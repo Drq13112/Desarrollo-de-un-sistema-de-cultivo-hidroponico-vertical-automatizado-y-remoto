@@ -1,13 +1,22 @@
 #include "TDS.h"
 #include "Arduino.h"
 
-TDS::TDS()
-{}
+TDS::TDS(int TdsSensorPin,float temperature){
+
+  this-> TdsSensorPin=TdsSensorPin;
+  this-> temperature=temperature;
+}
 TDS::~TDS()
 {}
-
+float TDS::getRawValue()
+{
+  return analogRead(TdsSensorPin);
+  
+}
 float TDS::getMedianNum(int bArray[], int iFilterLen){
   int bTab[iFilterLen];
+  
+  // Copy to bTab all bArray content
   for (byte i = 0; i<iFilterLen; i++){
     bTab[i] = bArray[i];}
 
@@ -27,33 +36,26 @@ float TDS::getMedianNum(int bArray[], int iFilterLen){
   else {
     bTemp = (bTab[iFilterLen / 2] + bTab[iFilterLen / 2 - 1]) / 2;
   }
-  return bTemp;
+  return float(bTemp);
 }
 
 void TDS::setPin(int TdsSensorPin){
   this-> TdsSensorPin=TdsSensorPin;
-  pinMode(TdsSensorPin,INPUT);
 }
 
 float TDS::getTDSValue(){
- static unsigned long analogSampleTimepoint = millis();
-  if(millis()-analogSampleTimepoint > 40U){     //every 40 milliseconds,read the analog value from the ADC
-    analogSampleTimepoint = millis();
-    analogBuffer[analogBufferIndex] = analogRead(TdsSensorPin);    //read the analog value and store into the buffer
-    analogBufferIndex++;
-    if(analogBufferIndex == SCOUNT){ 
-      analogBufferIndex = 0;
-    }
-  }   
-  
  static unsigned long printTimepoint = millis();
   if(millis()-printTimepoint > 800U){
     printTimepoint = millis();
-    for(copyIndex=0; copyIndex<SCOUNT; copyIndex++){
-       analogBufferTemp[copyIndex] = analogBuffer[copyIndex];
+    
+      averageVoltage = analogRead(TdsSensorPin)* float(VREF) / 4096.0;
       
-      // read the analog value more stable by the median filtering algorithm, and convert to voltage value
-      averageVoltage = getMedianNum(analogBufferTemp,SCOUNT) * (float)VREF / 4096.0;
+      
+      Serial.print("float(VREF)");
+      Serial.println((float)VREF);
+      Serial.print("averageVoltage");
+      Serial.println(averageVoltage);
+      
       
       //temperature compensation formula: fFinalResult(25^C) = fFinalResult(current)/(1.0+0.02*(fTP-25.0)); 
       float compensationCoefficient = 1.0+0.02*(temperature-25.0);
@@ -62,11 +64,11 @@ float TDS::getTDSValue(){
       
       //convert voltage value to tds value
       tdsValue=(133.42*compensationVoltage*compensationVoltage*compensationVoltage - 255.86*compensationVoltage*compensationVoltage + 857.39*compensationVoltage)*0.5;
-      
+
       //Serial.print("voltage:");
       //Serial.print(averageVoltage,2);
       //Serial.print("V   ");
-    }
+    //}
   }
   return tdsValue;
 }

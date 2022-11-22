@@ -9,13 +9,14 @@ class TDS
 
 public:
     // Constructor and destructor
-    TDS();
+    TDS(int, float);
     ~TDS();
 
     void setTemperature(float);
     void setPin(int);
     float getMedianNum(int*, int);
     float getTDSValue();
+    float getRawValue();
 
 private:
     int analogBuffer[SCOUNT]; // store the analog value in the array, read from ADC
