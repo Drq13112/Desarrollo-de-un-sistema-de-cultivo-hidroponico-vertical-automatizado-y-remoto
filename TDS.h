@@ -9,7 +9,7 @@ class TDS
 
 public:
     // Constructor and destructor
-    TDS(int, float);
+    TDS(int, float, ADS1115_PARALLEL*);
     ~TDS();
 
     void setTemperature(float);

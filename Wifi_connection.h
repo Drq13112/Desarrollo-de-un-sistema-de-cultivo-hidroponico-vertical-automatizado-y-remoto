@@ -16,7 +16,7 @@ class MQTT {
     void SetIP(char*);
     void setup_wifi();
     void reconnect();
-    void SetPort(uint8_t);
+    void SetPort(int);
     int GetResponse();
     void Subscribe(const char *);
     void Publish(float, const char *);
@@ -25,7 +25,7 @@ class MQTT {
   private:
     /////////////////////////////////////////////////////////////////////////////
     char * mqttpassword = "152436978";
-    uint8_t Port = 1883;
+    int Port = 1883;
     char * IP = "192.168.0.6";
     const char *mqttclient = "ESP32_2";  // Name of our device, must be unique
     const char *ssid =  "vodafoneAAFAVK";   // name of your WiFi network

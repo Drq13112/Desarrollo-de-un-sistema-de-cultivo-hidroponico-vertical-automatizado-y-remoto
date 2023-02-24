@@ -4,3 +4,4 @@
 #include "TDS.h"
 #include "Wifi_connection.h"
 #include "Arduino.h"
+#include "ADS1115_PARALLEL.h"

@@ -1,8 +1,9 @@
 #include "TDS.h"
 #include "Arduino.h"
+#include "ADS1115_PARALLEL.h"
 
-TDS::TDS(int TdsSensorPin,float temperature){
-
+TDS::TDS(int TdsSensorPin,float temperature, ADS1115_PARALLEL* ADS){
+  ads
   this-> TdsSensorPin=TdsSensorPin;
   this-> temperature=temperature;
 }
@@ -10,7 +11,7 @@ TDS::~TDS()
 {}
 float TDS::getRawValue()
 {
-  return analogRead(TdsSensorPin);
+  return averageVoltage;
   
 }
 float TDS::getMedianNum(int bArray[], int iFilterLen){
@@ -48,11 +49,9 @@ float TDS::getTDSValue(){
   if(millis()-printTimepoint > 800U){
     printTimepoint = millis();
     
-      averageVoltage = analogRead(TdsSensorPin)* float(VREF) / 4096.0;
-      
-      
-      Serial.print("float(VREF)");
-      Serial.println((float)VREF);
+      //averageVoltage = analogRead(TdsSensorPin)* float(VREF) / 4096.0;
+      averageVoltage = ADS.
+      this -> averageVoltage=averageVoltage;
       Serial.print("averageVoltage");
       Serial.println(averageVoltage);
       

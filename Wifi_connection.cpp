@@ -31,12 +31,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
 }
 
 MQTT::MQTT(){}
-MQTT::~MQTT() {}
+MQTT::~MQTT(){}
 void MQTT::SetIP(char* IP)
 {
   this-> IP = IP;
 }
-void MQTT::SetPort(uint8_t Port)
+void MQTT::SetPort(int Port)
 {
   this->Port = Port;
 }
@@ -68,7 +68,7 @@ void MQTT::setup_wifi() {
 
 void MQTT::reconnect() {
 
-  client.setServer(IP, 1883);
+  client.setServer(IP, Port);
   client.setCallback(callback);
 
   // Loop until we're reconnected
@@ -98,7 +98,7 @@ void MQTT::Publish(float message, const char* topic)
   char message_to_upload [7];
 
   // We pass from a float nimbre into a const char
-  dtostrf(message, 6, 2, message_to_upload);
+  dtostrf(message, 6, 0, message_to_upload);
   client.publish(topic, message_to_upload);
 }
 
@@ -106,3 +106,5 @@ void MQTT::Loop()
 {
   client.loop();
 }
+
+void MQTT::SetResponse(){}

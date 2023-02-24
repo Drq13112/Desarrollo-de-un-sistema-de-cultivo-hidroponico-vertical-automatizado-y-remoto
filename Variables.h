@@ -5,45 +5,44 @@
 #include "OneWire.h"
 #include "DallasTemperature.h"
 
+
+//
+#define DHTPIN 25
+#define DHTTYPE DHT11
+//
+#define pHPin 33
+//
+#define WaterTempPin 32
 //
 #define TdsSensorPin 35
-
 //
-#define pHPin 39
 
-//
-#define WaterTempPin 34
 
-//
-#define Port 1883
 
+
+
+
+#define NutrientTankLevelPin 32
 //
 #define WaterFLowFDBK   14
 #define WaterflowSetPoint 13
-
-//
-#define NutrientTankLevelPin 32
-
 //
 #define WaterTankLevel 13
-
-//
-#define DHTPIN 36
-#define DHTTYPE DHT11
 
 
 //Topics:
 
 struct{
-const char *Tank_level_topic = "Hydroponic/Tank_level";
+const char *Tank_level = "Hydroponic/Tank_level";
 const char *pH = "Hydroponic/pH";
 const char *Water_Flow = "Hydroponic/Water_Flow";
-const char *p = "Hydroponic/p"; //
+const char *TDS = "Hydroponic/TDS"; //
 const char *Humidity = "Hydroponic/Humidity";
 const char *Water_temperature = "Hydroponic/Water_temperature";
 const char *Weather_temperature = "Hydroponic/Weather_temperature";
 const char *Nutrient_tank_level = "Hydroponic/Nutrient_tank_level";
 const char *Water_pump = "Hydroponic/Water_pump";
+const char *Water_pump_fdbk = "Hydroponic/Water_pump_fdbk";
 }Topics;
 
 ///////////////////////////////////////////////////////////////////////////
