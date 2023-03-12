@@ -32,14 +32,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 MQTT::MQTT(){}
 MQTT::~MQTT(){}
-void MQTT::SetIP(char* IP)
-{
-  this-> IP = IP;
-}
-void MQTT::SetPort(int Port)
-{
-  this->Port = Port;
-}
 int MQTT::GetResponse()
 {
   return Response_String.toInt();

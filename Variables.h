@@ -1,35 +1,43 @@
-/*
+#include <string.h>
 
-*/
+#define SONAR_NUM 5      // Number of level sensors.
+#define MAX_DISTANCE 200 // Maximum distance (in cm) to ping.
 
-#include "OneWire.h"
-#include "DallasTemperature.h"
+#define WaterTankLevelTrigger 32
+#define WaterTankLevelEcho 39
 
+#define WaterTankLevelReserveTrigger 27
+#define WaterTankLevelReserveEcho 36
+
+#define NutrientTankLevelTrigger 26
+#define NutrientTankLevelEcho 35
+
+#define pHElevatorTankLevelTrigger 25
+#define pHElevatorTankLevelEcho 34
+
+#define pHReductorTankLevelTrigger 23
+#define pHReductorTankLevelEcho 33
 
 //
-#define DHTPIN 25
+#define DHTPIN 19
 #define DHTTYPE DHT11
 //
-#define pHPin 33
-//
-#define WaterTempPin 32
-//
-#define TdsSensorPin 35
+#define WaterTempPin 18
 //
 
-
-
-
-
-
-#define NutrientTankLevelPin 32
 //
-#define WaterFLowFDBK   14
-#define WaterflowSetPoint 13
+#define WaterFLowFDBK   17    // Analog
+#define WaterflowSetPoint1 16  // Digital PWM
+#define WaterflowSetPoint2 15  // Digital PWM
 //
-#define WaterTankLevel 13
 
+// UART Communication
 
+#define RXp2 16
+#define TXp2 17
+//
+
+String message_from_arduino;
 //Topics:
 
 struct{
@@ -46,8 +54,9 @@ const char *Water_pump_fdbk = "Hydroponic/Water_pump_fdbk";
 }Topics;
 
 ///////////////////////////////////////////////////////////////////////////
-
-char * mqttpassword = "152436978";
+/*
+const char *mqttpassword = "152436978";
 const char *mqttclient = "ESP32_1";  // Name of our device, must be unique
 const char *mqttclient1 = "ESP32_2";  // Name of our device, must be unique
 const char *mqttclient2 = "Hydroponics";  // Name of our device, must be unique
+*/
