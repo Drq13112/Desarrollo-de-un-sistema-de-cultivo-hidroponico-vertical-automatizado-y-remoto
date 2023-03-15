@@ -29,13 +29,18 @@ struct{
 const char *Tank_level = "Hydroponic/Tank_level";
 const char *pH = "Hydroponic/pH";
 const char *Water_Flow = "Hydroponic/Water_Flow";
-const char *TDS = "Hydroponic/TDS"; //
+const char *TDS = "Hydroponic/TDS"; 
 const char *Humidity = "Hydroponic/Humidity";
 const char *Water_temperature = "Hydroponic/Water_temperature";
 const char *Weather_temperature = "Hydroponic/Weather_temperature";
 const char *Nutrient_tank_level = "Hydroponic/Nutrient_tank_level";
+const char *pH_elevator_tank_level = "Hydroponic/pH_elevator_tank_level";
+const char *pH_reductor_tank_level = "Hydroponic/pH_reductor_tank_level";
 const char *Water_pump = "Hydroponic/Water_pump";
+const char *Heater = "Hydroponic/Heater";
 const char *Water_pump_fdbk = "Hydroponic/Water_pump_fdbk";
+const char *Photo_petition = "Hydroponic/Photo_petition";
+const char *Update_petition = "Hydroponic/Update_petition";
 }Topics;
 
 ///////////////////////////////////////////////////////////////////////////

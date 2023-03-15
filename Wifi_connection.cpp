@@ -15,25 +15,24 @@ String Response_String = "";
 void callback(char* topic, byte* payload, unsigned int length) {
 
   String response = "";
-
-  Serial.print("Message arrived [");
+  /*Serial.print("Message arrived:");*/
   Serial.print(topic);
+  if (String(topic) == "Hydroponic/Update_petition") {
+    for (int i = 0; i < length; i++) {
+      response = ((char)payload[i]);
+    }
 
-  for (int i = 0; i < length; i++) {
-    response = ((char)payload[i]);
+    Serial.println();
+    Serial.println("-----------------------");
+
+    Response_String = response;
+    Serial.println(response);
   }
-
-  Serial.println();
-  Serial.println("-----------------------");
-
-  Response_String = response;
-
 }
 
-MQTT::MQTT(){}
-MQTT::~MQTT(){}
-int MQTT::GetResponse()
-{
+MQTT::MQTT() {}
+MQTT::~MQTT() {}
+int MQTT::GetResponse() {
   return Response_String.toInt();
 }
 
@@ -43,9 +42,9 @@ void MQTT::setup_wifi() {
   Serial.print("\nConnecting to ");
   Serial.println(ssid);
 
-  WiFi.begin(ssid, password); // Connect to network
+  WiFi.begin(ssid, password);  // Connect to network
 
-  while (WiFi.status() != WL_CONNECTED) { // Wait for connection
+  while (WiFi.status() != WL_CONNECTED) {  // Wait for connection
     delay(500);
     Serial.print(".");
   }
@@ -80,23 +79,20 @@ void MQTT::reconnect() {
     }
   }
 }
-void MQTT::Subscribe(const char* topic)
-{
+void MQTT::Subscribe(const char* topic) {
   client.subscribe(topic);
 }
-void MQTT::Publish(float message, const char* topic)
-{
+void MQTT::Publish(float message, const char* topic) {
 
-  char message_to_upload [7];
+  char message_to_upload[7];
 
   // We pass from a float nimbre into a const char
   dtostrf(message, 6, 0, message_to_upload);
   client.publish(topic, message_to_upload);
 }
 
-void MQTT::Loop()
-{
+void MQTT::Loop() {
   client.loop();
 }
 
-void MQTT::SetResponse(){}
+void MQTT::SetResponse() {}
