@@ -3,21 +3,6 @@
 #define SONAR_NUM 5      // Number of level sensors.
 #define MAX_DISTANCE 200 // Maximum distance (in cm) to ping.
 
-#define WaterTankLevelTrigger 32
-#define WaterTankLevelEcho 39
-
-#define WaterTankLevelReserveTrigger 27
-#define WaterTankLevelReserveEcho 36
-
-#define NutrientTankLevelTrigger 26
-#define NutrientTankLevelEcho 35
-
-#define pHElevatorTankLevelTrigger 25
-#define pHElevatorTankLevelEcho 34
-
-#define pHReductorTankLevelTrigger 23
-#define pHReductorTankLevelEcho 33
-
 //
 #define DHTPIN 19
 #define DHTTYPE DHT11

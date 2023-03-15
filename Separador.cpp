@@ -1,7 +1,3 @@
-//Creado por Pablo Sánchez (Ioticos) para ser compartido, modificado, mejorado sin necesidad de autorización alguna.
-//Saludos!
-
-
 #include <Arduino.h>
 #include "Separador.h"
 

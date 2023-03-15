@@ -7,13 +7,16 @@ BTS7960-43A-Driver
 BTS7960::BTS7960() {}
 
 void BTS7960::SetUp() {
-
+  
+  delay(50);
   pinMode(RPWM, OUTPUT);
+  delay(50);
   pinMode(LPWM, OUTPUT);
-  pinMode(LEN, OUTPUT);
+  delay(50);
   pinMode(REN, OUTPUT);
+  delay(50);
   digitalWrite(REN, HIGH);
-  digitalWrite(LEN, LOW);
+  delay(50);
 }
 
 void BTS7960::Run(float Setpoint) {
@@ -39,8 +42,11 @@ LN298N::LN298N() {}
 
 void LN298N::SetUp() {
   pinMode(PinIN1, OUTPUT);
+  delay(50);
   pinMode(PinIN2, OUTPUT);
+  delay(50);
   pinMode(ENB, OUTPUT);
+  delay(50);
 }
 
 void LN298N::Run(float Setpoint) {

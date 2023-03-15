@@ -3,24 +3,59 @@
 
 Relays::Relays() {}
 
-void Relays::SetUp()
-{
-    // Setup pins as Outputs
-    pinMode(latchPin, OUTPUT);
-    pinMode(clockPin, OUTPUT);
-    pinMode(dataPin, OUTPUT);
+void Relays::SetUp() {
+  delay(100);
+  pinMode(SER_Pin, OUTPUT);
+  delay(50);
+  pinMode(RCLK_Pin, OUTPUT);
+  delay(50);
+  pinMode(SRCLK_Pin, OUTPUT);
+  delay(500);
+  clearRegisters();
+  delay(50);
+  writeRegisters();
+  delay(500);
 }
 
-void Relays::OpenRelay(int Relay)
-{
-    // ST_CP LOW to keep LEDs from changing while reading serial data
-    digitalWrite(latchPin, LOW);
+void Relays::OpenRelay(int relayId) {
+  // Opening certain relay
+  registers[relayId] = LOW;
+  writeRegisters();
+}
 
-    // Shift out the bits
-    shiftOut(dataPin, clockPin, MSBFIRST, Relay);
+void Relays::CloseRelay(int relayId) {
+  // Closing certain relay
+  registers[relayId] = HIGH;
+  writeRegisters();
+}
+void Relays::Reset() {
+  Serial.println(F("Reset all relays"));
+  clearRegisters();
+  writeRegisters();
+}
 
-    // ST_CP HIGH change LEDs
-    digitalWrite(latchPin, HIGH);
-
-    delay(500);
+void Relays::clearRegisters() { /* function clearRegisters */
+  //// Clear registers variables
+  for (int i = numOfRegisterPins - 1; i >= 0; i--) {
+    registers[i] = HIGH;
+  }
+  printRegisters();
+}
+void Relays::writeRegisters() { /* function writeRegisters */
+  //// Write register after being set
+  digitalWrite(RCLK_Pin, LOW);
+  for (int i = numOfRegisterPins - 1; i >= 0; i--) {
+    digitalWrite(SRCLK_Pin, LOW);
+    digitalWrite(SER_Pin, registers[i]);
+    digitalWrite(SRCLK_Pin, HIGH);
+  }
+  digitalWrite(RCLK_Pin, HIGH);
+}
+void Relays::printRegisters() { /* function clearRegisters */
+  //// Clear registers variables
+  for (int i = 0; i < numOfRegisterPins; i++) {
+    Serial.print(registers[i]);
+    Serial.print(F(" ,"));
+  }
+  Serial.println();
 }

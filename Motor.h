@@ -3,7 +3,6 @@
 /*
 BTS7960-43A-Driver
 */
-
 class BTS7960 {
 
 public:
@@ -19,10 +18,9 @@ public:
 private:
   // Variables internas
 
-  const int RPWM = 5;
-  const int LPWM = 6;
-  const int REN = 8;
-  const int LEN = 9;
+  const int RPWM = 32;
+  const int LPWM = 33;
+  const int REN = 26;
   int out = 0;
   float Setpoint = 0;
 };
@@ -34,9 +32,9 @@ LN298N-Driver
 class LN298N {
 private:
   float Setpoint = 0;
-  const int PinIN1 = 7;
-  const int PinIN2 = 6;
-  const int ENB = 3;
+  const int PinIN1 = 5;
+  const int PinIN2 = 18;
+  const int ENB = 19;
   int out;
 
 public:

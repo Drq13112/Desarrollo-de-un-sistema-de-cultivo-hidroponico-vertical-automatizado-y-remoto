@@ -1,29 +1,38 @@
 #include "Libraries.h"
 #include "Variables.h"
 
-void ReadMessage();
+void ReadMessageFromNano();
+void SendMessageToNano();
 
 float temperature = 20, tdsValue = -80;
 float Water_temperature = 20, pH = 7;
 float humidity = 60, Water_flow = 0, Nutrient_tank_level = 60, Tank_level = 70;
 float pH_Elevator_Level = 0, pH_Reductor_Level = 0, Water_Reserve_Level = 0;
 
+BTS7960 ThermalResistor;
+LN298N WaterPump;
+Relays Electrovalvulas;
+
 DHT dht(DHTPIN, DHTTYPE);  // I have to read using a pin GPIO
 MQTT mqtt;
 EasyComma easyComma(9);
 HardwareSerial SerialPort(2);
 Separador s;
-BTS7960 ThermalResistor;
-LN298N WaterPump;
-Relays Electrovalvulas;
+
 
 void setup() {
 
-  Serial.begin(9600);  // Start serial communication at 115200 baud
+  Serial.begin(9600);
+  // Start serial communication at 115200 baud
   SerialPort.begin(115200, SERIAL_8N1, RXp2, TXp2);
-  dht.begin();
+  
+  delay(50);
   WaterPump.SetUp();
+  delay(50);
   ThermalResistor.SetUp();
+  delay(50);
+  dht.begin();
+  
   Electrovalvulas.SetUp();
   /*
   mqtt.setup_wifi();
@@ -33,20 +42,17 @@ void setup() {
   */
 }
 void loop() {
-
-  for (int i=0;i<5;i++)
-  {
-    Electrovalvulas.OpenRelay(i);
-    delay(1000);
-  }
-  
-  
-  
   //////////////////////////////////////////////////////////////////////
-  ReadMessage();
+  
+  SendMessageToNano();
+  ReadMessageFromNano();
   delay(50);
- 
+/*
+  Serial.println("ABRE");
+  Electrovalvulas.OpenRelay(2);
+*/
   //
+  /*
   humidity = dht.readHumidity();
   temperature = dht.readTemperature();
 
@@ -89,7 +95,13 @@ void loop() {
   delay(3000);
 }
 
-void ReadMessage() {
+void SendMessageToNano() {
+  SerialPort.print("A");  // I use -2 to indicate that it's a message from ESP to Nano asking for measurements
+  Serial.println("Petition sent");
+}
+
+void ReadMessageFromNano() {
+  delay(1000);  // Time to wait until the response
   Serial.println("Message Received: ");
   message_from_arduino = SerialPort.readString();
   Serial.println(message_from_arduino);
@@ -100,7 +112,7 @@ void ReadMessage() {
   value = s.separa(message_from_arduino, ',', 2);
   pH = value.toFloat();
   delay(50);
-  
+
   value = s.separa(message_from_arduino, ',', 3);
   Water_temperature = value.toFloat();
   delay(50);
@@ -124,5 +136,4 @@ void ReadMessage() {
   value = s.separa(message_from_arduino, ',', 8);
   Water_Reserve_Level = value.toFloat();
   delay(50);
-  
 }
