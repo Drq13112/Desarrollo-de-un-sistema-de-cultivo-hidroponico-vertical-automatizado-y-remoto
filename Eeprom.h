@@ -1,3 +1,5 @@
+/*
+
 #ifndef Eeprom_h
 #define Eeprom_h
 
@@ -9,3 +11,4 @@ void settingsWipe();
 
 
 #endif
+*/

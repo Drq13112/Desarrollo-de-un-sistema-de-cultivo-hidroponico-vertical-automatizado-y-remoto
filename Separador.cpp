@@ -1,5 +1,4 @@
-#include <Arduino.h>
-#include "Separador.h"
+#include "Libraries.h"
 
 Separador::Separador()
 {
