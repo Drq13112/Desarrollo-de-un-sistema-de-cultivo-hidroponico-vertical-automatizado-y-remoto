@@ -20,10 +20,9 @@ ESP32Time rtc;
 WiFiClient wclient;
 PubSubClient client(wclient);
 DHT dht(DHTPIN, DHTTYPE);
-EasyComma easyComma(9);
 HardwareSerial SerialPort(2);
 Separador s;
-TDS TdsSensor;
+GravityTDS TdsSensor;
 
 PID::PIDParameters<double> parameters(4.0, 0.2, 1);
 PID::PIDController<double> pidController(parameters);
@@ -42,6 +41,7 @@ void setup()
   dht.begin();
   Electrovalvulas.SetUp();
   setup_wifi();
+  TdsSensor.begin();
   minute1 = rtc.getMinute();
   day_initial = rtc.getDayofYear();
 
@@ -152,6 +152,14 @@ void loop()
     ReadMessageFromNano();
     delay(100);*/
 
+
+    TdsSensor.setTemperature(Water_temperature);
+    TdsSensor.update();
+    tdsValue = TdsSensor.getTdsValue();
+    pH = TdsSensor.getpH();
+    humidity = dht.readHumidity();
+    temperature = dht.readTemperature();
+
   if (abs(minute2 - minute1) >= Cycle_time || Update_data_flag == true)
   {
     if (Update_data_flag == true)
@@ -169,8 +177,6 @@ void loop()
     //
     humidity = dht.readHumidity();
     temperature = dht.readTemperature();
-    //sensor.readCurrent(); // this must be inside loop
-    //sensor.printCurrent();
 
     /////////////////////////////////////////////////////////////////////
 

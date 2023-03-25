@@ -1,5 +1,3 @@
-#include <string.h>
-
 // Paramereters
 int MAX_pH = 10;
 int MIN_pH = 0;

@@ -1,4 +1,4 @@
-#include "Librerias.h"
+/*#include "Libreries.h"
 #include <Preferences.h>
 
 Preferences preferences;
@@ -55,3 +55,4 @@ void settingsWipe(){
   preferences.end();
   //ESP.restart();
 }
+*/
