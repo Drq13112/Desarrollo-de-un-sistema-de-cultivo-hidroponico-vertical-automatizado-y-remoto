@@ -1,5 +1,4 @@
-#include "Motor.h"
-#include <Arduino.h>
+#include "Libraries.h"
 
 /*
 BTS7960-43A-Driver
@@ -23,13 +22,13 @@ void BTS7960::Run(float Setpoint) {
   this->Setpoint = Setpoint;
 
   out = map(Setpoint, 0, 100, 0, 255);
-  analogWrite(RPWM, out);
-  analogWrite(LPWM, 0);
+  analogWrite(RPWM, out,255);
+  analogWrite(LPWM, 0,255);
 }
 void BTS7960::Stop() {
   this->Setpoint = 0;
-  analogWrite(RPWM, 0);
-  analogWrite(LPWM, 0);
+  analogWrite(RPWM, 0,255);
+  analogWrite(LPWM, 0,255);
 }
 int BTS7960::GetOutPut() {
   return out;
@@ -54,7 +53,7 @@ void LN298N::Run(float Setpoint) {
   digitalWrite(PinIN1, HIGH);
   digitalWrite(PinIN2, LOW);
   out = map(Setpoint, 0, 100, 0, 255);
-  analogWrite(ENB, out);
+  analogWrite(ENB, out,255);
 }
 void LN298N::Stop() {
   digitalWrite(PinIN1, LOW);
