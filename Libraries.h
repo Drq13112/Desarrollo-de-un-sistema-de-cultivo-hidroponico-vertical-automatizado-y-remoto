@@ -1,5 +1,5 @@
 #include "DHT.h"
-//#include <NewPing.h>
+#include <NewPing.h>
 #include "Arduino.h"
 #include <HardwareSerial.h>
 #include "Separador.h"
@@ -8,11 +8,13 @@
 #include <ESP32Time.h>
 #include <PubSubClient.h>
 #include <WiFi.h>
-#include "PIDController.h"
+#include "PIDController.hpp"
 #include "GravityTDS.h"
-#include <Wire.h> 
-#include "analogWrite.h"
+#include <Wire.h>
+#include "OneWire.h"
+#include "DallasTemperature.h"
+//#include "analogWrite.h"
 #include "ADS1115_PARALLEL.h"
-#include <EEPROM.h>
+//#include "Eeprom.h"
 #include <string.h>
-//#include "AiEsp32RotaryEncoder.h"
+#include "AiEsp32RotaryEncoder.h"

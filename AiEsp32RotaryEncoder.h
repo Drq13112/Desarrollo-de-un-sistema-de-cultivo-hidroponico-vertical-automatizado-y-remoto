@@ -4,12 +4,6 @@
 #ifndef _AIESP32ROTARYENCODER_h
 #define _AIESP32ROTARYENCODER_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
-
 // Rotary Encocer
 #define AIESP32ROTARYENCODER_DEFAULT_A_PIN 25
 #define AIESP32ROTARYENCODER_DEFAULT_B_PIN 26

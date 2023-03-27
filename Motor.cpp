@@ -1,65 +1,37 @@
-#include "Libraries.h"
+#include "Motor.h"
+#include <Arduino.h>
 
 /*
 BTS7960-43A-Driver
 */
 BTS7960::BTS7960() {}
 
-void BTS7960::SetUp() {
-  
+void BTS7960::SetUp()
+{
+
+  // put your setup code here, to run once:
+  ledcSetup(Channel, freq, res); // setup PWM channel for BST R_PWM
+  ledcAttachPin(RPWM, Channel);  // Attach BST R_PWM
+  pinMode(REN, OUTPUT);          // declare pin as output
   delay(50);
-  pinMode(RPWM, OUTPUT);
-  delay(50);
-  pinMode(LPWM, OUTPUT);
-  delay(50);
-  pinMode(REN, OUTPUT);
-  delay(50);
-  digitalWrite(REN, HIGH);
-  delay(50);
+  digitalWrite(REN, HIGH); // enable BST
 }
 
-void BTS7960::Run(float Setpoint) {
+void BTS7960::Run(float Setpoint)
+{
   this->Setpoint = Setpoint;
 
   out = map(Setpoint, 0, 100, 0, 255);
-  analogWrite(RPWM, out,255);
-  analogWrite(LPWM, 0,255);
+
+  ledcWrite(Channel, out);
 }
-void BTS7960::Stop() {
+void BTS7960::Stop()
+{
   this->Setpoint = 0;
-  analogWrite(RPWM, 0,255);
-  analogWrite(LPWM, 0,255);
+  this->out = 0;
+  ledcWrite(Channel, 0);
 }
-int BTS7960::GetOutPut() {
-  return out;
-}
-
-/*
-LN298N-Driver
-*/
-LN298N::LN298N() {}
-
-void LN298N::SetUp() {
-  pinMode(PinIN1, OUTPUT);
-  delay(50);
-  pinMode(PinIN2, OUTPUT);
-  delay(50);
-  pinMode(ENB, OUTPUT);
-  delay(50);
-}
-
-void LN298N::Run(float Setpoint) {
-  this->Setpoint = Setpoint;
-  digitalWrite(PinIN1, HIGH);
-  digitalWrite(PinIN2, LOW);
-  out = map(Setpoint, 0, 100, 0, 255);
-  analogWrite(ENB, out,255);
-}
-void LN298N::Stop() {
-  digitalWrite(PinIN1, LOW);
-  digitalWrite(PinIN2, LOW);
-}
-
-int LN298N::GetOutPut() {
+int BTS7960::GetOutPut()
+{
   return out;
 }

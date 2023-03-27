@@ -7,19 +7,18 @@ class Relays
 {
 
 private:
-
     // Variables:
-    
+
     // ST_CP pin 12
     const int SER_Pin = 14;
     // SH_CP pin 11
     const int RCLK_Pin = 12;
     // DS pin 14
     const int SRCLK_Pin = 13;
-    int  numOfRegisterPins = 8;
+    int numOfRegisterPins = 8;
     bool registers[8];
 
-    //Private methods
+    // Private methods
 
     void printRegisters();
     void writeRegisters();

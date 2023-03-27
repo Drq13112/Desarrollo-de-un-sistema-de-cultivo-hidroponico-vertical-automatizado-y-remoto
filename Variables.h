@@ -1,33 +1,41 @@
 // Paramereters
-int MAX_pH = 10;
-int MIN_pH = 0;
-int MAX_TDS = 1000;
-int MIN_TDS = 300;
+int MAX_pH = 6;
+int MIN_pH = 5.5;
+int MAX_EC = 2400;
+int MIN_EC = 1000;
 int MAX_TEMP = 25;
 int MIN_TEMP = 15;
-int Cycle_time = 5; // mins
+int Cycle_time = 10; // mins
 float Water_temp_Setpoint = 20.0;
-#define MAX_DISTANCE 200       // Maximum distance (in cm) to ping.
-int Time_pump_works = 5;     // mins
-#define Time_Nutrient 10000    // ms
-#define Time_pH_Decrease 10000 // ms
-#define Time_pH_Up 10000       // ms
-#define Time_Water 5000        // ms
+float Kp = 4.0;
+float Ki = 0.2;
+float Kd = 1;
+int Time_pump_works = 5;      // mins
+int Time_Nutrient = 10000;    // ms
+int Time_pH_Decrease = 10000; // ms
+int Time_pH_Up = 10000;       // ms
+int Time_Water = 5000;        // ms
+#define Height_tank 100;
 
 // PINS
 #define DHTPIN 32
 #define DHTTYPE DHT11
-#define WaterTempPin 18
+#define WaterTempPin 23
 #define WaterFLowFDBK 17      // Analog
 #define WaterflowSetPoint1 16 // Digital PWM
 #define WaterflowSetPoint2 15 // Digital PWM
+#define Trigger_PIN 16
+#define Echo_PIN 4
+#define MAX_DISTANCE 200 // Maximum distance (in cm) to ping.
+#define pH_Reductor_PIN 39
+#define pH_Elevator_PIN 36
+#define Nutrient1_Elevator_PIN 35
+#define Nutrient2_Elevator_PIN 34
 
-// UART Communication
-#define RXp2 16
-#define TXp2 17
-//
+// I2C Communication
+#define SDAPIN 21
+#define SCLPIN 22
 
-String message_from_arduino;
 // Topics:
 
 struct
@@ -54,36 +62,51 @@ struct
   const char *Water_Uppered = "Hydroponic/Water_Uppered";
   const char *pH_Decreased = "Hydroponic/pH_Decreased";
   const char *pH_Uppered = "Hydroponic/pH_Uppered";
-  const char *Nutrient_Uppered = "Hydroponic/Nutrient_Uppered";
+  const char *Nutrient_Uppered = "Hydroponic/Low_Nutrient_Tank_1";
+  const char *Low_Nutrient_Tank_1 = "Hydroponic/Low_Nutrient_Tank_1";
+  const char *Low_Nutrient_Tank_2 = "Hydroponic/Nutrient_Uppered";
+  const char *Low_pH_Elevator_Tank = "Hydroponic/Low_pH_Elevator_Tank";
+  const char *Low_pH_Reductor_Tank = "Hydroponic/Low_pH_Reductor_Tank";
 } Topics;
 
 ///////////////////////////////////////////////////////////////////////////
 
-// Varaibles
+// Variables
 float temperature = 20;
 float tdsValue = 450;
 float Water_temperature = 20;
 float pH = 5.5;
 float humidity = 60;
 float Water_flow = 0;
-float Nutrient_tank_level = 60;
+bool Nutrient1_tank_level = false;
+bool Nutrient2_tank_level = false;
 float Tank_level = 70;
-float pH_Elevator_Level = 0;
-float pH_Reductor_Level = 0;
-float Water_Reserve_Level = 0;
+bool pH_Elevator_Level = false;
+bool pH_Reductor_Level = false;
 float Heater = 0;
+float ECValue = 0;
 bool Update_Pump_state = false;
 bool Update_data_flag = false;
 bool Remote_Decrease_pH = false;
 bool Remote_Increase_pH = false;
 bool Remote_Water_UP = false;
 bool Remote_Increase_TDS = false;
+bool Low_Nutrient_Tank_1 = false;
+bool Low_Nutrient_Tank_2 = false;
+bool Low_pH_Elevator_Tank = false;
+bool Low_pH_Reductor_Tank = false;
 
 int minute1 = 0;
 int minute2 = 0;
 int Pump_timer = 0;
 int day = 0;
 int day_initial = 0;
+int Process_week = 1;
+int Process_day = 0;
+bool Process_ON = false;
+bool Process_Started = false;
+bool Reset_Process = false;
+bool SetProcess_Configuration = false;
 
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 1 * 3600;

@@ -2,7 +2,7 @@
 // 
 // 
 
-#include "AiEsp32RotaryEncoder.h"
+#include "Libraries.h"
 
 void IRAM_ATTR AiEsp32RotaryEncoder::readEncoder_ISR()
 {	

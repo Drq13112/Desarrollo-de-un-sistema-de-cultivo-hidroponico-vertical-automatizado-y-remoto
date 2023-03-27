@@ -11,12 +11,15 @@ class ADS1115_PARALLEL{
 
 public:
 // Constructor
-ADS1115_PARALLEL();
+ADS1115_PARALLEL(bool,bool,bool,bool);
 ~ADS1115_PARALLEL();
 
 // Methods
 void SetUp();
-
+bool channel1 = 0;
+bool channel2 = 0;
+bool channel3 = 0;
+bool channel4 = 0;
 float ReadVoltage(int, int);
 
 };
