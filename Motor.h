@@ -18,7 +18,7 @@ public:
 private:
   // Variables internas
 
-  const int RPWM = 32;
+  const int RPWM = 25;
   const int LPWM = 33;
   const int REN = 26;
   int out = 0;
