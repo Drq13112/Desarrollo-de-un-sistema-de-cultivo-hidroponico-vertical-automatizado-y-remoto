@@ -264,10 +264,8 @@ double dameValor(String cadena, double valor, double inc, double min, double max
 
 void FuncionMenuPrincipal(){
   //Inicializamos las opciones de menu
-  String menu[] = {"VOLVER", "MODO","OBJETO CONTROL","POSICION","VELOCIDAD"};
+  String menu[] = {"BACK", "OVERVIEW","MOOD","CONFIGUTARION"};
 
-  //Si se está en modo automático o no, la segunda opción será diferente
-  
   
   String opDefecto[5];
   int index=0;

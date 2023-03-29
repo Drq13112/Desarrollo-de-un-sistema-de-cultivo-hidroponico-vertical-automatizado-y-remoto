@@ -32,9 +32,6 @@ void setup()
 {
 
   Serial.begin(9600);
-
-  // WaterPump.SetUp();
-  // sensor.start();
   ThermalResistor.SetUp();
   dht.begin();
   Electrovalvulas.SetUp();
@@ -43,6 +40,11 @@ void setup()
   WaterTempSensor.begin();
   minute1 = rtc.getMinute();
   day_initial = rtc.getDayofYear();
+
+  void incializaRotaryEncoder();
+// Incialización del lcd
+
+void inicializaLcd();
   /*
     delay(3000);
     reconnect();
