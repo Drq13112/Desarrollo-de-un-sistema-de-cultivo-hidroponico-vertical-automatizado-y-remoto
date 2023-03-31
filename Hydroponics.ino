@@ -32,11 +32,14 @@ void setup()
 {
 
   Serial.begin(9600);
+<<<<<<< HEAD:Hydroponics.ino
   inicializaLcd();
   incializaRotaryEncoder();
 
   // WaterPump.SetUp();
   // sensor.start();
+=======
+>>>>>>> d942c004b9b55ebde5c6986ff0de81a1605f7300:main_sin_nano.ino
   ThermalResistor.SetUp();
   dht.begin();
   Electrovalvulas.SetUp();
@@ -45,6 +48,11 @@ void setup()
   WaterTempSensor.begin();
   minute1 = rtc.getMinute();
   day_initial = rtc.getDayofYear();
+
+  void incializaRotaryEncoder();
+// Incialización del lcd
+
+void inicializaLcd();
   /*
     delay(3000);
     reconnect();

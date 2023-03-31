@@ -282,12 +282,24 @@ double dameValor(String cadena, double valor, double inc, double min, double max
   delay(100);
   return valor;
 }
+<<<<<<< HEAD
 void MainMenu()
 {
   // Inicializamos las opciones de menu
   String menu[] = {"OVERVIEW", "MANUAL", "AUTOMATICO"};
   String opDefecto[3];
   int index = 0;
+=======
+
+
+void FuncionMenuPrincipal(){
+  //Inicializamos las opciones de menu
+  String menu[] = {"BACK", "OVERVIEW","MOOD","CONFIGUTARION"};
+
+  
+  String opDefecto[5];
+  int index=0;
+>>>>>>> d942c004b9b55ebde5c6986ff0de81a1605f7300
   double temp = consigna_valor[0];
   do
   {
