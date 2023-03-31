@@ -21,8 +21,8 @@ private:
   const int Channel = 10;
   const int freq = 1000; //  Set up PWM Frequency
   const int res = 8;     //  Set up PWM Resolution
-  const int RPWM = 25;
-  const int REN = 26;
+  const int RPWM = 33;
+  const int REN = 32;
   int out = 0;
   float Setpoint = 0;
 };

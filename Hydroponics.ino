@@ -32,13 +32,15 @@ void setup()
 {
 
   Serial.begin(9600);
+  inicializaLcd();
+  incializaRotaryEncoder();
 
   // WaterPump.SetUp();
   // sensor.start();
   ThermalResistor.SetUp();
   dht.begin();
   Electrovalvulas.SetUp();
-  setup_wifi();
+  //setup_wifi();
   TdsSensor.begin();
   WaterTempSensor.begin();
   minute1 = rtc.getMinute();
@@ -83,35 +85,39 @@ void loop()
   if (Reset_Process == true)
   {
     day_initial = 0;
-    Process_week = 1;
+    Process_week = 0;
     Process_ON = false;
-    Process_Started = 1;
+    Process_day = 0;
   }
-  // Semana 1-> 1,5 ml // CE entre 1,0
-  // Semena 2-> 1,5 ml
+  // Semana 0-> 1,5 ml // CE entre 1,0
+  // Semena 1-> 1,5 ml
+  // Semana 2-> 2 ml
   // Semana 3-> 2 ml
-  // Semana 4-> 2 ml
+  // Semana 4-> 4,5 ml
   // Semana 5-> 4,5 ml
   // Semana 6-> 4,5 ml
-  // Semana 7-> 4,5 ml
-  // Semana 8-> 5 ml
-  // Semana 9-> 5 ml // CE 2.5
+  // Semana 7-> 5 ml
+  // Semana 8-> 5 ml // CE 2.5
   // pH entre 5,5 – 5,8
+  if (Process_ON == false)
+    day_initial = rtc.getDayofYear();
+    Serial.print("Day_initial: ");
+    Serial.println(day_initial);
+
 
   // Depending on the week the the process is, we use some patameters or others.
   if (Process_ON == true)
   {
-    if (Process_Started == true)
-      day_initial = rtc.getDayofYear();
     Process_day = day - day_initial;
+
     if (Process_day % 7 == true)
       Process_week = Process_week + 1;
 
     // Modo automatico
     switch (Process_week)
     {
+    case 0:
     case 1:
-    case 2:
       MAX_pH = 6;
       MIN_pH = 5.5;
       MAX_EC = 1100;
@@ -119,8 +125,8 @@ void loop()
       MAX_TEMP = 25;
       MIN_TEMP = 15;
       break;
+    case 2:
     case 3:
-    case 4:
       MAX_pH = 6;
       MIN_pH = 5.5;
       MAX_EC = 1700;
@@ -128,9 +134,9 @@ void loop()
       MAX_TEMP = 25;
       MIN_TEMP = 15;
       break;
+    case 4:
     case 5:
     case 6:
-    case 7:
 
       MAX_pH = 6;
       MIN_pH = 5.5;
@@ -140,8 +146,8 @@ void loop()
       MIN_TEMP = 15;
 
       break;
+    case 7:
     case 8:
-    case 9:
 
       MAX_pH = 6;
       MIN_pH = 5.5;
@@ -152,7 +158,7 @@ void loop()
       break;
     default:
       break;
-    }
+    };
 
     // PID Control
     PID_Control();
@@ -171,7 +177,6 @@ void loop()
       regulate_pH();
       regulate_Solution();
     }
-    client.loop();
   }
   else
   {
@@ -219,6 +224,7 @@ void loop()
     // PID Control
     PID_Control();
   }
+  client.loop();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

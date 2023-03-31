@@ -101,10 +101,9 @@ int minute2 = 0;
 int Pump_timer = 0;
 int day = 0;
 int day_initial = 0;
-int Process_week = 1;
+int Process_week = 0;
 int Process_day = 0;
 bool Process_ON = false;
-bool Process_Started = false;
 bool Reset_Process = false;
 bool SetProcess_Configuration = false;
 
