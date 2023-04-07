@@ -1,5 +1,4 @@
-#include "Motor.h"
-#include <Arduino.h>
+#include "Libraries.h"
 
 /*
 BTS7960-43A-Driver

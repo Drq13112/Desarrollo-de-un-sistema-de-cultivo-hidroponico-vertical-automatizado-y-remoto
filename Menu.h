@@ -1,46 +1,34 @@
 #ifndef Menu_h
 #define Menu_h
 
+class Menu
+{
+public:
+    Menu();
+    void SetUp();
+    void MainMenu();
 
-/* Conexiones Display
-LCD       ESP32
-Vcc       3.3 v
-GND       GND
-SDA        GPIO21
-SCL       GPIO22
-*/
-/*Conector encoder rotativo. Funciones disponibles
-rotaryEncoder.currentButtonState() != BUT_RELEASED
-rotaryEncoder.readEncoder();
-rotaryEncoder.setBoundaries(limInf,limSup, false);
-rotaryEncoder.encoderChanged()*/
-#define ROTARY_ENCODER_A_PIN 25
-#define ROTARY_ENCODER_B_PIN 26
-#define ROTARY_ENCODER_BUTTON_PIN 27
-#define ROTARY_ENCODER_VCC_PIN -1 /*put -1 of Rotary encoder Vcc is connected directly to 3,3V; else you can use declared output pin for powering rotary encoder antes 27 */
-
-#define DIRLCD 0x27  // Dirección i2c del lcd
-
-int16_t leeEncoder();
-int8_t deltaEncoder();  // calcula el sentido giro encoder
-void incializaRotaryEncoder();
-// Incialización del lcd
-
-void inicializaLcd();
-
-void escribeLcd(String mensaje1, String mensaje2);
-
-int leeEstadoRotativo();
-
-bool botonEncoderPulsado();
-
-// Función principal de menu, devuelve el numero de opccion elegida
-int miMenu(String menu[],int maxMenuItems,   String OpDefecto[], int nMenuOpDef);
-void muestraMenu(String menu[], int maxMenuItems,  String opDefecto[], int opcionMenu);
-double dameValor(String cadena, double valor, double inc, double min, double max);
-
-void MainMenu();
-
-
+private:
+    int16_t leeEncoder();
+    int8_t deltaEncoder();
+    void inicializaLcd();
+    void incializaRotaryEncoder();
+    void escribeLcd(String mensaje1, String mensaje2);
+    bool botonEncoderPulsado();
+    float setValue(String, float, float, float, float);
+    void UpdateData1();
+    void UpdateData2();
+    static void IRAM_ATTR readE();
+    static void IRAM_ATTR readB();
+    int16_t valEncoderAnt = 0;
+    int16_t valEncoder = 0;
+    int16_t current_pos = 0;
+    int8_t delta_pos = 0;
+    int low_limit = 0;
+    int16_t upper_limit = 0;
+    bool menu_changed = false;
+    int16_t menu_pos = 0;  // To ndicate the current position inside the menu
+    int16_t menus_pos = 0; // To indicate in which menu we are
+};
 
 #endif

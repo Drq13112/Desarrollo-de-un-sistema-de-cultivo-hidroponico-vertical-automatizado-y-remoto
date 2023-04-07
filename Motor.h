@@ -18,7 +18,7 @@ public:
 
 private:
   // Private variables
-  const int Channel = 10;
+  const int Channel = 0;
   const int freq = 1000; //  Set up PWM Frequency
   const int res = 8;     //  Set up PWM Resolution
   const int RPWM = 33;

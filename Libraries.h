@@ -15,6 +15,3 @@
 #include "DallasTemperature.h"
 #include "ADS1115_PARALLEL.h"
 #include <string.h>
-#include "AiEsp32RotaryEncoder.h"
-#include "Menu.h"
-#include <LiquidCrystal_I2C.h>

@@ -1,16 +1,14 @@
 // Paramereters
-int MAX_pH = 6;
-int MIN_pH = 5.5;
-int MAX_EC = 2400;
-int MIN_EC = 1000;
-int MAX_TEMP = 25;
-int MIN_TEMP = 15;
-int Cycle_time = 10; // mins
+float MAX_pH = 6;
+float MIN_pH = 5.5;
+float MAX_EC = 2400;
+float MIN_EC = 1000;
+float Cycle_time = 10; // mins
 float Water_temp_Setpoint = 20.0;
 float Kp = 4.0;
 float Ki = 0.2;
 float Kd = 1;
-int Time_pump_works = 5;      // mins
+float Time_pump_works = 5;      // mins
 int Time_Nutrient = 10000;    // ms
 int Time_pH_Decrease = 10000; // ms
 int Time_pH_Up = 10000;       // ms
@@ -18,14 +16,12 @@ int Time_Water = 5000;        // ms
 #define Height_tank 100;
 
 // PINS
-#define DHTPIN 32
+#define DHTPIN 15
 #define DHTTYPE DHT11
 #define WaterTempPin 23
 #define WaterFLowFDBK 17      // Analog
-#define WaterflowSetPoint1 16 // Digital PWM
-#define WaterflowSetPoint2 15 // Digital PWM
-#define Trigger_PIN 16
-#define Echo_PIN 4
+#define Trigger_PIN 19
+#define Echo_PIN 18
 #define MAX_DISTANCE 200 // Maximum distance (in cm) to ping.
 #define pH_Reductor_PIN 39
 #define pH_Elevator_PIN 36
@@ -85,6 +81,7 @@ bool pH_Elevator_Level = false;
 bool pH_Reductor_Level = false;
 float Heater = 0;
 float ECValue = 0;
+
 bool Update_Pump_state = false;
 bool Update_data_flag = false;
 bool Remote_Decrease_pH = false;
@@ -106,6 +103,7 @@ int Process_day = 0;
 bool Process_ON = false;
 bool Reset_Process = false;
 bool SetProcess_Configuration = false;
+bool Stop_Process = false;
 
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 1 * 3600;

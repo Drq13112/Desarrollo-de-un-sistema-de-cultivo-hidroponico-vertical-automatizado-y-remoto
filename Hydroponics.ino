@@ -1,5 +1,7 @@
 #include "Libraries.h"
+#include "Menu.h"
 #include "Variables.h"
+
 void regulate_pH();
 void regulate_Solution();
 void Increase_pH();
@@ -10,6 +12,7 @@ void callback(char *topic, byte *payload, unsigned int length);
 void Publish(float message, const char *topic);
 void Update_all_data();
 void PID_Control();
+
 
 String Response_string = "";
 BTS7960 ThermalResistor;
@@ -24,41 +27,34 @@ Separador s;
 GravityTDS TdsSensor;
 OneWire oneWire(WaterTempPin);
 DallasTemperature WaterTempSensor(&oneWire);
+Menu MiMenu;
 
 PID::PIDParameters<double> parameters(Kp, Ki, Kd);
 PID::PIDController<double> pidController(parameters);
-
 void setup()
 {
-
   Serial.begin(9600);
-<<<<<<< HEAD:Hydroponics.ino
-  inicializaLcd();
-  incializaRotaryEncoder();
+  MiMenu.SetUp();
+
+  pinMode(Low_pH_Elevator_Tank, INPUT);
+  pinMode(Low_pH_Reductor_Tank, INPUT);
+  pinMode(Low_Nutrient_Tank_1, INPUT);
+  pinMode(Low_Nutrient_Tank_2, INPUT);
 
   // WaterPump.SetUp();
   // sensor.start();
-=======
->>>>>>> d942c004b9b55ebde5c6986ff0de81a1605f7300:main_sin_nano.ino
   ThermalResistor.SetUp();
   dht.begin();
   Electrovalvulas.SetUp();
-  //setup_wifi();
+  setup_wifi();
   TdsSensor.begin();
   WaterTempSensor.begin();
   minute1 = rtc.getMinute();
   day_initial = rtc.getDayofYear();
 
-  void incializaRotaryEncoder();
-// Incialización del lcd
-
-void inicializaLcd();
-  /*
-    delay(3000);
-    reconnect();
-    delay(100);
-
-    */
+  delay(3000);
+  reconnect();
+  delay(100);
 
   // Configuro hora:
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
@@ -85,8 +81,9 @@ void inicializaLcd();
 }
 void loop()
 {
-  //////////////////////////////////////////////////////////////////////
 
+  MiMenu.MainMenu();
+  //////////////////////////////////////////////////////////////////////
   minute2 = rtc.getMinute();
   day = rtc.getDayofYear();
 
@@ -109,9 +106,8 @@ void loop()
   // pH entre 5,5 – 5,8
   if (Process_ON == false)
     day_initial = rtc.getDayofYear();
-    Serial.print("Day_initial: ");
-    Serial.println(day_initial);
-
+  Serial.print("Day_initial: ");
+  Serial.println(day_initial);
 
   // Depending on the week the the process is, we use some patameters or others.
   if (Process_ON == true)
@@ -130,8 +126,6 @@ void loop()
       MIN_pH = 5.5;
       MAX_EC = 1100;
       MIN_EC = 900;
-      MAX_TEMP = 25;
-      MIN_TEMP = 15;
       break;
     case 2:
     case 3:
@@ -139,8 +133,7 @@ void loop()
       MIN_pH = 5.5;
       MAX_EC = 1700;
       MIN_EC = 1400;
-      MAX_TEMP = 25;
-      MIN_TEMP = 15;
+
       break;
     case 4:
     case 5:
@@ -150,8 +143,6 @@ void loop()
       MIN_pH = 5.5;
       MAX_EC = 2000;
       MIN_EC = 1800;
-      MAX_TEMP = 25;
-      MIN_TEMP = 15;
 
       break;
     case 7:
@@ -161,8 +152,7 @@ void loop()
       MIN_pH = 5.5;
       MAX_EC = 2500;
       MIN_EC = 2300;
-      MAX_TEMP = 25;
-      MIN_TEMP = 15;
+
       break;
     default:
       break;
@@ -181,7 +171,7 @@ void loop()
       minute1 = minute2;
       // Uploading parameters
 
-      Update_all_data();
+      // Update_all_data();
       regulate_pH();
       regulate_Solution();
     }
@@ -190,7 +180,9 @@ void loop()
   {
     // Modo Manual
 
-    // Accionamiento de la bomba
+    // Update all data
+    // Update_all_data();
+    //  Accionamiento de la bomba
     if (Update_Pump_state == true)
     {
       // WaterPump.Run(100);
@@ -230,9 +222,9 @@ void loop()
       Publish(0, Topics.Water_Uppered);
     }
     // PID Control
-    PID_Control();
+    // PID_Control();
   }
-  client.loop();
+  // client.loop();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -465,14 +457,13 @@ void Publish(float message, const char *topic)
 void Update_all_data()
 {
   // Checking regulator tanks
-
   Low_Nutrient_Tank_1 = digitalRead(Nutrient1_Elevator_PIN);
   Low_Nutrient_Tank_2 = digitalRead(Nutrient2_Elevator_PIN);
   Low_pH_Elevator_Tank = digitalRead(pH_Elevator_PIN);
   Low_pH_Reductor_Tank = digitalRead(pH_Reductor_PIN);
 
   // Nutrient Level tank
-  Tank_level = Height_tank - (sonar.ping() / US_ROUNDTRIP_CM);
+  // Tank_level = Height_tank - (sonar.ping() / US_ROUNDTRIP_CM);
 
   // 100cm -> 0%
   // 1cm -> 1%  -> 10L  aprox
