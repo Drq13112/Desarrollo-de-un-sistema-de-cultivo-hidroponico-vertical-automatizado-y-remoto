@@ -1,6 +1,7 @@
 #include "Libraries.h"
 #include "Menu.h"
 #include "Variables.h"
+#include "FlowMeter.h"
 
 void regulate_pH();
 void regulate_Solution();
@@ -12,7 +13,7 @@ void callback(char *topic, byte *payload, unsigned int length);
 void Publish(float message, const char *topic);
 void Update_all_data();
 void PID_Control();
-
+void Reset_ESP();
 
 String Response_string = "";
 BTS7960 ThermalResistor;
@@ -63,25 +64,24 @@ void setup()
   {
     rtc.setTimeStruct(timeinfo);
   }
-  /*
-    // Subscribing to  topics
-    client.subscribe(Topics.Update_petition);
-    client.subscribe(Topics.Photo_petition);
-    client.subscribe(Topics.Water_pump_fdbk);
+  // Subscribing to  topics
+  client.subscribe(Topics.Update_petition);
+  client.subscribe(Topics.Photo_petition);
+  client.subscribe(Topics.Water_pump_fdbk);
 
-    // Publish a initial value
-    Publish(0, Topics.pH_Uppered);
-    Publish(0, Topics.Water_Uppered);
-    Publish(0, Topics.pH_Decreased);
-    Publish(0, Topics.Nutrient_Uppered);
-  */
+  // Publish a initial value
+  Publish(0, Topics.pH_Uppered);
+  Publish(0, Topics.Water_Uppered);
+  Publish(0, Topics.pH_Decreased);
+  Publish(0, Topics.Nutrient_Uppered);
   pidController.Input = analogRead(Water_temperature);
   pidController.Setpoint = Water_temp_Setpoint;
   pidController.TurnOn();
 }
 void loop()
 {
-
+  if (Reset == true)
+    Reset_ESP();
   MiMenu.MainMenu();
   //////////////////////////////////////////////////////////////////////
   minute2 = rtc.getMinute();
@@ -181,7 +181,7 @@ void loop()
     // Modo Manual
 
     // Update all data
-    // Update_all_data();
+    Update_all_data();
     //  Accionamiento de la bomba
     if (Update_Pump_state == true)
     {
@@ -222,9 +222,9 @@ void loop()
       Publish(0, Topics.Water_Uppered);
     }
     // PID Control
-    // PID_Control();
+    PID_Control();
   }
-  // client.loop();
+  client.loop();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -514,4 +514,9 @@ void PID_Control()
   ThermalResistor.Run(pidController.Output);
   Serial.print("PID output:");
   Serial.println(pidController.Output);
+}
+
+void Reset_ESP()
+{
+  ESP.restart();
 }

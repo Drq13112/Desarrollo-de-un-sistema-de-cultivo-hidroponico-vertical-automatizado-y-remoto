@@ -1,6 +1,6 @@
 #include "Libraries.h"
 
-ADS1115_PARALLEL ADS(0,0,0,0);
+ADS1115_PARALLEL ADS(1,0,0,0);
 GravityTDS::GravityTDS()
 {
   this->pin = 30;               //Not used

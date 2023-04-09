@@ -63,6 +63,7 @@ struct
   const char *Low_Nutrient_Tank_2 = "Hydroponic/Nutrient_Uppered";
   const char *Low_pH_Elevator_Tank = "Hydroponic/Low_pH_Elevator_Tank";
   const char *Low_pH_Reductor_Tank = "Hydroponic/Low_pH_Reductor_Tank";
+  const char *Reset_Pushed = "Hydroponic/Reset";
 } Topics;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -92,6 +93,7 @@ bool Low_Nutrient_Tank_1 = false;
 bool Low_Nutrient_Tank_2 = false;
 bool Low_pH_Elevator_Tank = false;
 bool Low_pH_Reductor_Tank = false;
+bool Reset = false;
 
 int minute1 = 0;
 int minute2 = 0;
@@ -104,6 +106,7 @@ bool Process_ON = false;
 bool Reset_Process = false;
 bool SetProcess_Configuration = false;
 bool Stop_Process = false;
+size_t contador =0;
 
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 1 * 3600;

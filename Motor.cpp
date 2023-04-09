@@ -20,7 +20,7 @@ void BTS7960::Run(float Setpoint)
 {
   this->Setpoint = Setpoint;
 
-  out = map(Setpoint, 0, 100, 0, 255);
+  out = map(Setpoint, 0, 100, 255, 0);
 
   ledcWrite(Channel, out);
 }

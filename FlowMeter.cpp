@@ -1,13 +1,17 @@
-#include "Libraries.h"
+#include "FlowMeter.h"
 
-FlowMeter::FlowMeter(uint_8 PIN)
-{
-    this->PIN = PIN;
-}
-void IRAM_ATTR FlowMeter::pulseCounter()
+size_t pulseCount = 0;
+
+void IRAM_ATTR pulseCounter()
 {
     pulseCount++;
 }
+
+FlowMeter::FlowMeter(uint8_t PIN)
+{
+    this->PIN = PIN;
+}
+
 void FlowMeter::setup()
 {
     pinMode(PIN, INPUT_PULLUP);
@@ -17,7 +21,7 @@ void FlowMeter::setup()
     totalMilliLitres = 0;
     previousMillis = 0;
 
-    attachInterrupt(digitalPinToInterrupt(SENSOR), pulseCounter, FALLING);
+    attachInterrupt(digitalPinToInterrupt(PIN), pulseCounter, FALLING);
 }
 
 float FlowMeter::Measure()
