@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "Variables.h"
 #include "FlowMeter.h"
+#include "Eeprom.hpp"
 
 void regulate_pH();
 void regulate_Solution();
@@ -29,11 +30,13 @@ GravityTDS TdsSensor;
 OneWire oneWire(WaterTempPin);
 DallasTemperature WaterTempSensor(&oneWire);
 Menu MiMenu;
+FlowMeter FlowMeter1(WaterFLow_PIN);
 
 PID::PIDParameters<double> parameters(Kp, Ki, Kd);
 PID::PIDController<double> pidController(parameters);
-void setup()
-{
+void setup() {
+
+  LoadSettings();
   Serial.begin(9600);
   MiMenu.SetUp();
 
@@ -50,6 +53,7 @@ void setup()
   setup_wifi();
   TdsSensor.begin();
   WaterTempSensor.begin();
+  FlowMeter1.setup();
   minute1 = rtc.getMinute();
   day_initial = rtc.getDayofYear();
 
@@ -60,14 +64,12 @@ void setup()
   // Configuro hora:
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
   struct tm timeinfo;
-  if (getLocalTime(&timeinfo))
-  {
+  if (getLocalTime(&timeinfo)) {
     rtc.setTimeStruct(timeinfo);
   }
   // Subscribing to  topics
   client.subscribe(Topics.Update_petition);
-  client.subscribe(Topics.Photo_petition);
-  client.subscribe(Topics.Water_pump_fdbk);
+  client.subscribe(Topics.Water_pump_remote);
 
   // Publish a initial value
   Publish(0, Topics.pH_Uppered);
@@ -78,17 +80,23 @@ void setup()
   pidController.Setpoint = Water_temp_Setpoint;
   pidController.TurnOn();
 }
-void loop()
-{
-  if (Reset == true)
+void loop() {
+  if (Reset == true) {
+    ResetSettings();
+    delay(1000);
     Reset_ESP();
+  }
+  if (Save_Settings = true) {
+    SaveSettings();
+    Save_Settings = false;
+  }
+
   MiMenu.MainMenu();
   //////////////////////////////////////////////////////////////////////
   minute2 = rtc.getMinute();
   day = rtc.getDayofYear();
 
-  if (Reset_Process == true)
-  {
+  if (Reset_Process == true) {
     day_initial = 0;
     Process_week = 0;
     Process_ON = false;
@@ -106,65 +114,61 @@ void loop()
   // pH entre 5,5 – 5,8
   if (Process_ON == false)
     day_initial = rtc.getDayofYear();
-  Serial.print("Day_initial: ");
-  Serial.println(day_initial);
+  //Serial.print("Day_initial: ");
+  //Serial.println(day_initial);
 
   // Depending on the week the the process is, we use some patameters or others.
-  if (Process_ON == true)
-  {
+  if (Process_ON == true) {
     Process_day = day - day_initial;
 
     if (Process_day % 7 == true)
       Process_week = Process_week + 1;
 
     // Modo automatico
-    switch (Process_week)
-    {
-    case 0:
-    case 1:
-      MAX_pH = 6;
-      MIN_pH = 5.5;
-      MAX_EC = 1100;
-      MIN_EC = 900;
-      break;
-    case 2:
-    case 3:
-      MAX_pH = 6;
-      MIN_pH = 5.5;
-      MAX_EC = 1700;
-      MIN_EC = 1400;
+    switch (Process_week) {
+      case 0:
+      case 1:
+        MAX_pH = 6;
+        MIN_pH = 5.5;
+        MAX_EC = 1100;
+        MIN_EC = 900;
+        break;
+      case 2:
+      case 3:
+        MAX_pH = 6;
+        MIN_pH = 5.5;
+        MAX_EC = 1700;
+        MIN_EC = 1400;
 
-      break;
-    case 4:
-    case 5:
-    case 6:
+        break;
+      case 4:
+      case 5:
+      case 6:
 
-      MAX_pH = 6;
-      MIN_pH = 5.5;
-      MAX_EC = 2000;
-      MIN_EC = 1800;
+        MAX_pH = 6;
+        MIN_pH = 5.5;
+        MAX_EC = 2000;
+        MIN_EC = 1800;
 
-      break;
-    case 7:
-    case 8:
+        break;
+      case 7:
+      case 8:
 
-      MAX_pH = 6;
-      MIN_pH = 5.5;
-      MAX_EC = 2500;
-      MIN_EC = 2300;
+        MAX_pH = 6;
+        MIN_pH = 5.5;
+        MAX_EC = 2500;
+        MIN_EC = 2300;
 
-      break;
-    default:
-      break;
+        break;
+      default:
+        break;
     };
 
     // PID Control
     PID_Control();
 
-    if (abs(minute2 - minute1) >= Cycle_time || Update_data_flag == true)
-    {
-      if (Update_data_flag == true)
-      {
+    if (abs(minute2 - minute1) >= Cycle_time || Update_data_flag == true) {
+      if (Update_data_flag == true) {
         Serial.println("Update solicitated");
         Update_data_flag = false;
       }
@@ -175,91 +179,76 @@ void loop()
       regulate_pH();
       regulate_Solution();
     }
-  }
-  else
-  {
+  } else {
     // Modo Manual
-
-    // Update all data
-    Update_all_data();
+    if (contador >= number_ticks) {
+      // Update all data
+      Update_all_data();
+      // PID Control
+      //PID_Control();
+      contador = 0;
+    }
     //  Accionamiento de la bomba
-    if (Update_Pump_state == true)
-    {
-      // WaterPump.Run(100);
-      Serial.println("Water pump ON");
-      Pump_timer = rtc.getMinute();
-      if ((Pump_timer - minute2) == 5)
-      {
-        Update_Pump_state = false;
-      }
+    if (Update_Pump_state == true) {
+      Electrovalvulas.OpenRelay(1);
+    } else {
+      Electrovalvulas.CloseRelay(1);
     }
     // Accionamiento pH Reductor
-    if (Remote_Decrease_pH == true)
-    {
+    if (Remote_Decrease_pH == true) {
       Decrease_pH();
       Publish(0, Topics.pH_Decreased);
       Remote_Decrease_pH = false;
     }
     // Accionamiento pH Incrementador
-    if (Remote_Increase_pH == true)
-    {
+    if (Remote_Increase_pH == true) {
       Increase_pH();
       Publish(0, Topics.pH_Uppered);
       Remote_Increase_pH = false;
     }
     // Accionamiento Increase EC
-    if (Remote_Increase_TDS == true)
-    {
+    if (Remote_Increase_TDS == true) {
       Remote_Increase_TDS = false;
       Increase_TDS();
       Publish(0, Topics.Nutrient_Uppered);
     }
     // Accionamiento Decrease EC
-    if (Remote_Water_UP == true)
-    {
+    if (Remote_Water_UP == true) {
       Remote_Water_UP = false;
       Decrease_TDS();
       Publish(0, Topics.Water_Uppered);
     }
-    // PID Control
-    PID_Control();
   }
+  contador++;
   client.loop();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-void regulate_pH()
-{
+void regulate_pH() {
 
   // pH>rango max
-  if (pH > MAX_pH)
-  {
+  if (pH > MAX_pH) {
     Decrease_pH();
   }
 
   // pH<rango minimo
-  if (pH < MIN_pH)
-  {
+  if (pH < MIN_pH) {
     Increase_pH();
   }
 }
-void regulate_Solution()
-{
+void regulate_Solution() {
   // TDS>rango max
-  if (ECValue > MAX_EC)
-  {
+  if (ECValue > MAX_EC) {
     Decrease_TDS();
   }
 
   // TDS<rango minimo
-  if (ECValue < MIN_EC)
-  {
+  if (ECValue < MIN_EC) {
     Increase_TDS();
   }
 }
 
-void Increase_pH()
-{
+void Increase_pH() {
   Electrovalvulas.OpenRelay(2);
   delay(Time_pH_Up);
   Electrovalvulas.CloseRelay(2);
@@ -268,8 +257,7 @@ void Increase_pH()
   Serial.println(pH);
   delay(2000);
 }
-void Decrease_pH()
-{
+void Decrease_pH() {
   Electrovalvulas.OpenRelay(3);
   delay(Time_pH_Decrease);
   Electrovalvulas.CloseRelay(3);
@@ -278,134 +266,100 @@ void Decrease_pH()
   Serial.println(pH);
   delay(2000);
 }
-void Increase_TDS()
-{
+void Increase_TDS() {
   Electrovalvulas.OpenRelay(5);
-  Electrovalvulas.OpenRelay(6);
+  Electrovalvulas.OpenRelay(4);
   delay(Time_Nutrient);
   Electrovalvulas.CloseRelay(5);
-  Electrovalvulas.CloseRelay(6);
+  Electrovalvulas.CloseRelay(4);
   Publish(1, Topics.Nutrient_Uppered);
   Serial.print("Current TDS value: ");
   Serial.println(ECValue);
   delay(2000);
 }
-void Decrease_TDS()
-{
-  Electrovalvulas.OpenRelay(4);
+void Decrease_TDS() {
+  Electrovalvulas.OpenRelay(7);
   delay(Time_Water);
-  Electrovalvulas.CloseRelay(4);
+  Electrovalvulas.CloseRelay(7);
   Publish(1, Topics.Water_Uppered);
   Serial.print("Current TDS value: ");
   Serial.println(ECValue);
   delay(2000);
 }
 
-void callback(char *topic, byte *payload, unsigned int length)
-{
+void callback(char *topic, byte *payload, unsigned int length) {
 
   String response = "";
-  for (int i = 0; i < length; i++)
-  {
+  for (int i = 0; i < length; i++) {
     response = ((char)payload[i]);
   }
-  if (String(topic) == "Hydroponic/Update_petition")
-  {
-    if (response == "1")
-    {
+  if (String(topic) == "Hydroponic/Update_petition") {
+    if (response == "1") {
       Update_data_flag = true;
-    }
-    else
-    {
+    } else {
       Update_data_flag = false;
     }
   }
-  if (String(topic) == "Hydroponic/Water_pump_fdbk")
-  {
-    if (response == "1")
-    {
+  if (String(topic) == "Hydroponic/Water_pump_remote") {
+    if (response == "1") {
       Update_Pump_state = true;
-    }
-    else
-    {
+    } else {
       Update_Pump_state = false;
     }
   }
 
-  if (String(topic) == "Hydroponic/pH_Up")
-  {
-    if (response == "1")
-    {
+  if (String(topic) == "Hydroponic/pH_Up") {
+    if (response == "1") {
       Remote_Increase_pH = true;
-    }
-    else
-    {
+    } else {
       Remote_Increase_pH = false;
     }
   }
-  if (String(topic) == "Hydroponic/pH_Decrease")
-  {
-    if (response == "1")
-    {
+  if (String(topic) == "Hydroponic/pH_Decrease") {
+    if (response == "1") {
       Remote_Decrease_pH = true;
-    }
-    else
-    {
+    } else {
       Remote_Decrease_pH = false;
     }
   }
 
-  if (String(topic) == "Hydroponic/Nutrient_Up")
-  {
-    if (response == "1")
-    {
+  if (String(topic) == "Hydroponic/Nutrient_Up") {
+    if (response == "1") {
       Remote_Increase_TDS = true;
-    }
-    else
-    {
+    } else {
       Remote_Increase_TDS = false;
     }
   }
 
-  if (String(topic) == "Hydroponic/Water_Up")
-  {
-    if (response == "1")
-    {
+  if (String(topic) == "Hydroponic/Water_Up") {
+    if (response == "1") {
       Remote_Water_UP = true;
       Decrease_TDS();
       Publish(0, Topics.Water_Uppered);
-    }
-    else
-    {
+    } else {
       Remote_Water_UP = false;
     }
   }
-  if (String(topic) == "Hydroponic/Heater_control")
-  {
+  if (String(topic) == "Hydroponic/Heater_control") {
     Response_string = response;
     // Setting the new Setpoint
     Water_temp_Setpoint = float(Response_string.toInt());
   }
 
   if (String(topic) == "Hydroponic/SetProcess_Configuration")
-    if (response == "1")
-    {
-    }
-    else
-    {
+    if (response == "1") {
+    } else {
     }
 }
 
-void setup_wifi()
-{
+void setup_wifi() {
 
   Serial.print("\nConnecting to ");
   Serial.println(ssid);
 
-  WiFi.begin(ssid, password); // Connect to network
+  WiFi.begin(ssid, password);  // Connect to network
 
-  while (WiFi.status() != WL_CONNECTED)
-  { // Wait for connection
+  while (WiFi.status() != WL_CONNECTED) {  // Wait for connection
     delay(500);
     Serial.print(".");
   }
@@ -417,25 +371,20 @@ void setup_wifi()
 
 // Reconnect to client
 
-void reconnect()
-{
+void reconnect() {
 
   client.setServer(IP, Port);
   client.setCallback(callback);
 
   // Loop until we're reconnected
-  while (!client.connected())
-  {
+  while (!client.connected()) {
 
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP32_2"))
-    {
+    if (client.connect("ESP32_2")) {
       Serial.println("connected");
       Serial.println('\n');
-    }
-    else
-    {
+    } else {
       Serial.println(" try again in 5 seconds");
       Serial.println(client.state());
       // Wait 5 seconds before retrying
@@ -444,8 +393,7 @@ void reconnect()
   }
 }
 
-void Publish(float message, const char *topic)
-{
+void Publish(float message, const char *topic) {
 
   char message_to_upload[7];
 
@@ -454,8 +402,7 @@ void Publish(float message, const char *topic)
   client.publish(topic, message_to_upload);
 }
 
-void Update_all_data()
-{
+void Update_all_data() {
   // Checking regulator tanks
   Low_Nutrient_Tank_1 = digitalRead(Nutrient1_Elevator_PIN);
   Low_Nutrient_Tank_2 = digitalRead(Nutrient2_Elevator_PIN);
@@ -469,10 +416,13 @@ void Update_all_data()
   // 1cm -> 1%  -> 10L  aprox
   // 10cm -> 10% -> 100L aprox
 
+  //Flow_Meter
+
+  Water_flow = FlowMeter1.Measure();
+
   // Water Temperature
   WaterTempSensor.requestTemperatures();
   Water_temperature = WaterTempSensor.getTempCByIndex(0);
-  delay(50);
 
   // EC Value
   TdsSensor.setTemperature(Water_temperature);
@@ -482,7 +432,6 @@ void Update_all_data()
 
   // pH Value
   pH = TdsSensor.getpH();
-  delay(50);
 
   // Weather Condition
   humidity = dht.readHumidity();
@@ -504,11 +453,47 @@ void Update_all_data()
   Serial.println(pH, 2);
   Serial.print("Tank level:");
   Serial.println(Tank_level, 0);
+  Serial.print("Flow rate: ");
+  Serial.print(Water_flow,0);
+  Serial.println("L/min");
+
+  //Publish data. In case with are having a measurement out of range it will be printed -1
+  if (pH >= 0 && pH <= 14) {
+    Publish(pH, Topics.pH);
+  } else {
+    Publish(-1, Topics.pH);
+  }
+  if (Tank_level >= 0 && Tank_level <= 100) {
+    Publish(Tank_level, Topics.Tank_level);
+  } else {
+    Publish(-1, Topics.Tank_level);
+  }
+  if (ECValue >= 0) {
+    Publish(ECValue, Topics.TDS);
+  } else {
+    Publish(-1, Topics.TDS);
+  }
+  Publish(Water_temperature, Topics.Water_temperature);
+  if (humidity >= 0 && humidity <= 100) {
+    Publish(humidity, Topics.Humidity);
+  } else {
+    Publish(-1, Topics.Humidity);
+  }
+  if (Heater > 0) {
+    Publish(1, Topics.Heater);
+  } else {
+    Publish(0, Topics.Heater);
+  }
+  if (Water_flow >= 0) {
+    Publish(Water_flow, Topics.Water_Flow);
+  } else {
+    Publish(-1, Topics.Water_Flow);
+  }
+  Publish(temperature, Topics.Weather_temperature);
   delay(1000);
 }
 
-void PID_Control()
-{
+void PID_Control() {
   pidController.Input = analogRead(Water_temperature);
   pidController.Update();
   ThermalResistor.Run(pidController.Output);
@@ -516,7 +501,6 @@ void PID_Control()
   Serial.println(pidController.Output);
 }
 
-void Reset_ESP()
-{
+void Reset_ESP() {
   ESP.restart();
 }

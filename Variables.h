@@ -1,28 +1,31 @@
-// Paramereters
+// Controllable Paramereters
 float MAX_pH = 6;
 float MIN_pH = 5.5;
 float MAX_EC = 2400;
 float MIN_EC = 1000;
-float Cycle_time = 10; // mins
+float Cycle_time = 10;  // mins
 float Water_temp_Setpoint = 20.0;
 float Kp = 4.0;
 float Ki = 0.2;
 float Kd = 1;
-float Time_pump_works = 5;      // mins
-int Time_Nutrient = 10000;    // ms
-int Time_pH_Decrease = 10000; // ms
-int Time_pH_Up = 10000;       // ms
-int Time_Water = 5000;        // ms
-#define Height_tank 100;
+float Time_pump_works = 5;     // mins
+int Time_Nutrient = 10000;     // ms
+int Time_pH_Decrease = 10000;  // ms
+int Time_pH_Up = 10000;        // ms
+int Time_Water = 5000;         // ms
+
+// Non-controllable parameters
+#define Height_tank 100
+#define number_ticks 1
 
 // PINS
 #define DHTPIN 15
 #define DHTTYPE DHT11
 #define WaterTempPin 23
-#define WaterFLowFDBK 17      // Analog
+#define WaterFLow_PIN 4
 #define Trigger_PIN 19
 #define Echo_PIN 18
-#define MAX_DISTANCE 200 // Maximum distance (in cm) to ping.
+#define MAX_DISTANCE 200  // Maximum distance (in cm) to ping.
 #define pH_Reductor_PIN 39
 #define pH_Elevator_PIN 36
 #define Nutrient1_Elevator_PIN 35
@@ -48,7 +51,7 @@ struct
   const char *pH_reductor_tank_level = "Hydroponic/pH_reductor_tank_level";
   const char *Water_pump = "Hydroponic/Water_pump";
   const char *Heater = "Hydroponic/Heater";
-  const char *Water_pump_fdbk = "Hydroponic/Water_pump_fdbk";
+  const char *Water_pump_remote = "Hydroponic/Water_pump_remote";
   const char *Photo_petition = "Hydroponic/Photo_petition";
   const char *Update_petition = "Hydroponic/Update_petition";
   const char *Nutrient_Up = "Hydroponic/Nutrient_Up";
@@ -75,14 +78,15 @@ float Water_temperature = 20;
 float pH = 5.5;
 float humidity = 60;
 float Water_flow = 0;
-bool Nutrient1_tank_level = false;
-bool Nutrient2_tank_level = false;
-float Tank_level = 70;
-bool pH_Elevator_Level = false;
-bool pH_Reductor_Level = false;
 float Heater = 0;
 float ECValue = 0;
+float Tank_level = 70;
 
+// Control flags
+bool Nutrient1_tank_level = false;
+bool Nutrient2_tank_level = false;
+bool pH_Elevator_Level = false;
+bool pH_Reductor_Level = false;
 bool Update_Pump_state = false;
 bool Update_data_flag = false;
 bool Remote_Decrease_pH = false;
@@ -94,7 +98,9 @@ bool Low_Nutrient_Tank_2 = false;
 bool Low_pH_Elevator_Tank = false;
 bool Low_pH_Reductor_Tank = false;
 bool Reset = false;
+bool Save_Settings = false;
 
+// Variable for time processes
 int minute1 = 0;
 int minute2 = 0;
 int Pump_timer = 0;
@@ -106,16 +112,16 @@ bool Process_ON = false;
 bool Reset_Process = false;
 bool SetProcess_Configuration = false;
 bool Stop_Process = false;
-size_t contador =0;
-
+size_t contador = 0;
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 1 * 3600;
 const int daylightOffset_sec = 0;
 
+// Wifi settings
 const char *mqttpassword = "152436978";
 const int Port = 1883;
 const char *IP = "192.168.0.6";
-const char *mqttclient = "ESP32";        // Name of the device, must be unique
-const char *ssid = "vodafoneAAFAVK";       // name of the WiFi network
-const char *password = "KfPTnPFpTkgL6qPF"; // password of the WiFi network
+const char *mqttclient = "ESP32";           // Name of the device, must be unique
+const char *ssid = "vodafoneAAFAVK";        // name of the WiFi network
+const char *password = "KfPTnPFpTkgL6qPF";  // password of the WiFi network
 bool state = 0;

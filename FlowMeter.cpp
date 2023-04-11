@@ -51,17 +51,16 @@ float FlowMeter::Measure()
         totalMilliLitres += flowMilliLitres;
 
         // Print the flow rate for this second in litres / minute
-        Serial.print("Flow rate: ");
-        Serial.print(int(flowRate)); // Print the integer part of the variable
-        Serial.print("L/min");
-        Serial.print("\t"); // Print tab space
+        //Serial.print("Flow rate: ");
+        //Serial.print(int(flowRate)); // Print the integer part of the variable
+        //Serial.println("L/min");
 
         // Print the cumulative total of litres flowed since starting
-        Serial.print("Output Liquid Quantity: ");
-        Serial.print(totalMilliLitres);
-        Serial.print("mL / ");
-        Serial.print(totalMilliLitres / 1000);
-        Serial.println("L");
+        //Serial.print("Output Liquid Quantity: ");
+        //Serial.print(totalMilliLitres);
+        //Serial.print("mL / ");
+        //Serial.print(totalMilliLitres / 1000);
+        //Serial.println("L");
     }
 
     return flowRate;

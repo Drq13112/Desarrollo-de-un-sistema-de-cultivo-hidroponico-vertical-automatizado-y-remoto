@@ -56,17 +56,18 @@ void GravityTDS::update()
 {
 
   // TDS and EC
-  this->analogValueTDS = getAverage(1);
-  Serial.println("analogValueTDS:");
-  Serial.println(analogValueTDS);
-  this->ecValue = (133.42 * this->analogValueTDS * this->analogValueTDS * this->analogValueTDS - 255.86 * this->analogValueTDS * this->analogValueTDS + 857.39 * this->analogValueTDS) * this->kValue;
+  this->analogValueTDS = getAverage(2);
+  
+  //this->ecValue = (133.42 * this->analogValueTDS * this->analogValueTDS * this->analogValueTDS - 255.86 * this->analogValueTDS * this->analogValueTDS + 857.39 * this->analogValueTDS) * this->kValue;
+  this->ecValue = 1072.53*this->analogValueTDS + 429.012;
   this->ecValue25 = this->ecValue / (1.0 + 0.02 * (this->temperature - 25.0)); // temperature compensation
   this->tdsValue = ecValue25 * TdsFactor;
-  delay(50);
+  //Serial.print("analogValueTDS: ");
+  //Serial.println(ecValue25);
   // pH
-  this->analogValuepH = getAverage(0);
-  Serial.print("analogValuepH");
-  Serial.println(analogValuepH);
+  this->analogValuepH = getAverage(1);
+  //Serial.print("analogValuepH: ");
+  //Serial.println(analogValuepH);
   pHValue = Coef1 * analogValuepH + coef2;
 }
 float GravityTDS::getpH()
