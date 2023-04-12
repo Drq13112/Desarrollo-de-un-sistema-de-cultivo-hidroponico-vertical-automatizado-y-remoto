@@ -159,7 +159,7 @@ void AiEsp32RotaryEncoder::setup(void (*ISR_callback)(void), void (*ISR_button)(
 {
 	attachInterrupt(digitalPinToInterrupt(this->encoderAPin), ISR_callback, CHANGE);
 	attachInterrupt(digitalPinToInterrupt(this->encoderBPin), ISR_callback, CHANGE);
-	attachInterrupt(digitalPinToInterrupt(this->encoderButtonPin), ISR_button, RISING);;
+	attachInterrupt(digitalPinToInterrupt(this->encoderButtonPin), ISR_button, RISING);
 }
 
 void AiEsp32RotaryEncoder::setup(void (*ISR_callback)(void))

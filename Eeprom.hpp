@@ -50,15 +50,16 @@ void ResetSettings() {
   //Restaouring
 
   preferences.begin("Code", false);
+
   preferences.putFloat("MAX_EC", 2400);
-  preferences.getFloat("MIN_pH", 5.5);
-  preferences.getFloat("MAX_pH", 6);
-  preferences.getFloat("MIN_EC", 1000);
-  preferences.getFloat("Cycle_time", 10);
-  preferences.getFloat("Water_temp_Setpoint", 20);
-  preferences.getFloat("Kp", 4.0);
-  preferences.getFloat("Ki", 0.2);
-  preferences.getFloat("Kd", 1);
+  preferences.putFloat("MIN_pH", 5.5);
+  preferences.putFloat("MAX_pH", 5.8);
+  preferences.putFloat("MIN_EC", 1000);
+  preferences.putFloat("Cycle_time", 10);
+  preferences.putFloat("Water_temp_Setpoint", 20);
+  preferences.putFloat("Kp", 4.0);
+  preferences.putFloat("Ki", 0.2);
+  preferences.putFloat("Kd", 1);
 
   //
 

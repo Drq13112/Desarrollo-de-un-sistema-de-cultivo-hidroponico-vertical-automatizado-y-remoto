@@ -1,12 +1,12 @@
 #ifndef Menu_h
 #define Menu_h
-
 class Menu
 {
 public:
     Menu();
     void SetUp();
     void MainMenu();
+    void begin();
 
 private:
     int16_t leeEncoder();
