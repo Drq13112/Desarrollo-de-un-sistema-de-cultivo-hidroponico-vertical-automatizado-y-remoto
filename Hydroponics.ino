@@ -114,7 +114,6 @@ void setup()
 void loop()
 {
   MiMenu.MainMenu();
-  Serial.println(contador);
   if (Update_data_flag == true)
   {
     Update_data_flag = false;

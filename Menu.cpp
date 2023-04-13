@@ -65,7 +65,7 @@ String menu[] = {"OVERVIEW", "MANUAL", "AUTOMATIC", "SETTINGS", ""};
 String menu_OVERVIEW[] = {"BACK                         ", "UPDATE DATA            ", "PH:", "EC:", "WTR TEMP:", "WTHR TEMP:", "HUMIDITY:", "                                                        "};
 String menu_MANUAL[] = {"BACK", "PUMP_ON", "pH UP", "pH DOWN", "NUTRIENT UP", "WATER UP", ""};
 String menu_AUTOMATIC[] = {"BACK", "START PROCESS", "STOP PROCESS", ""};
-String menu_SETTINGS[] = {"BACK                         ", "MAX_pH:", "MIN_pH:", "MAX_EC:", "MIN_EC:", "TEMP SP:", "CYCLE:", "Kp:", "Kd:", "Ti:", "SAVE SETTINGS            ", "RESET SETTINGS        ", "RESET                                           ", "                                            "};
+String menu_SETTINGS[] = {"BACK                         ", "MAX_pH:", "MIN_pH:", "MAX_EC:", "MIN_EC:", "TEMP SP:", "CYCLE:", "Kp:", "Kd:", "Ti:", "SAVE SETTINGS            ", "RESET SETTINGS        ", "RESET ESP32                                         ", "                                            "};
 int limites[] = {3, 5, 5, 2, 12};
 float Values1[] = {0, 0, pH, ECValue, Water_temperature, temperature, humidity, 0};
 float Values2[] = {0, MAX_pH, MAX_pH, MAX_EC, MIN_EC, Water_temp_Setpoint, Cycle_time, Kp, Kd, Ki, 0, 0, 0, 0};
@@ -207,8 +207,11 @@ void Menu::MainMenu()
   {
     rotaryEncoder.reset(low_limit);
   }
-  if (menu_pos <= upper_limit)
+  Serial.print("Menu_pos:");
+  Serial.println(menu_pos);
+  if (menu_pos <= upper_limit && menu_pos >= 0)
   {
+    
     switch (menus_pos)
     {
     case 0: // OVERVIEW
