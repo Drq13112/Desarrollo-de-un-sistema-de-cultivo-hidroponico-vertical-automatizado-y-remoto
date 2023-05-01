@@ -34,8 +34,13 @@ extern float pH;
 extern float humidity;
 extern float Tank_level;
 extern float ECValue;
+extern float Water_flow;
+extern float Tank_level;
 extern bool Update_Pump_state;
 extern bool Update_data_flag;
+extern float Low_Nutrient_Tank_General;
+extern float Low_pH_Elevator_Tank;
+extern float Low_pH_Reductor_Tank;
 extern void Increase_pH();
 extern void Decrease_pH();
 extern void Increase_TDS();
@@ -62,12 +67,12 @@ extern void Publish(float message, const char *topic);
 // Menu Layout
 
 String menu[] = {"OVERVIEW", "MANUAL", "AUTOMATIC", "SETTINGS", ""};
-String menu_OVERVIEW[] = {"BACK                         ", "UPDATE DATA            ", "PH:", "EC:", "WTR TEMP:", "WTHR TEMP:", "HUMIDITY:", "                                                        "};
+String menu_OVERVIEW[] = {"BACK                         ", "UPDATE DATA            ", "PH:", "EC:", "WTR TEMP:", "WTHR TEMP:", "HUMIDITY:", "TANK:", "PH UP:", "PH DOWN:", "EC UP:", "WATERFLOW:", "                                                        "};
 String menu_MANUAL[] = {"BACK", "PUMP_ON", "pH UP", "pH DOWN", "NUTRIENT UP", "WATER UP", ""};
 String menu_AUTOMATIC[] = {"BACK", "START PROCESS", "STOP PROCESS", ""};
 String menu_SETTINGS[] = {"BACK                         ", "MAX_pH:", "MIN_pH:", "MAX_EC:", "MIN_EC:", "TEMP SP:", "CYCLE:", "Kp:", "Kd:", "Ti:", "SAVE SETTINGS            ", "RESET SETTINGS        ", "RESET ESP32                                         ", "                                            "};
-int limites[] = {3, 5, 5, 2, 12};
-float Values1[] = {0, 0, pH, ECValue, Water_temperature, temperature, humidity, 0};
+int limites[] = {3, 10, 5, 2, 12};
+float Values1[] = {0, 0, pH, ECValue, Water_temperature, temperature, humidity, Tank_level, Low_pH_Elevator_Tank, Low_pH_Reductor_Tank, Low_Nutrient_Tank_General, Water_flow, 0};
 float Values2[] = {0, MAX_pH, MAX_pH, MAX_EC, MIN_EC, Water_temp_Setpoint, Cycle_time, Kp, Kd, Ki, 0, 0, 0, 0};
 
 // Creates  custom character for the menu display
@@ -207,11 +212,11 @@ void Menu::MainMenu()
   {
     rotaryEncoder.reset(low_limit);
   }
-  Serial.print("Menu_pos:");
-  Serial.println(menu_pos);
+  // Serial.print("Menu_pos:");
+  // Serial.println(menu_pos);
   if (menu_pos <= upper_limit && menu_pos >= 0)
   {
-    
+
     switch (menus_pos)
     {
     case 0: // OVERVIEW
@@ -290,16 +295,20 @@ void Menu::MainMenu()
           }
           break;
         case 2: // pH UP
-          Increase_pH();
+          if (Process_ON == false)
+            Increase_pH();
           break;
         case 3: // pH DOWN
-          Decrease_pH();
+          if (Process_ON == false)
+            Decrease_pH();
           break;
         case 4: // NUTRIENT UP
-          Increase_TDS();
+          if (Process_ON == false)
+            Increase_TDS();
           break;
         case 5: // WATER UP
-          Decrease_TDS();
+          if (Process_ON == false)
+            Decrease_TDS();
           break;
         };
       }
@@ -395,11 +404,17 @@ void Menu::MainMenu()
 }
 void Menu::UpdateData1()
 {
-  Values1[1] = pH;
-  Values1[2] = ECValue;
-  Values1[3] = Water_temperature;
-  Values1[4] = temperature;
-  Values1[5] = humidity;
+  Values1[2] = pH;
+  Values1[3] = ECValue;
+  Values1[4] = Water_temperature;
+  Values1[5] = temperature;
+  Values1[6] = humidity;
+  Values1[7] = Tank_level;
+  Values1[8] = Low_pH_Elevator_Tank;
+  Values1[9] = Low_pH_Reductor_Tank;
+  Values1[10] = Low_Nutrient_Tank_General;
+  Values1[11] = Water_flow;
+
 }
 void Menu::UpdateData2()
 {

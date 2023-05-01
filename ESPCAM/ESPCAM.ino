@@ -1,12 +1,25 @@
-
+#include "Certs.h"
 #include "esp_camera.h"
-#include <WiFi.h>
+#include <WiFiClientSecure.h>
 #include <PubSubClient.h>
 #include <Arduino.h>
+#include <ArduinoJson.h>
+#include "WiFi.h"
 
 // https://github.com/botabotlab/ESP32CAM-MQTT/blob/master/ESP32_Cam_MQTT/ESP32_Cam_MQTT.ino
 // https://randomnerdtutorials.com/esp32-cam-ov2640-camera-settings/
 
+
+//Functions
+/*
+void callback(char *topic, byte *payload, unsigned int length);
+void Publish(float message, const char *topic);
+void setup_wifi();
+void camera_init();
+void take_picture();
+void reconnect();
+*/
+//Definitions
 // CAMERA_MODEL_AI_THINKER
 #define PWDN_GPIO_NUM 32
 #define RESET_GPIO_NUM -1
@@ -26,22 +39,39 @@
 #define HREF_GPIO_NUM 23
 #define PCLK_GPIO_NUM 22
 
-const char* ssid = "vodafoneAAFAVK";
-const char* password = "KfPTnPFpTkgL6qPF";
-const char* mqtt_server = "192.168.0.6";
-const char* HostName = "ESP32CAM";
+//Settings
+const char* ssid = "HydroponicTFG2023";
+const char* password = "HydroponicTFG2023";
 const char* topic_UP = "Picture";
 const char* topic_PHOTO = "TakeAPicture";
 
-
-WiFiClient espClient;
+//Objects
+WiFiClientSecure espClient = WiFiClientSecure();
 PubSubClient client(espClient);
 
-void callback(String topic, byte* message, unsigned int length) {
+
+
+
+
+
+
+
+
+
+
+
+void callback(String topic, byte* payload, unsigned int length) {
+  /*
   String messageTemp;
   for (int i = 0; i < length; i++) {
     messageTemp += (char)message[i];
-  }
+  }*/
+  Serial.print("incoming: ");
+  Serial.println(topic);
+  StaticJsonDocument<200> doc;
+  deserializeJson(doc, payload);
+  const char* message = doc["message"];
+  Serial.println(message);
   if (topic == topic_PHOTO) {
     Serial.println("PING");
     take_picture();
@@ -102,7 +132,37 @@ void take_picture() {
     esp_camera_fb_return(fb);
   }
 }
+
+void reconnect() {
+
+  while (!client.connect(THINGNAME)) {
+    Serial.print(".");
+    delay(100);
+  }
+
+  if (!client.connected()) {
+    Serial.println("AWS IoT Timeout!");
+    return;
+  }
+  Serial.println("AWS IoT Connected!");
+  client.subscribe(topic_PHOTO);
+
+  /*
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    if (client.connect(HostName)) {
+      Serial.println("connected");
+      client.subscribe(topic_PHOTO);
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 5 seconds");
+      delay(5000);
+    }
+  }*/
+}
 void setup_wifi() {
+  /*
   delay(10);
   Serial.println();
   Serial.print("Connecting to ");
@@ -118,32 +178,52 @@ void setup_wifi() {
   Serial.println("");
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-}
-void reconnect() {
-  while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
-    if (client.connect(HostName)) {
-      Serial.println("connected");
-      client.subscribe(topic_PHOTO);
-    } else {
-      Serial.print("failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
-      delay(5000);
-    }
+  Serial.println(WiFi.localIP());*/
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  Serial.println("Connecting to Wi-Fi");
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
   }
+
+  // Configure WiFiClientSecure to use the AWS IoT device credentials
+  espClient.setCACert(AWS_CERT_CA);
+  espClient.setCertificate(AWS_CERT_CRT);
+  espClient.setPrivateKey(AWS_CERT_PRIVATE);
+
+  // Connect to the MQTT broker on the AWS endpoint we defined earlier
+  client.setServer(AWS_IOT_ENDPOINT, 8883);
+
+  Serial.println("Connecting to AWS IOT");
+
+  reconnect();
 }
+
+
+
+
+
+
+
+
+
 void setup() {
   Serial.begin(115200);
   camera_init();
   setup_wifi();
-  client.setServer(mqtt_server, 1883);
+  //client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
 }
+
 void loop() {
   if (!client.connected()) {
     reconnect();
   }
   client.loop();
 }
+
+

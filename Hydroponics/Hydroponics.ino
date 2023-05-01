@@ -3,7 +3,9 @@
 #include "Variables.h"
 #include "FlowMeter.h"
 #include "Eeprom.hpp"
+#include "Certs.h"
 
+// Functions
 void regulate_pH();
 void regulate_Solution();
 void Increase_pH();
@@ -17,13 +19,14 @@ void PID_Control();
 void Reset_ESP();
 void Reset_Settings();
 
+// Objects
 String Response_string = "";
 BTS7960 ThermalResistor;
 NewPing sonar(Trigger_PIN, Echo_PIN, MAX_DISTANCE);
 Relays Electrovalvulas;
 ESP32Time rtc;
-WiFiClient wclient;
-PubSubClient client(wclient);
+WiFiClientSecure espClient = WiFiClientSecure();
+PubSubClient client(espClient);
 DHT dht(DHTPIN, DHTTYPE);
 HardwareSerial SerialPort(2);
 Separador s;
@@ -32,9 +35,9 @@ OneWire oneWire(WaterTempPin);
 DallasTemperature WaterTempSensor(&oneWire);
 Menu MiMenu;
 FlowMeter FlowMeter1(WaterFLow_PIN);
-
 PID::PIDParameters<double> parameters(Kp, Ki, Kd);
 PID::PIDController<double> pidController(parameters);
+
 void setup()
 {
   Serial.begin(9600);
@@ -54,6 +57,12 @@ void setup()
   TdsSensor.begin();
   WaterTempSensor.begin();
   FlowMeter1.setup();
+
+  //
+  pinMode(Nutrient1_Elevator_PIN, INPUT);
+  pinMode(Nutrient2_Elevator_PIN, INPUT);
+  pinMode(pH_Elevator_PIN, INPUT);
+  pinMode(pH_Reductor_PIN, INPUT);
 
   // Time
   minute1 = rtc.getMinute();
@@ -144,7 +153,7 @@ void loop()
     }
 
     // PID Control
-    PID_Control();
+    //PID_Control();
 
     if (abs(minute2 - minute1) >= Cycle_time || Update_data_flag == true)
     {
@@ -253,17 +262,25 @@ void Decrease_TDS()
 
 void callback(char *topic, byte *payload, unsigned int length)
 {
-
+  /*
   String response = "";
-
   for (int i = 0; i < length; i++)
   {
     response += (char)payload[i];
   }
+  */
+  //Serial.print("incoming: ");
+  //Serial.println(topic);
+  StaticJsonDocument<200> doc;
+  deserializeJson(doc, payload);
+  const char* response = doc["message"];
+  //Serial.println(message);
+
+  /*
   Serial.print(topic);
   Serial.print("message:");
   Serial.println(response);
-
+*/
   if (String(topic) == Topics.Update_petition)
   {
     Update_all_data();
@@ -279,19 +296,19 @@ void callback(char *topic, byte *payload, unsigned int length)
       Update_Pump_state = false;
     }
   }
-  if (String(topic) == Topics.pH_Up)
+  if (String(topic) == Topics.pH_Up && Process_ON == false)
   {
     Increase_pH();
   }
-  if (String(topic) == Topics.pH_Decrease)
+  if (String(topic) == Topics.pH_Decrease && Process_ON == false)
   {
     Decrease_pH();
   }
-  if (String(topic) == Topics.Nutrient_Up)
+  if (String(topic) == Topics.Nutrient_Up && Process_ON == false)
   {
     Increase_TDS();
   }
-  if (String(topic) == Topics.Water_Up)
+  if (String(topic) == Topics.Water_Up && Process_ON == false)
   {
     Decrease_TDS();
   }
@@ -325,7 +342,6 @@ void callback(char *topic, byte *payload, unsigned int length)
     if (response == "1")
     {
       Process_ON = true;
-      // Serial.println("Process ON ");
     }
     else
     {
@@ -367,6 +383,7 @@ void callback(char *topic, byte *payload, unsigned int length)
 }
 void setup_wifi()
 {
+  /*
   Serial.println("Initialiting System");
   Serial.print("\nConnecting to ");
   Serial.println(ssid);
@@ -381,14 +398,35 @@ void setup_wifi()
   Serial.println();
   Serial.println("WiFi connected");
   Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+  Serial.println(WiFi.localIP());*/
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  Serial.println("Connecting to Wi-Fi");
+
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+
+  // Configure WiFiClientSecure to use the AWS IoT device credentials
+  espClient.setCACert(AWS_CERT_CA);
+  espClient.setCertificate(AWS_CERT_CRT);
+  espClient.setPrivateKey(AWS_CERT_PRIVATE);
+
+  // Connect to the MQTT broker on the AWS endpoint we defined earlier
+  client.setServer(AWS_IOT_ENDPOINT, 8883);
+
+  Serial.println("Connecting to AWS IOT");
 }
 
 // Reconnect to client
 
 void reconnect()
 {
-
+  /*
   client.setServer(IP, Port);
   client.setCallback(callback);
 
@@ -410,16 +448,29 @@ void reconnect()
       // Wait 5 seconds before retrying
       delay(5000);
     }
+  }*/
+  while (!client.connect(THINGNAME))
+  {
+    Serial.print(".");
+    delay(100);
   }
+
+  if (!client.connected())
+  {
+    Serial.println("AWS IoT Timeout!");
+    return;
+  }
+  Serial.println("AWS IoT Connected!");
 }
 
 void Publish(float message, const char *topic)
 {
-
-  Serial.print("TOPIC: ");
-  Serial.println(topic);
-  Serial.print("message: ");
-  Serial.println(message);
+  /*
+    Serial.print("TOPIC: ");
+    Serial.println(topic);
+    Serial.print("message: ");
+    Serial.println(message);
+    */
   char message_to_upload[7];
 
   // We pass from a float number into a const char
@@ -431,26 +482,48 @@ void Update_all_data()
 {
   // Checking regulator tanks
   Low_Nutrient_Tank_1 = digitalRead(Nutrient1_Elevator_PIN);
+  Serial.print("Low_Nutrient_Tank_1: ");
+  Serial.println(Low_Nutrient_Tank_1);
   Low_Nutrient_Tank_2 = digitalRead(Nutrient2_Elevator_PIN);
+  Serial.print("Low_Nutrient_Tank_2: ");
+  Serial.println(Low_Nutrient_Tank_2);
   Low_pH_Elevator_Tank = digitalRead(pH_Elevator_PIN);
+  Serial.print("Low_pH_Elevator_Tank:");
+  Serial.println(Low_pH_Elevator_Tank);
   Low_pH_Reductor_Tank = digitalRead(pH_Reductor_PIN);
+  Serial.print("Low_pH_Reductor_Tank:");
+  Serial.println(Low_pH_Reductor_Tank);
 
-  if (Low_Nutrient_Tank_1 == false || Low_Nutrient_Tank_2 == false)
+  if (Low_Nutrient_Tank_1 == 0.0 || Low_Nutrient_Tank_2 == 0.0)
   {
+    Low_Nutrient_Tank_General = 0.0;
     Publish(0, Topics.Low_Nutrient_Tank);
   }
+  else
+  {
+    Low_Nutrient_Tank_General = 1;
+    Publish(1, Topics.Low_Nutrient_Tank);
+  }
   delay(50);
-  if (Low_pH_Elevator_Tank == false)
+  if (Low_pH_Elevator_Tank == 0)
   {
     Publish(0, Topics.Low_pH_Elevator_Tank);
   }
+  else
+  {
+    Publish(1, Topics.Low_pH_Elevator_Tank);
+  }
   delay(50);
-  if (Low_pH_Reductor_Tank == false)
+  if (Low_pH_Reductor_Tank == 0)
   {
     Publish(0, Topics.Low_pH_Reductor_Tank);
   }
+  else
+  {
+    Publish(1, Topics.Low_pH_Reductor_Tank);
+  }
   // Nutrient Level tank
-  // Tank_level = Height_tank - (sonar.ping() / US_ROUNDTRIP_CM);
+  Tank_level = Height_tank - (sonar.ping() / US_ROUNDTRIP_CM);
 
   // 100cm -> 0%
   // 1cm -> 1%  -> 10L  aprox
@@ -548,7 +621,7 @@ void PID_Control()
   parameters.Set(Kp, Kd, Ki);
   pidController.Input = analogRead(Water_temperature);
   pidController.Update();
-  ThermalResistor.Run(pidController.Output);
+  ThermalResistor.Run>(pidController.Output);
   Serial.print("PID output:");
   Serial.println(pidController.Output);
 }
