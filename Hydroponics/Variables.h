@@ -3,26 +3,28 @@ float MAX_pH = 6;
 float MIN_pH = 5.8;
 float MAX_EC = 2400;
 float MIN_EC = 1000;
-float Cycle_time = 30; // mins
+float Cycle_time = 5;         // mins
 float Water_temp_Setpoint = 20.0;
 float Kp = 4.0;
 float Ki = 0.2;
 float Kd = 1;
-float Time_pump_works = 30;     // mins
-int Time_Nutrient = 2000;       // ms
-int Time_pH_Decrease = 2000;    // ms
-int Time_pH_Up = 2000;          // ms
-int Time_Water = 2000;          // ms
+float Time_Pump_OFF = 15;     //mins
+float Time_Pump_ON = 15;      // mins
+int Time_Nutrient = 10000;     // ms
+int Time_pH_Decrease = 10000;  // ms
+int Time_pH_Up = 10000;        // ms
+int Time_Water = 10000;        // ms
+
 
 // Non-controllable parameters
-#define Height_tank 100
+#define Height_tank 835        //mm
 #define number_ticks 10000
 
 // PINS
-#define DHTPIN 15
+#define DHTPIN 4
 #define DHTTYPE DHT11
 #define WaterTempPin 23
-#define WaterFLow_PIN 4
+#define WaterFLow_PIN 5
 #define Trigger_PIN 19
 #define Echo_PIN 18
 #define MAX_DISTANCE 200 // Maximum distance (in cm) to ping.
@@ -30,6 +32,8 @@ int Time_Water = 2000;          // ms
 #define pH_Elevator_PIN 36
 #define Nutrient1_Elevator_PIN 35
 #define Nutrient2_Elevator_PIN 34
+#define RXp0 3
+#define TXp0 1
 
 // I2C Communication
 #define SDAPIN 21
@@ -59,6 +63,9 @@ struct
   const char *Water_Up = "Hydroponic/Water_Up";
   const char *Save_Settings_Remote = "Hydroponic/Save_Settings_Remote";
   const char *Reset_Settings = "Hydroponic/Reset_Settings";
+  const char *Control_Action = "Hydroponic/Control_Action";
+  const char *Time_Pump_ON_Remote = "Hydroponic/Time_Pump_ON_Remote";
+  const char *Time_Pump_OFF_Remote = "Hydroponic/Time_Pump_OFF_Remote";
 
   // Slide bars local
   const char *MAX_EC = "Hydroponic/MAX_EC";
@@ -71,6 +78,9 @@ struct
   const char *Kp = "Hydroponic/Kp";
   const char *Kd = "Hydroponic/Kd";
   const char *Ki = "Hydroponic/Ki";
+  const char *Time_Pump_ON = "Hydroponic/Time_Pump_ON";
+  const char *Time_Pump_OFF = "Hydroponic/Time_Pump_OFF";
+
 
   // Slide bars remote
   const char *MAX_EC_Remote = "Hydroponic/MAX_EC_Remote";
@@ -109,6 +119,14 @@ float humidity = 60;
 float Water_flow = 0;
 float ECValue = 0;
 float Tank_level = 70;
+int Relay1 = 0;
+int Relay2 = 0;
+int Relay3 = 0;
+int Relay4 = 0;
+int Relay5 = 0;
+int Relay6 = 0;
+int Relay7 = 0;
+int Relay8 = 0;
 
 // Control flags
 bool Nutrient1_tank_level = false;
@@ -128,24 +146,11 @@ float Low_pH_Elevator_Tank = 1;
 float Low_pH_Reductor_Tank = 1;
 bool Reset = false;
 bool Save_Settings = false;
-
-// VariableS for time processes
-int minute1 = 0;
-int minute2 = 0;
-int Pump_timer = 0;
-int day = 0;
-int day_initial = 0;
-int Process_week = 0;
-int Process_day = 0;
 bool Process_ON = false;
-size_t contador = 0;
-const char *ntpServer = "pool.ntp.org";
-const long gmtOffset_sec = 1 * 3600;
-const int daylightOffset_sec = 0;
 
 // Wifi settings
 const int Port = 1883;
-const char *mqttclient = "ESP32";    // Name of the device, must be unique
-const char *ssid = "HydroponicTFG2023";      // name of the WiFi network
+const char *mqttclient = "ESP32";           // Name of the device, must be unique
+const char *ssid = "HydroponicTFG2023";     // name of the WiFi network
 const char *password = "HydroponicTFG2023"; // password of the WiFi network
 bool state = 0;

@@ -16,6 +16,9 @@ extern float Water_temp_Setpoint;
 extern float Kp;
 extern float Ki;
 extern float Kd;
+extern float Time_Pump_OFF;     //mins
+extern float Time_Pump_ON;
+extern bool Process_ON;
 
 void SaveSettings() {
   preferences.begin("Code", false);
@@ -28,6 +31,9 @@ void SaveSettings() {
   preferences.putFloat("Kp", Kp);
   preferences.putFloat("Ki", Ki);
   preferences.putFloat("Kd", Kd);
+  preferences.putFloat("Time_Pump_OFF", Time_Pump_OFF);
+  preferences.putFloat("Time_Pump_ON", Time_Pump_ON);
+  preferences.putBool("Process_ON", Process_ON);
   preferences.end();
 }
 
@@ -42,6 +48,9 @@ void LoadSettings() {
   Kp = preferences.getFloat("Kp", Kp);
   Ki = preferences.getFloat("Ki", Ki);
   Kd = preferences.getFloat("Kd", Kd);
+  Time_Pump_OFF = preferences.getFloat("Time_Pump_OFF", Time_Pump_OFF);
+  Time_Pump_ON = preferences.getFloat("Time_Pump_ON", Time_Pump_ON);
+  Process_ON = preferences.getBool("Process_ON", Process_ON);
   preferences.end();
 }
 
@@ -60,6 +69,9 @@ void ResetSettings() {
   preferences.putFloat("Kp", 4.0);
   preferences.putFloat("Ki", 0.2);
   preferences.putFloat("Kd", 1);
+  preferences.putFloat("Time_Pump_OFF", 30);
+  preferences.putFloat("Time_Pump_ON", 30);
+  preferences.putBool("Process_ON", false);
 
   //
 
@@ -72,7 +84,9 @@ void ResetSettings() {
   Kp = preferences.getFloat("Kp", Kp);
   Ki = preferences.getFloat("Ki", Ki);
   Kd = preferences.getFloat("Kd", Kd);
-
+  Time_Pump_OFF = preferences.getFloat("Time_Pump_OFF", Time_Pump_OFF);
+  Time_Pump_ON = preferences.getFloat("Time_Pump_ON", Time_Pump_ON);
+  Process_ON = preferences.getBool("Process_ON", Process_ON);
   preferences.end();}
 
 

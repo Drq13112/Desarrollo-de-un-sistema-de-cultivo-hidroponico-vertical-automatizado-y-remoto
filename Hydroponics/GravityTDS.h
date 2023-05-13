@@ -39,8 +39,8 @@ private:
     float ecValue25; // after temperature compensation
     float tdsValue;
     float pHValue; 
-    float Coef1 = -6.573;
-    float coef2 = 27.01;
+    float Coef1 = -5.928;
+    float coef2 = 29.02;
     float buffer[10];
     float Voltage = 0.0;
     float Current = 0.0;

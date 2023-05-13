@@ -7,7 +7,7 @@
 #include <ArduinoJson.h>
 #include "WiFi.h"
 
-//Functions
+// Functions
 
 /*
 void callback(char *topic, byte *payload, unsigned int length);
@@ -16,27 +16,27 @@ void setup_wifi();
 void reconnect();
 
 */
-//Settings
-const char* ssid = "HydroponicTFG2023";
-const char* password = "HydroponicTFG2023";
+// Settings
+const char *ssid = "HydroponicTFG2023";
+const char *password = "HydroponicTFG2023";
 
-//Definitions
+// Definitions
 #define PinRelay 23
 
-//Variables
+// Variables
 float Voltage = 0;
 float Load_Current = 0;
 float Panel_Current = 0;
 float Load_Power = 0;
 float Panel_Power = 0;
 
-//Objects
+// Objects
 ADS1115_PARALLEL I2C_Module(0, 0, 1, 0);
 WiFiClientSecure espClient = WiFiClientSecure();
 PubSubClient client(espClient);
 
-
-void callback(String topic, byte* payload, unsigned int length) {
+void callback(String topic, byte *payload, unsigned int length)
+{
   /*
   String messageTemp;
   for (int i = 0; i < length; i++) {
@@ -46,18 +46,31 @@ void callback(String topic, byte* payload, unsigned int length) {
   Serial.println(topic);
   StaticJsonDocument<200> doc;
   deserializeJson(doc, payload);
-  const char* message = doc["message"];
+  const char *message = doc["message"];
   Serial.println(message);
 
-  if (String(topic) == "Hydroponic/Power") {
-    if (message == "1") {
+  if (String(topic) == "Hydroponic/Power_Remote")
+  {
+    if (message == "1")
+    {
       digitalWrite(PinRelay, HIGH);
-    } else {
+    }
+    else
+    {
       digitalWrite(PinRelay, LOW);
     }
   }
+  if (String(topic) == "Hydroponic/Reset_Pushed_Remote")
+  {
+    Reset_ESP();
+  }
+  if (String(topic) == "Hydroponic/Update_petition_power")
+  {
+    Update_Data();
+  }
 }
-void setup_wifi() {
+void setup_wifi()
+{
   /*
   delay(10);
   Serial.println();
@@ -81,7 +94,8 @@ void setup_wifi() {
 
   Serial.println("Connecting to Wi-Fi");
 
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(500);
     Serial.print(".");
   }
@@ -96,14 +110,17 @@ void setup_wifi() {
 
   Serial.println("Connecting to AWS IOT");
 }
-void reconnect() {
+void reconnect()
+{
 
-  while (!client.connect(THINGNAME)) {
+  while (!client.connect(THINGNAME))
+  {
     Serial.print(".");
     delay(100);
   }
 
-  if (!client.connected()) {
+  if (!client.connected())
+  {
     Serial.println("AWS IoT Timeout!");
     return;
   }
@@ -124,7 +141,8 @@ void reconnect() {
   }*/
 }
 
-void Publish(float message, const char* topic) {
+void Publish(float message, const char *topic)
+{
   /*
     Serial.print("TOPIC: ");
     Serial.println(topic);
@@ -137,35 +155,53 @@ void Publish(float message, const char* topic) {
   dtostrf(message, 6, 1, message_to_upload);
   client.publish(topic, message_to_upload);
 }
-
-void setup() {
-  Serial.begin(9600);
-  pinMode(PinRelay, OUTPUT);
-  I2C_Module.SetUp();
-  //setup_wifi();
-  //reconnect();
-  //client.setCallback(callback);
-  //client.setServer(mqtt_server, 1883);
+void Reset_ESP()
+{
+  ESP.restart();
 }
-void loop() {
+
+void Update_Data(){
   Voltage = I2C_Module.ReadVoltage(ADS1115_ADDRESS3, 0);
   Load_Current = I2C_Module.ReadVoltage(ADS1115_ADDRESS3, 1);
   Panel_Current = I2C_Module.ReadVoltage(ADS1115_ADDRESS3, 2);
-  Serial.print("Voltage: ");
-  Serial.println(Voltage);
-  Serial.print("Load current");
-  Serial.println(Load_Current);
-  Serial.print("Panel_Current:");
-  Serial.println(Panel_Current);
-  Voltage = 5.64 * (Voltage / 1000);
-  Load_Current = 6.92 * (Load_Current) - 2.110);
-  Panel_Current = -23 * (Panel_Current)
-   - 2.160);
+  // Serial.print("Load current");
+  // Serial.println(Load_Current);
+  // Serial.print("Panel_Current:");
+  // Serial.println(Panel_Current);
+  Voltage = 9.52 * (Voltage);
+  Load_Current = (Load_Current * 14.925) - 37.163;
+  if (Load_Current < 0)
+  {
+    Load_Current = 0;
+  }
+  Panel_Current = (Panel_Current * 14.925) - 37.163;
+  if (Panel_Current < 0)
+  {
+    Panel_Current = 0;
+  }
   Load_Power = Voltage * Load_Current;
   Panel_Power = Voltage * Panel_Power;
-  /*
-  Publish(Voltage,"Hydropionic/Voltage");
-  Publish(Load_Power,"Hydropionic/Load_Power");
-  Publish(Panel_Power,"Hydropionic/Panel_Power");*/
-  delay(10000);
+  // Serial.print("Voltage: ");
+  // Serial.println(Voltage);
+  // Serial.print("Load current");
+  // Serial.println(Load_Current);
+  // Serial.print("Panel_Current:");
+  // Serial.println(Panel_Current);
+  Publish(Voltage, "Hydroponic/Voltage");
+  Publish(Load_Power, "Hydroponic/Load_Power");
+  Publish(Panel_Power, "Hydroponic/Panel_Power");
+}
+
+void setup()
+{
+  Serial.begin(115200);
+  pinMode(PinRelay, OUTPUT);
+  I2C_Module.SetUp();
+  setup_wifi();
+  reconnect();
+  client.setCallback(callback);
+  // client.setServer(mqtt_server, 1883);
+}
+void loop()
+{
 }

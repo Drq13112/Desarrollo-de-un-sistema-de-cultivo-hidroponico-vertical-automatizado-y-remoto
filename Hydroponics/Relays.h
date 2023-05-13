@@ -10,7 +10,7 @@ private:
     // Variables:
 
     // ST_CP pin 12
-    const int SER_Pin = 14;
+    const int SER_Pin = 32;
     // SH_CP pin 11
     const int RCLK_Pin = 12;
     // DS pin 14
