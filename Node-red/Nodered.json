@@ -1,0 +1,5872 @@
+[
+    {
+        "id": "5bb853378958b21c",
+        "type": "tab",
+        "label": "Upload parameters",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "bdce61becdf9a1b1",
+        "type": "tab",
+        "label": "Control parameters",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1b3e90b2f9dd52d5",
+        "type": "tab",
+        "label": "Telegram ",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8f16c89e57f32f5a",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "60957a25134f75d1f80f04b2b6b5991e546d0857f8c0d41f8df5646512ffa51e-certificate.pem.crt",
+        "keyname": "60957a25134f75d1f80f04b2b6b5991e546d0857f8c0d41f8df5646512ffa51e-private.pem.key",
+        "caname": "AmazonRootCA1 (1).pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "f71c3225c65b706d",
+        "type": "mqtt-broker",
+        "name": "AWS",
+        "broker": "a3b9c3fdsvb9fo-ats.iot.eu-central-1.amazonaws.com",
+        "port": "8883",
+        "tls": "8f16c89e57f32f5a",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "94b1d1e676d2e1db",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "dark"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "menu",
+            "lockMenu": "false",
+            "allowTempTheme": "false",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "e06212c573b63dfd",
+        "type": "ui_tab",
+        "name": "OVERVIEW PC",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "5a44aa61b722a96b",
+        "type": "ui_tab",
+        "name": "STATS PC",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "cec4f690b4ec2ca0",
+        "type": "ui_tab",
+        "name": "STATS Smartphone",
+        "icon": "dashboard",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "810fd542e591f086",
+        "type": "ui_tab",
+        "name": "Remote control",
+        "icon": "dashboard",
+        "order": 6,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "72495bb20cbdebd3",
+        "type": "ui_tab",
+        "name": "Consumption",
+        "icon": "dashboard",
+        "order": 7,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c7eb00efaec834c3",
+        "type": "ui_group",
+        "name": "Parameters",
+        "tab": "e06212c573b63dfd",
+        "order": 1,
+        "disp": true,
+        "width": 25,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "258e13cc46e8ac80",
+        "type": "ui_group",
+        "name": "ESP32 CAM",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "41995a87aafb92d4",
+        "type": "ui_group",
+        "name": "Stats",
+        "tab": "5a44aa61b722a96b",
+        "order": 1,
+        "disp": true,
+        "width": "20",
+        "collapse": false
+    },
+    {
+        "id": "58d63b170ad640c4",
+        "type": "telegrambot-config",
+        "botname": "HydroponicsDavid_bot",
+        "usernames": "",
+        "chatIds": "-941871072",
+        "pollInterval": "300"
+    },
+    {
+        "id": "89d892c51fb1b7d6",
+        "type": "ui_group",
+        "name": "Consumption",
+        "tab": "72495bb20cbdebd3",
+        "order": 1,
+        "disp": true,
+        "width": 15,
+        "collapse": false
+    },
+    {
+        "id": "d861805021959ed2",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "258e13cc46e8ac80",
+        "order": 2,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "7a1b780161785deb",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 2,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "8ff4d3cae149c6ae",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 3,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "1f53492f23b6870d",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 4,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "52914bf7bb139385",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 6,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "cd0ab24d3f5d7eb0",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 7,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "c8ec30b0c553f93d",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 8,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "b7068cf94bb83765",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 10,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "a512b722e77cf389",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 11,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "851b6febdba23c1c",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 12,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "e2c52445545254e0",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 14,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "db067cf71788f4f4",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 15,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "7fe1814273956ace",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 16,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "bd0af7b4fe82930f",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 18,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "6d11ef79e03ba498",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 19,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "44a1fb605d8ae296",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "75631537e48d24f7",
+        "order": 20,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "0308f783476807b3",
+        "type": "ui_group",
+        "name": "Remote Control",
+        "tab": "810fd542e591f086",
+        "order": 3,
+        "disp": true,
+        "width": "22",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "af2c7c0d12d30da2",
+        "type": "ui_group",
+        "name": "Settings",
+        "tab": "21572ad988febb5c",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "a80e3858482898af",
+        "type": "ui_group",
+        "name": "Img",
+        "tab": "21572ad988febb5c",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "21572ad988febb5c",
+        "type": "ui_tab",
+        "name": "Cam",
+        "icon": "dashboard",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "4eba94e3f221a3cf",
+        "type": "ui_group",
+        "name": "STATS",
+        "tab": "cec4f690b4ec2ca0",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dd7f8134e015a1cb",
+        "type": "sqlitedb",
+        "db": "/home/ubuntu/temp/sqlite/sensors.db",
+        "mode": "RWC"
+    },
+    {
+        "id": "1c25415d.b8427f",
+        "type": "sqlitedb",
+        "db": "/home/ubuntu/temp/sqlite/nodered.db",
+        "mode": "RWC"
+    },
+    {
+        "id": "bd903d6.d9fc7c",
+        "type": "ui_group",
+        "name": "Report",
+        "tab": "1e3fe400.0baf5c",
+        "order": 2,
+        "disp": true,
+        "width": "18",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1e17cd0b.862863",
+        "type": "ui_group",
+        "name": "Selection",
+        "tab": "1e3fe400.0baf5c",
+        "order": 1,
+        "disp": true,
+        "width": "5"
+    },
+    {
+        "id": "156af96f.f8fd27",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "home",
+        "order": "1"
+    },
+    {
+        "id": "1e3fe400.0baf5c",
+        "type": "ui_tab",
+        "name": "Reports",
+        "icon": "dashboard",
+        "order": 9
+    },
+    {
+        "id": "7a0d3c321621ae65",
+        "type": "ui_group",
+        "name": "MiFlora",
+        "tab": "156af96f.f8fd27",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "a9446069d6c607a0",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "7bbc684a67687f41",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 24,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "f8966571d40d5206",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 26,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "02063450ebabaa60",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 27,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "5062da0425821ba7",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 30,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "3e00ffe3473a5bdc",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 31,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "93d0ff31259e08d7",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 34,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "aca759bff9a90f72",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 35,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "12793b4b1aeb0e9a",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 37,
+        "width": 12,
+        "height": 1
+    },
+    {
+        "id": "4ef5f67d04dff634",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 39,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "a688f7cd90a21731",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 41,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "74440e612265ea51",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 42,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "b6d46d4e04f8d250",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 43,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "458ec0f6fd645a72",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 44,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "5ac742f9315f33ea",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "0308f783476807b3",
+        "order": 45,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "080bb7b7ddc03819",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "bd903d6.d9fc7c",
+        "order": 2,
+        "width": 18,
+        "height": 1
+    },
+    {
+        "id": "644991b6ebbaa003",
+        "type": "ui_spacer",
+        "z": "5bb853378958b21c",
+        "name": "spacer",
+        "group": "bd903d6.d9fc7c",
+        "order": 3,
+        "width": 15,
+        "height": 1
+    },
+    {
+        "id": "c42ee354b203ad1a",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "group": "c7eb00efaec834c3",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "pH",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "14",
+        "colors": [
+            "#ff0000",
+            "#00e639",
+            "#ff0000"
+        ],
+        "seg1": "5.5",
+        "seg2": "5.8",
+        "x": 450,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "4b1008b9fe28e474",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "pH",
+        "topic": "Hydroponic/pH",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "c42ee354b203ad1a",
+                "9ed51e38afb03b59",
+                "ebb198461fedcc9b",
+                "503054f310933906"
+            ]
+        ]
+    },
+    {
+        "id": "b6fd4c96bb5c14ea",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "Weather Temperature",
+        "topic": "Hydroponic/Weather_temperature",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 600,
+        "wires": [
+            [
+                "902f5067c5e1fc1e",
+                "826b4b4bd020fb76",
+                "7802b4c62398dc75",
+                "6e2fa11cadd3b825"
+            ]
+        ]
+    },
+    {
+        "id": "28bd45b3e8fe293f",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "Humidity",
+        "topic": "Hydroponic/Humidity",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 700,
+        "wires": [
+            [
+                "5b908dc37f64b0ed",
+                "685c5de69dd867a6",
+                "b47377549f993c9a",
+                "2ccacf32ebde9693"
+            ]
+        ]
+    },
+    {
+        "id": "902f5067c5e1fc1e",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "Weather Temperature",
+        "group": "c7eb00efaec834c3",
+        "order": 10,
+        "width": 6,
+        "height": 4,
+        "gtype": "donut",
+        "title": "Weather Temperature",
+        "label": "ºC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "70",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 500,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "5b908dc37f64b0ed",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "Humidity",
+        "group": "c7eb00efaec834c3",
+        "order": 9,
+        "width": 6,
+        "height": 4,
+        "gtype": "donut",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 460,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "b16e269f3d707b01",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "Tank Level",
+        "topic": "Hydroponic/Tank_level",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 900,
+        "wires": [
+            [
+                "b24b57c06c60681e",
+                "a8af0f533cb9cb24",
+                "c4eed35a613080e2",
+                "73ebc1f13a2e7886",
+                "647e6574bfb132a3"
+            ]
+        ]
+    },
+    {
+        "id": "daebaed3b81c59cd",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "Nutrient Tank Level",
+        "topic": "Hydroponic/Low_Nutrient_Tank",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 1120,
+        "wires": [
+            [
+                "66d919023676f3f4",
+                "a37238081ad275a6"
+            ]
+        ]
+    },
+    {
+        "id": "18e1b9d9de6ee201",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "Water Flow",
+        "group": "c7eb00efaec834c3",
+        "order": 7,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Water Flow",
+        "label": "L/min",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 470,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "9ed51e38afb03b59",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "pH Record",
+        "group": "41995a87aafb92d4",
+        "order": 1,
+        "width": 20,
+        "height": 4,
+        "label": "pH Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "14",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 470,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "826b4b4bd020fb76",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Weather Temperature Record",
+        "group": "41995a87aafb92d4",
+        "order": 3,
+        "width": 20,
+        "height": 4,
+        "label": "Weather Temperature Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-10",
+        "ymax": "70",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 530,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "685c5de69dd867a6",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Humidity Record",
+        "group": "41995a87aafb92d4",
+        "order": 5,
+        "width": 20,
+        "height": 4,
+        "label": "Humidity Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 480,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b24b57c06c60681e",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Tank Level Record",
+        "group": "41995a87aafb92d4",
+        "order": 6,
+        "width": 20,
+        "height": 4,
+        "label": "Tank Level Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 490,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ee73c48f37a6adab",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "EC ",
+        "group": "c7eb00efaec834c3",
+        "order": 2,
+        "width": 6,
+        "height": 4,
+        "gtype": "compass",
+        "title": "EC",
+        "label": "μS/cm",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "2400",
+        "colors": [
+            "#b30000",
+            "#00e639",
+            "#ca3838"
+        ],
+        "seg1": "6",
+        "seg2": "8",
+        "diff": false,
+        "className": "",
+        "x": 450,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "e252f4b5717cd548",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "EC",
+        "topic": "Hydroponic/TDS",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 360,
+        "wires": [
+            [
+                "ee73c48f37a6adab",
+                "bf3b3b87b3e345cd",
+                "f84270e80fba9499",
+                "88104c87d2cfe3ea"
+            ]
+        ]
+    },
+    {
+        "id": "bf3b3b87b3e345cd",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "EC Record (μS/cm)",
+        "group": "41995a87aafb92d4",
+        "order": 2,
+        "width": 20,
+        "height": 4,
+        "label": "EC Record (μS/cm)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "500",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 490,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cbb58edb1aaf368e",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "Water Temperature",
+        "topic": "Hydroponic/Water_temperature",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 480,
+        "wires": [
+            [
+                "9d37d47c79736d26",
+                "0672324f993861d5",
+                "246a7c06c14d9de2",
+                "35143b7e17a29960"
+            ]
+        ]
+    },
+    {
+        "id": "9d37d47c79736d26",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "Water Temperature",
+        "group": "c7eb00efaec834c3",
+        "order": 6,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Water Temperature",
+        "label": "ºC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "70",
+        "colors": [
+            "#fa0000",
+            "#00fa00",
+            "#fa0000"
+        ],
+        "seg1": "15",
+        "seg2": "25",
+        "x": 490,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "0672324f993861d5",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Water Temperature Record",
+        "group": "41995a87aafb92d4",
+        "order": 4,
+        "width": 20,
+        "height": 4,
+        "label": "Water Temperature Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-10",
+        "ymax": "70",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 520,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a8af0f533cb9cb24",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "Water Tank Level",
+        "group": "c7eb00efaec834c3",
+        "order": 4,
+        "width": 8,
+        "height": 9,
+        "gtype": "wave",
+        "title": "Water Tank Level",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 490,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "c846ed189cb04646",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "pH Elevator Tank Level",
+        "topic": "Hydroponic/Low_pH_Elevator_Tank",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 1220,
+        "wires": [
+            [
+                "835e4e329538500b",
+                "5b44b151d6e611d3"
+            ]
+        ]
+    },
+    {
+        "id": "ce8ae5f0777849b2",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "pH Reductor Tank Level",
+        "topic": "Hydroponic/Low_pH_Reductor_Tank",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 1320,
+        "wires": [
+            [
+                "6b1355a815a8f9ec",
+                "7941f8eccdc8b032"
+            ]
+        ]
+    },
+    {
+        "id": "4a70a0dcb62c8aad",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "Water Flow",
+        "topic": "Hydroponic/Water_flow",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 800,
+        "wires": [
+            [
+                "18e1b9d9de6ee201"
+            ]
+        ]
+    },
+    {
+        "id": "a3ce0fbebae3d882",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "Voltage",
+        "group": "89d892c51fb1b7d6",
+        "order": 3,
+        "width": 4,
+        "height": 3,
+        "gtype": "compass",
+        "title": "Voltage",
+        "label": "V",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "32",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 960,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "a077b641079b283f",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "Load Consumption",
+        "group": "89d892c51fb1b7d6",
+        "order": 1,
+        "width": 4,
+        "height": 3,
+        "gtype": "wave",
+        "title": "Load Consumption",
+        "label": "W",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1010,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "582939bb81f7c19c",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Voltage",
+        "group": "89d892c51fb1b7d6",
+        "order": 5,
+        "width": 15,
+        "height": 4,
+        "label": "Voltage ",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "20",
+        "ymax": "40",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 960,
+        "y": 1480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac4a73074b1aaa7d",
+        "type": "ui_gauge",
+        "z": "5bb853378958b21c",
+        "name": "Power Panel",
+        "group": "89d892c51fb1b7d6",
+        "order": 2,
+        "width": 4,
+        "height": 3,
+        "gtype": "wave",
+        "title": "Power Panel",
+        "label": "W",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 990,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "7f02042a68a18dae",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "GeneralConsumption",
+        "group": "89d892c51fb1b7d6",
+        "order": 6,
+        "width": 15,
+        "height": 4,
+        "label": "General Consumption",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": true,
+        "ymin": "0",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1020,
+        "y": 1600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eefd4d23100209f5",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "topic": "Picture",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 170,
+        "y": 1420,
+        "wires": [
+            [
+                "986d1fce668dcea0"
+            ]
+        ]
+    },
+    {
+        "id": "ef8e8cf728f3b0b2",
+        "type": "mqtt out",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "topic": "TakeAPicture",
+        "qos": "1",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 370,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "cea8ac1dbf098229",
+        "type": "inject",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 1480,
+        "wires": [
+            [
+                "ef8e8cf728f3b0b2"
+            ]
+        ]
+    },
+    {
+        "id": "986d1fce668dcea0",
+        "type": "base64",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 330,
+        "y": 1420,
+        "wires": [
+            [
+                "0d3c0c8c1e63dde8",
+                "ede6ef8885cb3c52"
+            ]
+        ]
+    },
+    {
+        "id": "0d3c0c8c1e63dde8",
+        "type": "ui_template",
+        "z": "5bb853378958b21c",
+        "group": "a80e3858482898af",
+        "name": "Image",
+        "order": 1,
+        "width": 10,
+        "height": 8,
+        "format": "<img height=\"100%\" src=\"data:image/jpeg;base64,{{msg.payload}}\" style=\"transform: rotate(90deg);\" />\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "x": 480,
+        "y": 1420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa55e78af75eb0ac",
+        "type": "ui_button",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "group": "af2c7c0d12d30da2",
+        "order": 15,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Capture",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 180,
+        "y": 1520,
+        "wires": [
+            [
+                "ef8e8cf728f3b0b2"
+            ]
+        ]
+    },
+    {
+        "id": "ec873dd5031ee1a3",
+        "type": "ui_button",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "group": "c7eb00efaec834c3",
+        "order": 13,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "Update",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 400,
+        "y": 1700,
+        "wires": [
+            [
+                "1ffa4cc1b27131a1"
+            ]
+        ]
+    },
+    {
+        "id": "1ffa4cc1b27131a1",
+        "type": "mqtt out",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "topic": "Hydroponic/Update_petition",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 680,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "66d919023676f3f4",
+        "type": "ui_led",
+        "z": "5bb853378958b21c",
+        "order": 3,
+        "group": "c7eb00efaec834c3",
+        "width": 5,
+        "height": 3,
+        "label": "Nutrient Tank Level",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "red",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "green",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Nutrient Tank Level",
+        "x": 510,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "835e4e329538500b",
+        "type": "ui_led",
+        "z": "5bb853378958b21c",
+        "order": 8,
+        "group": "c7eb00efaec834c3",
+        "width": 5,
+        "height": 3,
+        "label": "pH Elevator Tank Level",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "red",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "green",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "pH Elevator Tank Level",
+        "x": 529.1180419921875,
+        "y": 1219.111083984375,
+        "wires": []
+    },
+    {
+        "id": "6b1355a815a8f9ec",
+        "type": "ui_led",
+        "z": "5bb853378958b21c",
+        "order": 11,
+        "group": "c7eb00efaec834c3",
+        "width": 5,
+        "height": 3,
+        "label": "pH Reductor Tank Level",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "red",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "green",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "pH Reductor Tank Level",
+        "x": 530,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "9ffa2e6a8c341656",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Voltage Detection",
+        "func": "var valor = msg.payload;\nif(valor < 10 && valor != 0){\n   msg.payload = true; \n   return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 1520,
+        "wires": [
+            [
+                "42804442737f4eb6"
+            ]
+        ]
+    },
+    {
+        "id": "42804442737f4eb6",
+        "type": "telegrambot-notify",
+        "z": "5bb853378958b21c",
+        "name": "Chat",
+        "bot": "58d63b170ad640c4",
+        "chatId": "-941871072",
+        "message": "WARNING: Load voltage lower than 12V",
+        "parseMode": "",
+        "x": 1190,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "e4df7471ba164509",
+        "type": "telegrambot-notify",
+        "z": "5bb853378958b21c",
+        "name": "Chat",
+        "bot": "58d63b170ad640c4",
+        "chatId": "-941871072",
+        "message": "WARNING: Low level Nutrirent tanks",
+        "parseMode": "",
+        "x": 590,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "a37238081ad275a6",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "message Detection",
+        "func": "var valor = msg;\nif( Number(valor) === 0){\n   msg.payload = true; \n}\nreturn valor;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1060,
+        "wires": [
+            [
+                "e4df7471ba164509"
+            ]
+        ]
+    },
+    {
+        "id": "43483aee5d98e690",
+        "type": "telegrambot-notify",
+        "z": "5bb853378958b21c",
+        "name": "Chat",
+        "bot": "58d63b170ad640c4",
+        "chatId": "-941871072",
+        "message": "WARNING: Low levep pH elevator",
+        "parseMode": "",
+        "x": 590,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "5b44b151d6e611d3",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "message Detection",
+        "func": "var valor = msg;\nif( Number(valor) === 0){\n   msg.payload = true; \n}\nreturn valor;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1160,
+        "wires": [
+            [
+                "43483aee5d98e690"
+            ]
+        ]
+    },
+    {
+        "id": "d60b06e7f6a29c82",
+        "type": "telegrambot-notify",
+        "z": "5bb853378958b21c",
+        "name": "Chat",
+        "bot": "58d63b170ad640c4",
+        "chatId": "-941871072",
+        "message": "WARNING: Low level pH Reductor",
+        "parseMode": "",
+        "x": 590,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "7941f8eccdc8b032",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "message Detection",
+        "func": "var valor = msg;\nif( Number(valor) === 0){\n   msg.payload = true; \n}\nreturn valor;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1260,
+        "wires": [
+            [
+                "d60b06e7f6a29c82"
+            ]
+        ]
+    },
+    {
+        "id": "1428edd232a5fcc8",
+        "type": "telegrambot-notify",
+        "z": "5bb853378958b21c",
+        "name": "Chat",
+        "bot": "58d63b170ad640c4",
+        "chatId": "-941871072",
+        "message": "WARNING: Low level Water Tank",
+        "parseMode": "",
+        "x": 650,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "c4eed35a613080e2",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "message Detection",
+        "func": "var valor = msg;\nif( Number(valor) < 20){\n   msg.payload = true; \n}\nreturn valor;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 960,
+        "wires": [
+            [
+                "1428edd232a5fcc8"
+            ]
+        ]
+    },
+    {
+        "id": "ede6ef8885cb3c52",
+        "type": "telegrambot-notify",
+        "z": "5bb853378958b21c",
+        "name": "Picture",
+        "bot": "58d63b170ad640c4",
+        "chatId": "",
+        "message": "",
+        "parseMode": "",
+        "x": 480,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "ebb198461fedcc9b",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "pH Record",
+        "group": "4eba94e3f221a3cf",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "label": "pH Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "14",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 470,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f84270e80fba9499",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "EC Record",
+        "group": "4eba94e3f221a3cf",
+        "order": 2,
+        "width": 6,
+        "height": 4,
+        "label": "EC Record (μS/cm)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "auto",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "500",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 470,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "246a7c06c14d9de2",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Water Temperature Record",
+        "group": "4eba94e3f221a3cf",
+        "order": 4,
+        "width": 6,
+        "height": 4,
+        "label": "Water Temperature Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-10",
+        "ymax": "70",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 520,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7802b4c62398dc75",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Weather Temperature Record",
+        "group": "4eba94e3f221a3cf",
+        "order": 3,
+        "width": 6,
+        "height": 4,
+        "label": "Weather Temperature Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-10",
+        "ymax": "70",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 770,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b47377549f993c9a",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Humidity Record",
+        "group": "4eba94e3f221a3cf",
+        "order": 5,
+        "width": 6,
+        "height": 4,
+        "label": "Humidity Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 480,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "73ebc1f13a2e7886",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Tank Level Record",
+        "group": "4eba94e3f221a3cf",
+        "order": 6,
+        "width": 6,
+        "height": 4,
+        "label": "Tank Level Record",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 690,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "964e7150233ae415",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "topic": "Hydroponic/Voltage",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 710,
+        "y": 1460,
+        "wires": [
+            [
+                "a3ce0fbebae3d882",
+                "582939bb81f7c19c",
+                "72f3be59daddc2e3",
+                "9ffa2e6a8c341656"
+            ]
+        ]
+    },
+    {
+        "id": "0ea26dd6f703d9d9",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "topic": "Hydroponic/Load_Power",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 730,
+        "y": 1560,
+        "wires": [
+            [
+                "a077b641079b283f",
+                "7f02042a68a18dae",
+                "bb381469117dde42"
+            ]
+        ]
+    },
+    {
+        "id": "596a94b37418be4a",
+        "type": "mqtt in",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "topic": "Hydroponic/Panel_Power",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 730,
+        "y": 1600,
+        "wires": [
+            [
+                "7f02042a68a18dae",
+                "ac4a73074b1aaa7d",
+                "e0a2d9acf53128ef"
+            ]
+        ]
+    },
+    {
+        "id": "d0258606c34b74fd",
+        "type": "timer-node",
+        "z": "5bb853378958b21c",
+        "name": "Updating data",
+        "topic": "",
+        "timer": "300",
+        "payloadOn": "true",
+        "payloadOnType": "bool",
+        "payloadOff": "false",
+        "payloadOffType": "bool",
+        "x": 540,
+        "y": 1800,
+        "wires": [
+            [
+                "c0a1ecf5a8349f85"
+            ],
+            [
+                "826969b2ff0b88b2"
+            ]
+        ]
+    },
+    {
+        "id": "3bbba8407fc7ab9e",
+        "type": "inject",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 150,
+        "y": 1800,
+        "wires": [
+            [
+                "d0258606c34b74fd"
+            ]
+        ]
+    },
+    {
+        "id": "c0a1ecf5a8349f85",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Bool to number",
+        "func": "if (msg.payload === true)\n{\n    msg.payload =1;\n    return msg;\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 1780,
+        "wires": [
+            [
+                "1ffa4cc1b27131a1"
+            ]
+        ]
+    },
+    {
+        "id": "826969b2ff0b88b2",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Activation timer",
+        "func": "if (msg.payload === 1) {\n    msg.payload = true;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 1900,
+        "wires": [
+            [
+                "b5a00a4602075200"
+            ]
+        ]
+    },
+    {
+        "id": "b5a00a4602075200",
+        "type": "delay",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 1900,
+        "wires": [
+            [
+                "d0258606c34b74fd"
+            ]
+        ]
+    },
+    {
+        "id": "503054f310933906",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Save to DB",
+        "func": "var sql = \"\";\nvar d = new Date();\nvar epoch = d.getTime();\nvar outputs = [];\n       \n\nsql = \"INSERT INTO sensor_data(device,sensor,value,epoch) \" +\n        \"VALUES ('hydroponic','pH',\"+msg.payload +\",\"+epoch+\")\";        \noutputs.push({topic:sql});      \n    \n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});    \n      \nreturn [ outputs ];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "4d498f32284c78ff"
+            ]
+        ]
+    },
+    {
+        "id": "4d498f32284c78ff",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "Node Red DB",
+        "x": 934,
+        "y": 220,
+        "wires": [
+            [
+                "2411dedc547c59ac"
+            ]
+        ]
+    },
+    {
+        "id": "4f80f9924baffe67",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "SQL",
+        "func": "// This will handle any device and any attribute as long as it is in the DB\nvar Week  = 604800000 ; //7 Days\nvar Day   =  86400000 ; // 1 Days\nvar d = new Date();\nvar epoch = d.getTime();\nvar fromdate = epoch - Day;\nvar enddate = epoch;\nvar output = [];\n\nfor (var property in msg.payload) {\n    if (msg.payload.hasOwnProperty(property)) {\n        //output.push({ payload: property + \" has value \"+msg.payload[property] });\n        if (msg.payload[property]) {\n            var parts = property.split(\"/\");\n            if (parts[0]===\"period\") {\n                switch (parts[1]) {\n                    case \"today\":\n                        fromdate = epoch-Day;\n                        enddate = epoch;\n                        break;\n                    case \"yesterday\":\n                        fromdate = epoch-2*Day;\n                        enddate = epoch-Day;\n                        break;\n                    case \"week\":\n                        fromdate = epoch-Week;\n                        enddate = epoch;\n                        break;\n                }\n            } else {\n                output.push({ topic: \"SELECT * FROM sensor_data WHERE device='\"+parts[0]+\"' AND sensor='\"+parts[1]+\"' AND epoch >= \" + fromdate + \" AND epoch <= \" + enddate });\n            }\n        }\n    }\n}\n\noutput[output.length-1].complete=true;\n\nreturn [ output ];\n\n//msg.topic = \"SELECT * FROM sensor_data WHERE device='growatt' AND sensor='power' AND epoch >= \" + fromdate + \" AND epoch <= \" + epoch ;\n//return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1590,
+        "y": 720,
+        "wires": [
+            [
+                "7533e972e2c6f056"
+            ]
+        ]
+    },
+    {
+        "id": "7533e972e2c6f056",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "DB",
+        "x": 1736,
+        "y": 721,
+        "wires": [
+            [
+                "2d4cadc3b52cf3f8"
+            ]
+        ]
+    },
+    {
+        "id": "52ca583ee4c21e7e",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Prep",
+        "func": "var msg2 = [];\nvar series = [];\nvar output1 = []\n\n// this is the logic when there are multiple data sets are received\nfor (var i = 0; i < msg.payload.length; i++) {\n    var output = [];\n    for (var j = 0; j < msg.payload[i].length; j++) {\n        output.push({ \"x\": msg.payload[i][j].epoch, \"y\": msg.payload[i][j].value });\n    }\n    series.push( msg.payload[i][0].sensor);\n    output1.push(output);\n    msg2.push({ \"series\": series, \"data\": output1 });\n    //msg2.push({ key: \"test\", values : output});\n}\n\nmsg.payload = msg2;\n//msg.payload = [ { key: \"Hydroponic/pH\", values : output} ];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2067,
+        "y": 723,
+        "wires": [
+            [
+                "6860fca07fa1990d"
+            ]
+        ]
+    },
+    {
+        "id": "c2f9bdda6723dada",
+        "type": "inject",
+        "z": "5bb853378958b21c",
+        "name": "Reset chart",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1425,
+        "y": 843,
+        "wires": [
+            [
+                "4277b7a65a8994a9"
+            ]
+        ]
+    },
+    {
+        "id": "4277b7a65a8994a9",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Empty payload",
+        "func": "msg.payload = [];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1753,
+        "y": 842,
+        "wires": [
+            [
+                "6860fca07fa1990d"
+            ]
+        ]
+    },
+    {
+        "id": "410766992796a345",
+        "type": "ui_form",
+        "z": "5bb853378958b21c",
+        "name": "Data points",
+        "label": "",
+        "group": "1e17cd0b.862863",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Period: today",
+                "value": "period/today",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Period: yesterday",
+                "value": "period/yesterday",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Period: this week",
+                "value": "period/week",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "pH",
+                "value": "hydroponic/pH",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "EC",
+                "value": "hydroponic/EC",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Water Temperature",
+                "value": "hydroponic/Water_Temp",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Huimidity",
+                "value": "hydroponic/Humidity",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Weather Temperature",
+                "value": "hydroponic/Weather_Temp",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Battery Voltage",
+                "value": "hydroponic/Voltage",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Panel power",
+                "value": "hydroponic/Panel_Power",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Load Power",
+                "value": "hydroponic/Load_Power",
+                "type": "checkbox",
+                "required": false,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "period/today": false,
+            "period/yesterday": false,
+            "period/week": false,
+            "hydroponic/pH": false,
+            "hydroponic/EC": false,
+            "hydroponic/Water_Temp": false,
+            "hydroponic/Humidity": false,
+            "hydroponic/Weather_Temp": false,
+            "hydroponic/Voltage": false,
+            "hydroponic/Panel_Power": false,
+            "hydroponic/Load_Power": false
+        },
+        "payload": "",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "topic": "",
+        "topicType": "str",
+        "splitLayout": false,
+        "className": "",
+        "x": 1395,
+        "y": 667,
+        "wires": [
+            [
+                "4f80f9924baffe67"
+            ]
+        ]
+    },
+    {
+        "id": "2d4cadc3b52cf3f8",
+        "type": "join",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1878,
+        "y": 721,
+        "wires": [
+            [
+                "52ca583ee4c21e7e"
+            ]
+        ]
+    },
+    {
+        "id": "88104c87d2cfe3ea",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Save to DB",
+        "func": "var sql = \"\";\nvar d = new Date();\nvar epoch = d.getTime();\nvar outputs = [];\n       \n\nsql = \"INSERT INTO sensor_data(device,sensor,value,epoch) \" +\n        \"VALUES ('hydroponic','EC',\" + msg.payload + \",\" + epoch + \")\";\noutputs.push({ topic: sql });\n      \n    \n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});    \n      \nreturn [ outputs ];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 360,
+        "wires": [
+            [
+                "05dfc4bea6fc3742"
+            ]
+        ]
+    },
+    {
+        "id": "05dfc4bea6fc3742",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "Node Red DB",
+        "x": 914,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "35143b7e17a29960",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Save to DB",
+        "func": "var sql = \"\";\nvar d = new Date();\nvar epoch = d.getTime();\nvar outputs = [];\n       \nsql = \"INSERT INTO sensor_data(device,sensor,value,epoch) \" +\n        \"VALUES ('Hydroponic','Water Temperature',\"+msg.payload+\",\"+epoch+\")\";\noutputs.push({topic:sql});        \n\n    \n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});    \n      \nreturn [ outputs ];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 480,
+        "wires": [
+            [
+                "e58b2932fd9f89df"
+            ]
+        ]
+    },
+    {
+        "id": "e58b2932fd9f89df",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "Node Red DB",
+        "x": 974,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2ccacf32ebde9693",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Save to DB",
+        "func": "var sql = \"\";\nvar d = new Date();\nvar epoch = d.getTime();\nvar outputs = [];\n\nsql = \"INSERT INTO sensor_data(device,sensor,value,epoch) \" +\n        \"VALUES ('hydroponic','Humidity',\"+msg.payload +\",\"+epoch+\")\";        \noutputs.push({topic:sql});       \n    \n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});    \n      \nreturn [ outputs ];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 700,
+        "wires": [
+            [
+                "e99d2e3f10ee5580"
+            ]
+        ]
+    },
+    {
+        "id": "e99d2e3f10ee5580",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "Node Red DB",
+        "x": 974,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "647e6574bfb132a3",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Save to DB",
+        "func": "var sql = \"\";\nvar d = new Date();\nvar epoch = d.getTime();\nvar outputs = [];\n\nsql = \"INSERT INTO sensor_data(device,sensor,value,epoch) \" +\n        \"VALUES ('hydroponic','Tank_Level',\" + msg.payload + \",\" + epoch + \")\";\noutputs.push({ topic: sql });        \n    \n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});    \n      \nreturn [ outputs ];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 880,
+        "wires": [
+            [
+                "6d933d34718a23f3"
+            ]
+        ]
+    },
+    {
+        "id": "6d933d34718a23f3",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "Node Red DB",
+        "x": 974,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "72f3be59daddc2e3",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Save to DB",
+        "func": "var sql = \"\";\nvar d = new Date();\nvar epoch = d.getTime();\nvar outputs = [];\n       \nsql = \"INSERT INTO sensor_data(device,sensor,value,epoch) \" +\n        \"VALUES ('hydroponic','Voltage',\" + msg.payload + \",\" + epoch + \")\";\noutputs.push({ topic: sql });   \n\n    \n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});    \n      \nreturn [ outputs ];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 1380,
+        "wires": [
+            [
+                "d9e7c825d37ba2a2"
+            ]
+        ]
+    },
+    {
+        "id": "d9e7c825d37ba2a2",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "Node Red DB",
+        "x": 1194,
+        "y": 1380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bb381469117dde42",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Save to DB",
+        "func": "var sql = \"\";\nvar d = new Date();\nvar epoch = d.getTime();\nvar outputs = [];\n       \n        \"VALUES ('hydroponic','Load_Power',\" + msg.payload + \",\" + epoch + \")\";\noutputs.push({ topic: sql });\n       \n    \n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});    \n      \nreturn [ outputs ];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1390,
+        "y": 1600,
+        "wires": [
+            [
+                "4d0b644ddec306c3"
+            ]
+        ]
+    },
+    {
+        "id": "4d0b644ddec306c3",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "Node Red DB",
+        "x": 1634,
+        "y": 1600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e0a2d9acf53128ef",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Save to DB",
+        "func": "var sql = \"\";\nvar d = new Date();\nvar epoch = d.getTime();\nvar outputs = [];\n       \n\nsql = \"INSERT INTO sensor_data(device,sensor,value,epoch) \" +\n        \"VALUES ('hydroponic','Panel_Power',\" + msg.payload + \",\" + epoch + \")\";\noutputs.push({ topic: sql });\n\n\n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});    \n      \nreturn [ outputs ];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 1720,
+        "wires": [
+            [
+                "8d7612fab869ece6"
+            ]
+        ]
+    },
+    {
+        "id": "8d7612fab869ece6",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "Node Red DB",
+        "x": 1234,
+        "y": 1720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e2fa11cadd3b825",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Save to DB",
+        "func": "var sql = \"\";\nvar d = new Date();\nvar epoch = d.getTime();\nvar outputs = [];\n       \n\nsql = \"INSERT INTO sensor_data(device,sensor,value,epoch) \" +\n        \"VALUES ('hydroponic','Weather temperature',\" + msg.payload +\",\"+epoch+\")\";\noutputs.push({topic:sql});        \n\n// Update the status with current timestamp\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Last update: \"+dd + \".\" + mm + \".\" + yyyy + \" \" + hh + \":\" + mmm + \":\" + ss});    \n      \nreturn [ outputs ];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 560,
+        "wires": [
+            [
+                "cb1069e2e59554d8"
+            ]
+        ]
+    },
+    {
+        "id": "cb1069e2e59554d8",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "Node Red DB",
+        "x": 1014,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2411dedc547c59ac",
+        "type": "debug",
+        "z": "5bb853378958b21c",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c1fc8fef7ed5b839",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "fixed",
+        "sql": "SELECT * FROM sensor_data",
+        "name": "Node Red DB",
+        "x": 960,
+        "y": 100,
+        "wires": [
+            [
+                "a5cd30bb478462fd"
+            ]
+        ]
+    },
+    {
+        "id": "4883cbffb70ef0e0",
+        "type": "inject",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 780,
+        "y": 100,
+        "wires": [
+            [
+                "c1fc8fef7ed5b839"
+            ]
+        ]
+    },
+    {
+        "id": "a5cd30bb478462fd",
+        "type": "debug",
+        "z": "5bb853378958b21c",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "6860fca07fa1990d",
+        "type": "ui_chart",
+        "z": "5bb853378958b21c",
+        "name": "Chart",
+        "group": "bd903d6.d9fc7c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "604800",
+        "cutout": "",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 2390,
+        "y": 720,
+        "wires": [
+            [
+                "a4c1b5eea7ba0b0a"
+            ]
+        ]
+    },
+    {
+        "id": "a4c1b5eea7ba0b0a",
+        "type": "debug",
+        "z": "5bb853378958b21c",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2620,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "1c3860db4fc8a865",
+        "type": "inject",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2060,
+        "y": 520,
+        "wires": [
+            [
+                "0fc956ac7734cde8"
+            ]
+        ]
+    },
+    {
+        "id": "434905befb58377b",
+        "type": "inject",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 2110,
+        "y": 440,
+        "wires": [
+            [
+                "6860fca07fa1990d"
+            ]
+        ]
+    },
+    {
+        "id": "0fc956ac7734cde8",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "function 5",
+        "func": "msg.payload = [{\n    \"series\": [\"A\", \"B\", \"C\"],\n    \"data\": [[\n        { \"x\": 1504029632890, \"y\": 5 },\n        { \"x\": 1504029636001, \"y\": 4 },\n        { \"x\": 1504029638656, \"y\": 2 }]\n    ],\n    \"labels\": [\"\"]\n}];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2100,
+        "y": 620,
+        "wires": [
+            [
+                "6860fca07fa1990d"
+            ]
+        ]
+    },
+    {
+        "id": "408aa6425cadf971",
+        "type": "ui_button",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "group": "89d892c51fb1b7d6",
+        "order": 4,
+        "width": 3,
+        "height": 3,
+        "passthru": false,
+        "label": "Update",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 400,
+        "y": 1980,
+        "wires": [
+            [
+                "8884dd58bbf0e3d9"
+            ]
+        ]
+    },
+    {
+        "id": "8884dd58bbf0e3d9",
+        "type": "mqtt out",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "topic": "Hydroponic/Update_petition_power",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 700,
+        "y": 1980,
+        "wires": []
+    },
+    {
+        "id": "45fd961b19e80a84",
+        "type": "timer-node",
+        "z": "5bb853378958b21c",
+        "name": "Updating data",
+        "topic": "",
+        "timer": "300",
+        "payloadOn": "true",
+        "payloadOnType": "bool",
+        "payloadOff": "false",
+        "payloadOffType": "bool",
+        "x": 400,
+        "y": 2060,
+        "wires": [
+            [
+                "fd9c412606a539b7"
+            ],
+            [
+                "9a885ba915bb1d97"
+            ]
+        ]
+    },
+    {
+        "id": "e5e6d6a80be3e6c8",
+        "type": "inject",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 50,
+        "y": 2060,
+        "wires": [
+            [
+                "45fd961b19e80a84"
+            ]
+        ]
+    },
+    {
+        "id": "fd9c412606a539b7",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Bool to number",
+        "func": "if (msg.payload === true)\n{\n    msg.payload =1;\n    return msg;\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 2040,
+        "wires": [
+            [
+                "8884dd58bbf0e3d9"
+            ]
+        ]
+    },
+    {
+        "id": "9a885ba915bb1d97",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "Activation timer",
+        "func": "if (msg.payload === 1) {\n    msg.payload = true;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 2160,
+        "wires": [
+            [
+                "fe3e1fad66b0ea09"
+            ]
+        ]
+    },
+    {
+        "id": "fe3e1fad66b0ea09",
+        "type": "delay",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 800,
+        "y": 2160,
+        "wires": [
+            [
+                "45fd961b19e80a84"
+            ]
+        ]
+    },
+    {
+        "id": "743b988c135e8b9d",
+        "type": "ui_slider",
+        "z": "5bb853378958b21c",
+        "name": "Sampling Time",
+        "label": "Sampling Time Consumption",
+        "tooltip": "",
+        "group": "89d892c51fb1b7d6",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "60",
+        "step": 1,
+        "className": "",
+        "x": 80,
+        "y": 2140,
+        "wires": [
+            [
+                "75c164229dc4dbc0"
+            ]
+        ]
+    },
+    {
+        "id": "eebd2bf87e04668d",
+        "type": "debug",
+        "z": "5bb853378958b21c",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "75c164229dc4dbc0",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "mins to secs",
+        "func": "msg.payload *= 60;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 2140,
+        "wires": [
+            [
+                "45fd961b19e80a84",
+                "eebd2bf87e04668d"
+            ]
+        ]
+    },
+    {
+        "id": "d116f64e9232d123",
+        "type": "ui_slider",
+        "z": "5bb853378958b21c",
+        "name": "Sampling Time",
+        "label": "Sampling Time Data",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 33,
+        "width": 11,
+        "height": 2,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "60",
+        "step": 1,
+        "className": "",
+        "x": 140,
+        "y": 1860,
+        "wires": [
+            [
+                "b99315fb2ba7929c"
+            ]
+        ]
+    },
+    {
+        "id": "b99315fb2ba7929c",
+        "type": "function",
+        "z": "5bb853378958b21c",
+        "name": "mins to secs",
+        "func": "msg.payload *= 60;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1860,
+        "wires": [
+            [
+                "d0258606c34b74fd"
+            ]
+        ]
+    },
+    {
+        "id": "87067440daf14dc6",
+        "type": "inject",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "topic": "",
+        "payload": "5",
+        "payloadType": "num",
+        "x": 130,
+        "y": 1960,
+        "wires": [
+            [
+                "d116f64e9232d123",
+                "743b988c135e8b9d"
+            ]
+        ]
+    },
+    {
+        "id": "f398e8ed5ff53500",
+        "type": "sqlite",
+        "z": "5bb853378958b21c",
+        "mydb": "1c25415d.b8427f",
+        "sqlquery": "fixed",
+        "sql": "DELETE FROM sensor_data",
+        "name": "Node Red DB",
+        "x": 960,
+        "y": 160,
+        "wires": [
+            [
+                "462d86e9692ff96b"
+            ]
+        ]
+    },
+    {
+        "id": "9540c3afd8dca9d3",
+        "type": "inject",
+        "z": "5bb853378958b21c",
+        "name": "DELETE ",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 780,
+        "y": 160,
+        "wires": [
+            [
+                "f398e8ed5ff53500"
+            ]
+        ]
+    },
+    {
+        "id": "462d86e9692ff96b",
+        "type": "debug",
+        "z": "5bb853378958b21c",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "1dfd754c369ffb10",
+        "type": "ui_button",
+        "z": "5bb853378958b21c",
+        "name": "",
+        "group": "bd903d6.d9fc7c",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "DELETE",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "date",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 620,
+        "y": 120,
+        "wires": [
+            [
+                "f398e8ed5ff53500"
+            ]
+        ]
+    },
+    {
+        "id": "db5f536650f84e70",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Water_Pump_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 900,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ecf1ab369e05a3a8",
+        "type": "ui_switch",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "label": "Water pump",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 1,
+        "width": 4,
+        "height": 3,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "payload",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": true,
+        "className": "",
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "db5f536650f84e70",
+                "2adf3f5c2d77992c",
+                "c88166841efdfb74"
+            ]
+        ]
+    },
+    {
+        "id": "f14a073052f69cfc",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Water_Pump",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 160,
+        "wires": [
+            [
+                "ecf1ab369e05a3a8",
+                "602f965409534989"
+            ]
+        ]
+    },
+    {
+        "id": "5e4d6a18fbc07eb1",
+        "type": "ui_button",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "group": "0308f783476807b3",
+        "order": 7,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "Increase pH",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1550,
+        "y": 760,
+        "wires": [
+            [
+                "eaa5641b4a1ca92c",
+                "7685e6c7c8795f65"
+            ]
+        ]
+    },
+    {
+        "id": "7a9229d190be7198",
+        "type": "ui_button",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "group": "0308f783476807b3",
+        "order": 9,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "Decrease pH",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1550,
+        "y": 880,
+        "wires": [
+            [
+                "a0913cdb89e889b9",
+                "028b725b566e51f8"
+            ]
+        ]
+    },
+    {
+        "id": "39b260a41928d048",
+        "type": "ui_button",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "group": "0308f783476807b3",
+        "order": 12,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "Increase Nutrient",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1570,
+        "y": 820,
+        "wires": [
+            [
+                "e546ad904ee56568",
+                "9dcdd639944d32fa"
+            ]
+        ]
+    },
+    {
+        "id": "1e0084986ac307d7",
+        "type": "ui_button",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "group": "0308f783476807b3",
+        "order": 14,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "Decrease Nutrient ",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1570,
+        "y": 940,
+        "wires": [
+            [
+                "6041ff94d9dfeacf",
+                "2495ccd6750182e2"
+            ]
+        ]
+    },
+    {
+        "id": "eaa5641b4a1ca92c",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/pH_Up",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 1850,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "ddf1f6aa873c68d1",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Hydroponic/Water_Uppered",
+        "topic": "Hydroponic/Water_Uppered",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 2160,
+        "y": 940,
+        "wires": [
+            [
+                "6041ff94d9dfeacf"
+            ]
+        ]
+    },
+    {
+        "id": "9732d34e2a8c6cf8",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Hydroponic/pH_Decreased",
+        "topic": "Hydroponic/pH_Decreased",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 2150,
+        "y": 880,
+        "wires": [
+            [
+                "a0913cdb89e889b9"
+            ]
+        ]
+    },
+    {
+        "id": "ccc156472f32188d",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Hydroponic/pH_Uppered",
+        "topic": "Hydroponic/pH_Uppered",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 2150,
+        "y": 760,
+        "wires": [
+            [
+                "7685e6c7c8795f65"
+            ]
+        ]
+    },
+    {
+        "id": "2285ca770e1e8179",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Hydroponic/Nutrient_Uppered",
+        "topic": "Hydroponic/Nutrient_Uppered",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 2160,
+        "y": 820,
+        "wires": [
+            [
+                "e546ad904ee56568"
+            ]
+        ]
+    },
+    {
+        "id": "5864ec0801ae5fb9",
+        "type": "ui_switch",
+        "z": "bdce61becdf9a1b1",
+        "name": "Switch power",
+        "label": "Load Power",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 3,
+        "width": 4,
+        "height": 3,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "x": 530,
+        "y": 1120,
+        "wires": [
+            [
+                "908bb7ba67f74f3e",
+                "a656308ff2a379c0"
+            ]
+        ]
+    },
+    {
+        "id": "908bb7ba67f74f3e",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 4,
+        "group": "0308f783476807b3",
+        "width": 3,
+        "height": 3,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "red",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "green",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "",
+        "x": 750,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "2adf3f5c2d77992c",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 2,
+        "group": "0308f783476807b3",
+        "width": 3,
+        "height": 3,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Pump",
+        "x": 830,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7685e6c7c8795f65",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 8,
+        "group": "0308f783476807b3",
+        "width": 3,
+        "height": 3,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "grey",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "Orange",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Increase pH",
+        "x": 2430,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "e546ad904ee56568",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 13,
+        "group": "0308f783476807b3",
+        "width": 3,
+        "height": 3,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "grey",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "orange",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Increase Nutrient",
+        "x": 2450,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "a0913cdb89e889b9",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 10,
+        "group": "0308f783476807b3",
+        "width": 3,
+        "height": 3,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "grey",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "orange",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Decrease pH",
+        "x": 2430,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "6041ff94d9dfeacf",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 15,
+        "group": "0308f783476807b3",
+        "width": 3,
+        "height": 3,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "grey",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "orange",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Decrease Nutrient",
+        "x": 2450,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "3cad836a3cea0d49",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "EC MAX",
+        "label": "EC MAX (μs/cm)",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 5,
+        "width": 8,
+        "height": 2,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "2400",
+        "step": "10",
+        "x": 1840,
+        "y": 1020,
+        "wires": [
+            [
+                "a83983f5156dbf85"
+            ]
+        ]
+    },
+    {
+        "id": "6e5c111e04dc8821",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "EC MIN",
+        "label": "EC MIN (μs/cm)",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 6,
+        "width": 8,
+        "height": 2,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": 0,
+        "max": "2400",
+        "step": "10",
+        "x": 1840,
+        "y": 1080,
+        "wires": [
+            [
+                "7e6ce18b44c2608a"
+            ]
+        ]
+    },
+    {
+        "id": "af7b0ba6f22b58f9",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "pH MAX",
+        "label": "pH MAX",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 11,
+        "width": 8,
+        "height": 2,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": 0,
+        "max": "14",
+        "step": "0.1",
+        "x": 1840,
+        "y": 1140,
+        "wires": [
+            [
+                "a7b851531bd1a2f8"
+            ]
+        ]
+    },
+    {
+        "id": "cb573f673462195e",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "pH MIN",
+        "label": "pH MIN",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 16,
+        "width": 8,
+        "height": 2,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": 0,
+        "max": "14",
+        "step": "0.1",
+        "x": 1840,
+        "y": 1200,
+        "wires": [
+            [
+                "8c0a8b2b7d47fb3c"
+            ]
+        ]
+    },
+    {
+        "id": "5850b861d5d94d6b",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "Temperature SetPoint",
+        "label": "Temperature Setpoint (ºC)",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 17,
+        "width": 8,
+        "height": 2,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": "10",
+        "max": "25",
+        "step": 1,
+        "x": 1880,
+        "y": 1260,
+        "wires": [
+            [
+                "dc7fbe63b943828c"
+            ]
+        ]
+    },
+    {
+        "id": "a83983f5156dbf85",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/MAX_EC_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2390,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "7e6ce18b44c2608a",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/MIN_EC_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2390,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "a7b851531bd1a2f8",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/MAX_pH_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2390,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "8c0a8b2b7d47fb3c",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/MIN_pH_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2380,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "dc7fbe63b943828c",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Temp_SP_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2390,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "c718ad0fda525bea",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Process_ON_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 900,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4467d88bbbbfcef8",
+        "type": "ui_button",
+        "z": "bdce61becdf9a1b1",
+        "name": "Reset ESP32",
+        "group": "0308f783476807b3",
+        "order": 40,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "Reset ESP32",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "red",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1820,
+        "y": 1820,
+        "wires": [
+            [
+                "dc0a2b14bc978779"
+            ]
+        ]
+    },
+    {
+        "id": "dc0a2b14bc978779",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Reset_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2340,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "e3806fb9a2663484",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "MAX_EC",
+        "topic": "Hydroponic/MAX_EC",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1560,
+        "y": 1020,
+        "wires": [
+            [
+                "3cad836a3cea0d49"
+            ]
+        ]
+    },
+    {
+        "id": "1d66fd301904cbef",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "MIN_EC",
+        "topic": "Hydroponic/MIN_EC",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1560,
+        "y": 1080,
+        "wires": [
+            [
+                "6e5c111e04dc8821"
+            ]
+        ]
+    },
+    {
+        "id": "f567c0b3be4089b5",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "MAX_pH",
+        "topic": "Hydroponic/MAX_pH",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1560,
+        "y": 1140,
+        "wires": [
+            [
+                "af7b0ba6f22b58f9"
+            ]
+        ]
+    },
+    {
+        "id": "815d8191cd95461d",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "MIN_pH",
+        "topic": "Hydroponic/MIN_pH",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1560,
+        "y": 1200,
+        "wires": [
+            [
+                "cb573f673462195e"
+            ]
+        ]
+    },
+    {
+        "id": "d787abc0a4cdf8b7",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Temp_SP",
+        "topic": "Hydroponic/Temp_SP",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1560,
+        "y": 1260,
+        "wires": [
+            [
+                "5850b861d5d94d6b"
+            ]
+        ]
+    },
+    {
+        "id": "36044c8b95bf0e44",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Process_ON",
+        "topic": "Hydroponic/Process_ON",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "19125c5f49149734"
+            ]
+        ]
+    },
+    {
+        "id": "19125c5f49149734",
+        "type": "ui_switch",
+        "z": "bdce61becdf9a1b1",
+        "name": "Automatic mode",
+        "label": "Automatic mode",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 18,
+        "width": 4,
+        "height": 3,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "Automatic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 420,
+        "y": 260,
+        "wires": [
+            [
+                "dce5d439426e1bb4",
+                "c718ad0fda525bea",
+                "ecffa7730e62a1e0",
+                "ad1227708cbd866b",
+                "140bd8927b0fd491"
+            ]
+        ]
+    },
+    {
+        "id": "dce5d439426e1bb4",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 19,
+        "group": "0308f783476807b3",
+        "width": 3,
+        "height": 3,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "red",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "green",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Automatic mode",
+        "x": 900,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "25deb129c37160c1",
+        "type": "inject",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 530,
+        "y": 1040,
+        "wires": [
+            [
+                "908bb7ba67f74f3e"
+            ]
+        ]
+    },
+    {
+        "id": "de8a17be3c04f606",
+        "type": "inject",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 630,
+        "y": 80,
+        "wires": [
+            [
+                "2adf3f5c2d77992c"
+            ]
+        ]
+    },
+    {
+        "id": "81dd4e826dfe8f43",
+        "type": "ui_button",
+        "z": "bdce61becdf9a1b1",
+        "name": "Save Settings",
+        "group": "0308f783476807b3",
+        "order": 20,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "Save Settings",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "green",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1820,
+        "y": 1900,
+        "wires": [
+            [
+                "e6b5e7c4e990e162",
+                "2255341fa70680c8"
+            ]
+        ]
+    },
+    {
+        "id": "e6b5e7c4e990e162",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Save_Settings_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2360,
+        "y": 1900,
+        "wires": []
+    },
+    {
+        "id": "a3acc88f21a54eac",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 21,
+        "group": "0308f783476807b3",
+        "width": 3,
+        "height": 3,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "grey",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "green",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Save Settings",
+        "x": 2300,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "56fdb4bcd109bb38",
+        "type": "inject",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 2050,
+        "y": 2000,
+        "wires": [
+            [
+                "a3acc88f21a54eac"
+            ]
+        ]
+    },
+    {
+        "id": "2255341fa70680c8",
+        "type": "trigger",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "num",
+        "duration": "2",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 2040,
+        "y": 1940,
+        "wires": [
+            [
+                "a3acc88f21a54eac"
+            ]
+        ]
+    },
+    {
+        "id": "28607f9a47946b4d",
+        "type": "ui_button",
+        "z": "bdce61becdf9a1b1",
+        "name": "Reset Settings",
+        "group": "0308f783476807b3",
+        "order": 38,
+        "width": 4,
+        "height": 3,
+        "passthru": false,
+        "label": "Reset Settings",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "red",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1820,
+        "y": 2060,
+        "wires": [
+            [
+                "d19530afa047ad97"
+            ]
+        ]
+    },
+    {
+        "id": "d19530afa047ad97",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Reset_Settings",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2360,
+        "y": 2060,
+        "wires": []
+    },
+    {
+        "id": "bf9d4fd59f283421",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "Cycle Time ",
+        "label": "Cycle Time (min)",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 22,
+        "width": 8,
+        "height": 2,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": "1",
+        "max": "60",
+        "step": 1,
+        "x": 1850,
+        "y": 1320,
+        "wires": [
+            [
+                "a5a6049f32a99ca9",
+                "a8b6669bce106ea5"
+            ]
+        ]
+    },
+    {
+        "id": "a5a6049f32a99ca9",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Cycle_Time_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2400,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "fad51326a0a78f2d",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Cycle Time",
+        "topic": "Hydroponic/Cycle_Time",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1560,
+        "y": 1320,
+        "wires": [
+            [
+                "bf9d4fd59f283421"
+            ]
+        ]
+    },
+    {
+        "id": "44f569eaf9ebf88b",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "Kp",
+        "label": "Kp",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 28,
+        "width": 10,
+        "height": 2,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": "0",
+        "max": "100",
+        "step": "0.1",
+        "x": 1830,
+        "y": 1400,
+        "wires": [
+            [
+                "3735c037094dbe3c"
+            ]
+        ]
+    },
+    {
+        "id": "3735c037094dbe3c",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Kp_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2370,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "994d1d5f6c027d81",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Kp",
+        "topic": "Hydroponic/Kp",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1550,
+        "y": 1400,
+        "wires": [
+            [
+                "44f569eaf9ebf88b"
+            ]
+        ]
+    },
+    {
+        "id": "6188e88b261d66ea",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic//Kd_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2370,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "f877f6259431fbef",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Kd",
+        "topic": "Hydroponic/Kd",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1550,
+        "y": 1460,
+        "wires": [
+            [
+                "225bd5dab39c11e1"
+            ]
+        ]
+    },
+    {
+        "id": "8138b03292fbf4fe",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Ki_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2370,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "806941d64f078b56",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Ki",
+        "topic": "Hydroponic/Ki",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1550,
+        "y": 1520,
+        "wires": [
+            [
+                "9be69439477408ea"
+            ]
+        ]
+    },
+    {
+        "id": "225bd5dab39c11e1",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "Kd",
+        "label": "Kd",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 32,
+        "width": 10,
+        "height": 2,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": "0",
+        "max": "100",
+        "step": "0.1",
+        "x": 1830,
+        "y": 1460,
+        "wires": [
+            [
+                "6188e88b261d66ea"
+            ]
+        ]
+    },
+    {
+        "id": "9be69439477408ea",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "Ki",
+        "label": "Ki",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 36,
+        "width": 10,
+        "height": 2,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": "0",
+        "max": "100",
+        "step": "0.1",
+        "x": 1830,
+        "y": 1520,
+        "wires": [
+            [
+                "8138b03292fbf4fe"
+            ]
+        ]
+    },
+    {
+        "id": "368abcb8f9e03820",
+        "type": "ui_text",
+        "z": "bdce61becdf9a1b1",
+        "group": "0308f783476807b3",
+        "order": 25,
+        "width": 4,
+        "height": 1,
+        "name": "Heater",
+        "label": "Heater:",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 2030,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "a656308ff2a379c0",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Power_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 820,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "9dcdd639944d32fa",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Nutrient_Up",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 1870,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "028b725b566e51f8",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/pH_Decrease",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 1870,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "2495ccd6750182e2",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Water_Up",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 1860,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "150e73624c6a6447",
+        "type": "timer-node",
+        "z": "bdce61becdf9a1b1",
+        "name": "Pumps_Working",
+        "topic": "",
+        "timer": "20",
+        "payloadOn": "true",
+        "payloadOnType": "bool",
+        "payloadOff": "false",
+        "payloadOffType": "bool",
+        "x": 340,
+        "y": 480,
+        "wires": [
+            [
+                "e151526f980aceba",
+                "4a557aa4b0710a8a"
+            ],
+            [
+                "62cb373475938e55"
+            ]
+        ]
+    },
+    {
+        "id": "1d78437788f65591",
+        "type": "timer-node",
+        "z": "bdce61becdf9a1b1",
+        "name": "Pumps_Not_Working",
+        "topic": "",
+        "timer": "20",
+        "payloadOn": "true",
+        "payloadOnType": "bool",
+        "payloadOff": "false",
+        "payloadOffType": "bool",
+        "x": 1120,
+        "y": 460,
+        "wires": [
+            [],
+            [
+                "e2e36abe032f9bbb"
+            ]
+        ]
+    },
+    {
+        "id": "78e527cc7186cedd",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "mins to secs",
+        "func": "msg.payload *= 60;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2110,
+        "y": 600,
+        "wires": [
+            [
+                "150e73624c6a6447"
+            ]
+        ]
+    },
+    {
+        "id": "6eb9f08208aacc41",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "Time Pumps Working (min)",
+        "label": "Time Pumps Working (min)",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 23,
+        "width": 11,
+        "height": 2,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": "1",
+        "max": "60",
+        "step": 1,
+        "className": "",
+        "x": 1880,
+        "y": 640,
+        "wires": [
+            [
+                "10c4378e5d1399a9",
+                "78e527cc7186cedd"
+            ]
+        ]
+    },
+    {
+        "id": "d418b32cb5828e0b",
+        "type": "ui_slider",
+        "z": "bdce61becdf9a1b1",
+        "name": "Time Pumps NOT Working (min)",
+        "label": "Time Pumps NOT Working (min)",
+        "tooltip": "",
+        "group": "0308f783476807b3",
+        "order": 29,
+        "width": 11,
+        "height": 2,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "str",
+        "min": "1",
+        "max": "60",
+        "step": 1,
+        "className": "",
+        "x": 1890,
+        "y": 700,
+        "wires": [
+            [
+                "b58170e8aadbc363",
+                "3626c47d829b650d"
+            ]
+        ]
+    },
+    {
+        "id": "f8ef1f8d2192e217",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Time Pump ON",
+        "topic": "Hydroponic/Time_Pump_ON",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1560,
+        "y": 640,
+        "wires": [
+            [
+                "6eb9f08208aacc41"
+            ]
+        ]
+    },
+    {
+        "id": "83fbf28e49d3ccdc",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Time Pump OFF",
+        "topic": "Hydroponic/Time_Pump_OFF",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1560,
+        "y": 700,
+        "wires": [
+            [
+                "d418b32cb5828e0b"
+            ]
+        ]
+    },
+    {
+        "id": "10c4378e5d1399a9",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Time_Pump_ON_Remote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2410,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "b58170e8aadbc363",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Time_Pump_OFFRemote",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 2410,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "3626c47d829b650d",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "mins to secs",
+        "func": "msg.payload *= 60;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2130,
+        "y": 680,
+        "wires": [
+            [
+                "1d78437788f65591"
+            ]
+        ]
+    },
+    {
+        "id": "04ae0fb2a49c1a92",
+        "type": "inject",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 690,
+        "y": 340,
+        "wires": [
+            [
+                "dce5d439426e1bb4",
+                "140bd8927b0fd491"
+            ]
+        ]
+    },
+    {
+        "id": "17f0e4b778983344",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "only false ",
+        "func": "if (msg.payload === false) {\n    msg.payload = false;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "1d78437788f65591"
+            ]
+        ]
+    },
+    {
+        "id": "62cb373475938e55",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "Activation timer",
+        "func": "if (msg.payload === 1) {\n    msg.payload = true;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 480,
+        "wires": [
+            [
+                "1d78437788f65591"
+            ]
+        ]
+    },
+    {
+        "id": "ecffa7730e62a1e0",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "number to bool",
+        "func": "if (msg.payload === 0) {\n    msg.payload = false;\n} else if (msg.payload === 1) {\n    msg.payload = true;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 80,
+        "y": 460,
+        "wires": [
+            [
+                "150e73624c6a6447",
+                "17f0e4b778983344"
+            ]
+        ]
+    },
+    {
+        "id": "e2e36abe032f9bbb",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "Activation timer",
+        "func": "if (msg.payload === 1) {\n    msg.payload = true;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 660,
+        "wires": [
+            [
+                "150e73624c6a6447"
+            ]
+        ]
+    },
+    {
+        "id": "34c0b4123210992b",
+        "type": "debug",
+        "z": "bdce61becdf9a1b1",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e151526f980aceba",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 5,
+        "group": "c7eb00efaec834c3",
+        "width": 5,
+        "height": 3,
+        "label": "Pump State",
+        "labelPlacement": "left",
+        "labelAlignment": "center",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Pump State",
+        "x": 610,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "ad1227708cbd866b",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "number to bool",
+        "func": "if (msg.payload === 0) {\n    msg.payload = false;\n} else if (msg.payload === 1) {\n    msg.payload = true;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 720,
+        "wires": [
+            [
+                "569cef3659925d8e"
+            ]
+        ]
+    },
+    {
+        "id": "a8b6669bce106ea5",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "mins to secs",
+        "func": "msg.payload *= 60;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2030,
+        "y": 1300,
+        "wires": [
+            [
+                "569cef3659925d8e"
+            ]
+        ]
+    },
+    {
+        "id": "9154b8a73355cb50",
+        "type": "mqtt out",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "topic": "Hydroponic/Control_Action",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f71c3225c65b706d",
+        "x": 1180,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "569cef3659925d8e",
+        "type": "timer-node",
+        "z": "bdce61becdf9a1b1",
+        "name": "Cycle_Time",
+        "topic": "",
+        "timer": "20",
+        "payloadOn": "true",
+        "payloadOnType": "bool",
+        "payloadOff": "false",
+        "payloadOffType": "bool",
+        "x": 670,
+        "y": 720,
+        "wires": [
+            [
+                "2d08d55de684d5f5"
+            ],
+            [
+                "9875382b5bbe64b4"
+            ]
+        ]
+    },
+    {
+        "id": "4a557aa4b0710a8a",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "Bool to number",
+        "func": "var previousValue = false;\nvar currentValue = msg.payload;\n\n\nif (currentValue === previousValue) {\n\n} else {\n    previousValue = currentValue;\n    if (msg.payload === true) {\n        msg.payload = 1;\n\n    } else {\n        msg.payload = 0;\n    }\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 220,
+        "wires": [
+            [
+                "db5f536650f84e70",
+                "34c0b4123210992b"
+            ]
+        ]
+    },
+    {
+        "id": "2d08d55de684d5f5",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "Bool to number",
+        "func": "if (msg.payload === true)\n{\n    msg.payload =1;\n    return msg;\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 720,
+        "wires": [
+            [
+                "9154b8a73355cb50"
+            ]
+        ]
+    },
+    {
+        "id": "9875382b5bbe64b4",
+        "type": "function",
+        "z": "bdce61becdf9a1b1",
+        "name": "Activation timer",
+        "func": "if (msg.payload === 1) {\n    msg.payload = true;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 860,
+        "wires": [
+            [
+                "4b8f147ca2b6c470"
+            ]
+        ]
+    },
+    {
+        "id": "4b8f147ca2b6c470",
+        "type": "delay",
+        "z": "bdce61becdf9a1b1",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 600,
+        "y": 860,
+        "wires": [
+            [
+                "569cef3659925d8e"
+            ]
+        ]
+    },
+    {
+        "id": "140bd8927b0fd491",
+        "type": "ui_led",
+        "z": "bdce61becdf9a1b1",
+        "order": 12,
+        "group": "c7eb00efaec834c3",
+        "width": 4,
+        "height": 3,
+        "label": "Automatic mode",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Automatic mode",
+        "x": 900,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "3dd0a65fcdac52a0",
+        "type": "mqtt in",
+        "z": "bdce61becdf9a1b1",
+        "name": "Hydroponic/Switch_Power",
+        "topic": "Hydroponic/Power",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 1120,
+        "wires": [
+            [
+                "5864ec0801ae5fb9"
+            ]
+        ]
+    },
+    {
+        "id": "602f965409534989",
+        "type": "debug",
+        "z": "bdce61becdf9a1b1",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c88166841efdfb74",
+        "type": "debug",
+        "z": "bdce61becdf9a1b1",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "35a8ae14c5602a0f",
+        "type": "mqtt in",
+        "z": "1b3e90b2f9dd52d5",
+        "name": "Water_Uppered",
+        "topic": "Hydroponic/Water_Uppered",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 80,
+        "wires": [
+            [
+                "cf9d16290e6564b1",
+                "b7fa8cb04047d260"
+            ]
+        ]
+    },
+    {
+        "id": "4c7c316361358bd8",
+        "type": "mqtt in",
+        "z": "1b3e90b2f9dd52d5",
+        "name": "pH_Decreased",
+        "topic": "Hydroponic/pH_Decreased",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 140,
+        "wires": [
+            [
+                "cf9d16290e6564b1",
+                "2994e13953554d8a"
+            ]
+        ]
+    },
+    {
+        "id": "be4228f182326ca5",
+        "type": "mqtt in",
+        "z": "1b3e90b2f9dd52d5",
+        "name": "pH_Uppered",
+        "topic": "Hydroponic/pH_Uppered",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "cf9d16290e6564b1",
+                "2140f28f01361678"
+            ]
+        ]
+    },
+    {
+        "id": "0e0d45db860e94eb",
+        "type": "mqtt in",
+        "z": "1b3e90b2f9dd52d5",
+        "name": "Nutrient_Uppered",
+        "topic": "Hydroponics/Nutrient_Uppered",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "f71c3225c65b706d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 260,
+        "wires": [
+            [
+                "cf9d16290e6564b1",
+                "dc472d9d3524ba78"
+            ]
+        ]
+    },
+    {
+        "id": "cf9d16290e6564b1",
+        "type": "ui_chart",
+        "z": "1b3e90b2f9dd52d5",
+        "name": "Regulations Record",
+        "group": "41995a87aafb92d4",
+        "order": 7,
+        "width": 20,
+        "height": 4,
+        "label": "Regulation Record",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 690,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2994e13953554d8a",
+        "type": "telegrambot-notify",
+        "z": "1b3e90b2f9dd52d5",
+        "name": "Chat",
+        "bot": "58d63b170ad640c4",
+        "chatId": "-941871072",
+        "message": "CONTROL ACTION: pH decreased",
+        "parseMode": "",
+        "x": 650,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "2140f28f01361678",
+        "type": "telegrambot-notify",
+        "z": "1b3e90b2f9dd52d5",
+        "name": "Chat",
+        "bot": "58d63b170ad640c4",
+        "chatId": "-941871072",
+        "message": "CONTROL ACTION: pH increased",
+        "parseMode": "",
+        "x": 650,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b7fa8cb04047d260",
+        "type": "telegrambot-notify",
+        "z": "1b3e90b2f9dd52d5",
+        "name": "Chat",
+        "bot": "58d63b170ad640c4",
+        "chatId": "-941871072",
+        "message": "CONTROL ACTION: Water increased",
+        "parseMode": "",
+        "x": 650,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "dc472d9d3524ba78",
+        "type": "telegrambot-notify",
+        "z": "1b3e90b2f9dd52d5",
+        "name": "Chat",
+        "bot": "58d63b170ad640c4",
+        "chatId": "-941871072",
+        "message": "CONTROL ACTION: Nutrient solution increased",
+        "parseMode": "",
+        "x": 650,
+        "y": 320,
+        "wires": []
+    }
+]
