@@ -44,6 +44,9 @@ extern float Low_pH_Reductor_Tank;
 extern float Time_Pump_ON;
 extern float Time_Pump_OFF;
 extern bool Process_ON;
+extern float PID_OutPut;
+extern float Minimum_Level;
+extern bool Filling;
 
 extern void Increase_pH();
 extern void Decrease_pH();
@@ -55,6 +58,7 @@ extern void Reset_Settings();
 extern void Update_all_data();
 extern void Pump_on();
 extern void Pump_off();
+extern void Update_PID_Parameters();
 
 const char *Water_Pump_m = "Hydroponic/Water_Pump";
 const char *MAX_EC_m = "Hydroponic/MAX_EC";
@@ -69,18 +73,19 @@ const char *Kd_m = "Hydroponic/Kd";
 const char *Ki_m = "Hydroponic/Ki";
 const char *Time_Pump_ON_m = "Hydroponic/Time_Pump_ON";
 const char *Time_Pump_OFF_m = "Hydroponic/Time_Pump_OFF";
+const char *Minimum_Level_m = "Hydroponic/Minimum_Level";
 
 extern void Publish(float message, const char *topic);
 // Menu Layout
 
 String menu[] = {"OVERVIEW", "MANUAL", "AUTOMATIC", "SETTINGS", ""};
-String menu_OVERVIEW[] = {"BACK                         ", "UPDATE DATA            ", "PH:", "EC:", "WTR TEMP:", "WTHR TEMP:", "HUMIDITY:", "TANK:", "PH UP:", "PH DOWN:", "EC UP:", "WATERFLOW:", "                                                        "};
+String menu_OVERVIEW[] = {"BACK                         ", "UPDATE DATA            ", "PH:", "EC:", "WTR TEMP:", "WTHR TEMP:", "HUMIDITY:", "TANK:", "PH UP:", "PH DOWN:", "EC UP:", "WATERFLOW:","PID:",  "                                                        "};
 String menu_MANUAL[] = {"BACK", "PUMP_ON", "pH UP", "pH DOWN", "NUTRIENT UP", "WATER UP", ""};
 String menu_AUTOMATIC[] = {"BACK", "START PROCESS", "STOP PROCESS", ""};
-String menu_SETTINGS[] = {"BACK                         ", "MAX_pH:", "MIN_pH:", "MAX_EC:", "MIN_EC:", "TEMP SP:", "CYCLE:", "TIME_ON", "TIME_OFF", "Kp:", "Kd:", "Ti:", "SAVE SETTINGS            ", "RESET SETTINGS        ", "RESET ESP32                                         ", "                                            "};
-int limites[] = {3, 10, 5, 2, 14};
-float Values1[] = {0, 0, pH, ECValue, Water_temperature, temperature, humidity, Tank_level, Low_pH_Elevator_Tank, Low_pH_Reductor_Tank, Low_Nutrient_Tank_General, Water_flow, 0};
-float Values2[] = {0, MAX_pH, MAX_pH, MAX_EC, MIN_EC, Water_temp_Setpoint, Cycle_time, Time_Pump_ON, Time_Pump_OFF, Kp, Kd, Ki, 0, 0, 0, 0};
+String menu_SETTINGS[] = {"BACK                         ", "MAX_pH:", "MIN_pH:", "MAX_EC:", "MIN_EC:", "TEMP SP:", "CYCLE:", "TIME_ON", "TIME_OFF", "Kp:", "Kd:", "Ti:","Min_Level", "SAVE SETTINGS            ", "RESET SETTINGS        ", "RESET ESP32                                         ", "                                            "};
+int limites[] = {3, 11, 5, 2, 15};
+float Values1[] = {0, 0, pH, ECValue, Water_temperature, temperature, humidity, Tank_level, Low_pH_Elevator_Tank, Low_pH_Reductor_Tank, Low_Nutrient_Tank_General, Water_flow,PID_OutPut, 0};
+float Values2[] = {0, MAX_pH, MAX_pH, MAX_EC, MIN_EC, Water_temp_Setpoint, Cycle_time, Time_Pump_ON, Time_Pump_OFF, Kp, Kd, Ki, Minimum_Level, 0, 0, 0, 0};
 
 // Creates  custom character for the menu display
 byte menuCursor[8] = {
@@ -336,11 +341,16 @@ void Menu::MainMenu()
           break;
         case 1: // START PROCESS
           Process_ON = true;
+          Update_data_flag = true;
           Publish(1, Process_ON_m);
+          Serial.println("ON");
           break;
         case 2: // STOP PROCESS
           Process_ON = false;
           Publish(0, Process_ON_m);
+          Pump_off();
+          Filling = false;
+          Serial.println("OFF");
           break;
         };
       }
@@ -378,9 +388,10 @@ void Menu::MainMenu()
         case 5: // TEMP SETPOINT
           Water_temp_Setpoint = setValue(menu_SETTINGS[menu_pos], Water_temp_Setpoint, 0.1, 0, 30);
           Publish(Water_temp_Setpoint, Temp_SP_m);
+          Update_PID_Parameters();
           break;
         case 6: // CYCLE TIME
-          temp = setValue(menu_SETTINGS[menu_pos], Cycle_time, 1, 0, 60);
+          temp = setValue(menu_SETTINGS[menu_pos], Cycle_time, 1, 1, 60);
           Cycle_time = round(temp);
           Publish(Cycle_time, Cycle_Time_m);
           break;
@@ -391,28 +402,35 @@ void Menu::MainMenu()
           break;
         case 8: // Time Pump OFF
           temp = setValue(menu_SETTINGS[menu_pos], Time_Pump_OFF, 1, 0, 120);
-          Cycle_time = round(temp);
+          Time_Pump_OFF = round(temp);
           Publish(Time_Pump_OFF, Time_Pump_OFF_m);
           break;
         case 9: // Kp
           Kp = setValue(menu_SETTINGS[menu_pos], Kp, 0.1, 0, 100);
           Publish(Kp, Kp_m);
+          Update_PID_Parameters();
           break;
         case 10: // Kd
           Kd = setValue(menu_SETTINGS[menu_pos], Kd, 0.1, 0, 100);
           Publish(Kd, Kd_m);
+          Update_PID_Parameters();
           break;
-        case 11: // Ki
+        case 11: // Ki Minimum_Level
           Ki = setValue(menu_SETTINGS[menu_pos], Ki, 0.1, 0, 100);
           Publish(Ki, Ki_m);
+          Update_PID_Parameters();
           break;
-        case 12: // SAVE SETTINGS
+          case 12: // Ki Minimum_Level
+          Minimum_Level = setValue(menu_SETTINGS[menu_pos], Minimum_Level, 0.1, 0, 100);
+          Publish(Minimum_Level, Minimum_Level_m);
+          break;
+        case 13: // SAVE SETTINGS
           SaveSettings();
           break;
-        case 13: // RESET SETTINGS
+        case 14: // RESET SETTINGS
           Reset_Settings();
           break;
-        case 14: // FORMAT
+        case 15: // FORMAT
           Reset_ESP();
           break;
         };
@@ -433,6 +451,7 @@ void Menu::UpdateData1()
   Values1[9] = Low_pH_Reductor_Tank;
   Values1[10] = Low_Nutrient_Tank_General;
   Values1[11] = Water_flow;
+  Values1[12] = PID_OutPut;
 }
 void Menu::UpdateData2()
 {
@@ -447,4 +466,5 @@ void Menu::UpdateData2()
   Values2[9] = Kp;
   Values2[10] = Kd;
   Values2[11] = Ki;
+  Values2[12] = Minimum_Level;
 }

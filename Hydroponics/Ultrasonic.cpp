@@ -9,7 +9,7 @@ Ultrasonic::Ultrasonic(int TRIGPIN, int ECHOPIN)
 void Ultrasonic::SetUp()
 {
     // Set pinmodes for sensor connections
-    pinMode(ECHOPIN, INPUT);
+    pinMode(ECHOPIN, INPUT_PULLUP);
     pinMode(TRIGPIN, OUTPUT);
 }
 float Ultrasonic::getDistance()

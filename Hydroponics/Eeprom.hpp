@@ -19,6 +19,7 @@ extern float Kd;
 extern float Time_Pump_OFF;     //mins
 extern float Time_Pump_ON;
 extern bool Process_ON;
+extern float Minimum_Level;
 
 void SaveSettings() {
   preferences.begin("Code", false);
@@ -34,6 +35,7 @@ void SaveSettings() {
   preferences.putFloat("Time_Pump_OFF", Time_Pump_OFF);
   preferences.putFloat("Time_Pump_ON", Time_Pump_ON);
   preferences.putBool("Process_ON", Process_ON);
+  preferences.putFloat("Minimum_Level", Minimum_Level);
   preferences.end();
 }
 
@@ -51,6 +53,7 @@ void LoadSettings() {
   Time_Pump_OFF = preferences.getFloat("Time_Pump_OFF", Time_Pump_OFF);
   Time_Pump_ON = preferences.getFloat("Time_Pump_ON", Time_Pump_ON);
   Process_ON = preferences.getBool("Process_ON", Process_ON);
+  Minimum_Level = preferences.getFloat("Minimum_Level", Minimum_Level);
   preferences.end();
 }
 
@@ -72,7 +75,7 @@ void ResetSettings() {
   preferences.putFloat("Time_Pump_OFF", 30);
   preferences.putFloat("Time_Pump_ON", 30);
   preferences.putBool("Process_ON", false);
-
+  preferences.putFloat("Minimum_Level", 2.0);
   //
 
   MAX_EC = preferences.getFloat("MAX_EC", MAX_EC);
@@ -87,6 +90,7 @@ void ResetSettings() {
   Time_Pump_OFF = preferences.getFloat("Time_Pump_OFF", Time_Pump_OFF);
   Time_Pump_ON = preferences.getFloat("Time_Pump_ON", Time_Pump_ON);
   Process_ON = preferences.getBool("Process_ON", Process_ON);
+  Minimum_Level = preferences.getFloat("Minimum_Level", Minimum_Level);
   preferences.end();}
 
 

@@ -20,19 +20,27 @@ void Reset_ESP();
 void Reset_Settings();
 void Control_Action();
 void SendMessageToNano();
+void ReadMessageFromNano();
 void Pump_off();
 void Pump_on();
-
+void RequestTankData();
+void Fill_Tank();
+void Stop_Fill_Tank();
+void Update_PID_Parameters();
+//Local varaibles
+String message_from_arduino = "";
+size_t contador = 0;
+size_t contador_communication = 0;
 // Objects
 String Response_string = "";
 BTS7960 ThermalResistor;
 //NewPing sonar(Trigger_PIN, Echo_PIN, MAX_DISTANCE);
 Ultrasonic sonar(Trigger_PIN, Echo_PIN);
-Relays Electrovalvulas;
+//Relays Electrovalvulas;
 WiFiClientSecure espClient = WiFiClientSecure();
 PubSubClient client(espClient);
 DHT dht(DHTPIN, DHTTYPE);
-HardwareSerial SerialPort(0);
+HardwareSerial SerialPort(2);
 Separador s;
 GravityTDS TdsSensor;
 OneWire oneWire(WaterTempPin);
@@ -46,30 +54,25 @@ void setup() {
   Serial.begin(9600);
   SerialPort.begin(115200, SERIAL_8N1, RXp0, TXp0);
   MiMenu.begin();
+  ThermalResistor.SetUp(255);
+  ThermalResistor.Stop();
 
   // WIFI
   setup_wifi();
   reconnect();
   client.setCallback(callback);
 
-  //
   // LOAD SETTINGS
   LoadSettings();
 
   // Sensors and actuators
-  ThermalResistor.SetUp(255);
-  dht.begin();
   sonar.SetUp();
-  Electrovalvulas.SetUp();
+  dht.begin();
+  //Electrovalvulas.SetUp();
   TdsSensor.begin();
   WaterTempSensor.begin();
   FlowMeter1.setup();
-
-  //
-  pinMode(Nutrient1_Elevator_PIN, INPUT);
-  pinMode(Nutrient2_Elevator_PIN, INPUT);
-  pinMode(pH_Elevator_PIN, INPUT);
-  pinMode(pH_Reductor_PIN, INPUT);
+  delay(100);
 
   // Subscribing to  topics
   client.subscribe(Topics.Update_petition);
@@ -89,8 +92,16 @@ void setup() {
   client.subscribe(Topics.Save_Settings_Remote);
   client.subscribe(Topics.Time_Pump_OFF_Remote);
   client.subscribe(Topics.Time_Pump_ON_Remote);
+  client.subscribe(Topics.Minimum_Level_Remote);
+  client.subscribe(Topics.Control_Action);
+  client.subscribe(Topics.Cycle_Time_Remote);
+  client.subscribe(Topics.Check_Remote);
+  client.subscribe(Topics.Kp_Remote);
+  client.subscribe(Topics.Kd_Remote);
+  client.subscribe(Topics.Ki_Remote);
   delay(10);
   // Publish initial values
+
   Publish(0, Topics.pH_Uppered);
   Publish(0, Topics.Water_Uppered);
   Publish(0, Topics.pH_Decreased);
@@ -110,8 +121,9 @@ void setup() {
   Publish(Kp, Topics.Kp);
   Publish(Kd, Topics.Kd);
   Publish(Ki, Topics.Ki);
-  Publish(Process_ON, Topics.Process_ON);
+  Publish(Minimum_Level, Topics.Minimum_Level);
 
+  Publish(Process_ON, Topics.Process_ON);
   // PID
   pidController.Input = analogRead(Water_temperature);
   pidController.Setpoint = Water_temp_Setpoint;
@@ -128,14 +140,52 @@ void loop() {
     Update_data_flag = false;
     Update_all_data();
   }
+  if (Process_ON == true) {
+    contador++;
+    //Serial.print("contador: ");
+    //Serial.println(contador);
+    if (contador >= Sampling_Time_Heater) {
+      Serial.println("PID in loop: ");
+      PID_Control();
+      // Control the level of tank
+      if (Filling == true) {
+        Tank_level = (-100 / Height_tank) * sonar.getDistance() + 100;
+        Serial.print("tank in loop:");
+        Serial.println(Tank_level);
+        if (Tank_level < 0) {
+          Tank_level = 0;
+        }
+        if (Tank_level > Minimum_Level) {
+          Stop_Fill_Tank();
+          Filling = false;
+        }
+      }
+      contador = 0;
+    }
+  }
+  if (contador_communication >= Check_Communication) {
+    Serial.println("Checking communication");
+    contador_communication = 0;
+    Publish(1, Topics.Check);
+    Attempt++;
+    if (Connected == false && Attempt >= 2) {
+      Serial.println("Connection_Lost");
+      SaveSettings();
+      Reset_ESP();
+    }
+  }
+  //Serial.print("contador_communication :");
+  //Serial.println(contador_communication);
+  contador_communication++;
   client.loop();
 }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
 void Pump_on() {
-  Relay5 = 1;
-  Relay1 = 1;
-  SendMessageToNano();
+  if (Filling == false) {
+    Relay5 = 1;
+    Relay1 = 1;
+    SendMessageToNano();
+  }
 }
 void Pump_off() {
   Relay5 = 0;
@@ -174,6 +224,7 @@ void Increase_pH() {
   Publish(1, Topics.pH_Uppered);
   Relay2 = 1;
   SendMessageToNano();
+  Serial.print("increase_pH");
   delay(Time_pH_Up);
   Relay2 = 0;
   SendMessageToNano();
@@ -181,19 +232,20 @@ void Increase_pH() {
 }
 void Decrease_pH() {
   Publish(1, Topics.pH_Decreased);
-  Relay3 = 1;
+  Relay4 = 1;
+  Serial.print("Decrease_pH");
   SendMessageToNano();
   delay(Time_pH_Decrease);
-  Relay3 = 0;
+  Relay4 = 0;
   SendMessageToNano();
   Publish(0, Topics.pH_Decreased);
 }
 void Increase_TDS() {
   Publish(1, Topics.Nutrient_Uppered);
-  Electrovalvulas.OpenRelay(7);
   Relay6 = 1;
   Relay8 = 1;
   SendMessageToNano();
+  Serial.print("increase_TDS");
   delay(Time_Nutrient);
   Relay8 = 0;
   Relay6 = 0;
@@ -204,7 +256,18 @@ void Decrease_TDS() {
   Publish(1, Topics.Water_Uppered);
   Relay7 = 1;
   SendMessageToNano();
+  Serial.print("Decrease_TDS");
   delay(Time_Water);
+  Relay7 = 0;
+  SendMessageToNano();
+  Publish(0, Topics.Water_Uppered);
+}
+void Fill_Tank() {
+  Publish(1, Topics.Water_Uppered);
+  Relay7 = 1;
+  SendMessageToNano();
+}
+void Stop_Fill_Tank() {
   Relay7 = 0;
   SendMessageToNano();
   Publish(0, Topics.Water_Uppered);
@@ -270,8 +333,10 @@ void callback(char *topic, byte *payload, unsigned int length) {
   if (String(topic) == Topics.Process_ON_Remote) {
     if (response == "1") {
       Process_ON = true;
+      Update_all_data();
     } else {
       Process_ON = false;
+      Filling = false;
     }
   }
   if (String(topic) == Topics.Reset_Pushed_Remote) {
@@ -290,14 +355,17 @@ void callback(char *topic, byte *payload, unsigned int length) {
   if (String(topic) == Topics.Kp_Remote) {
     Response_string = response;
     Kp = Response_string.toFloat();
+    Update_PID_Parameters();
   }
   if (String(topic) == Topics.Kd_Remote) {
     Response_string = response;
     Kd = Response_string.toFloat();
+    Update_PID_Parameters();
   }
   if (String(topic) == Topics.Ki_Remote) {
     Response_string = response;
     Ki = Response_string.toFloat();
+    Update_PID_Parameters();
   }
   if (String(topic) == Topics.Time_Pump_OFF_Remote) {
     Response_string = response;
@@ -307,8 +375,15 @@ void callback(char *topic, byte *payload, unsigned int length) {
     Response_string = response;
     Time_Pump_ON = Response_string.toFloat();
   }
-  if (String(topic) == Topics.Control_Action && Process_ON == false) {
+  if (String(topic) == Topics.Control_Action && Process_ON == true) {
     Control_Action();
+  }
+  if (String(topic) == Topics.Minimum_Level_Remote) {
+    Response_string = response;
+    Minimum_Level = Response_string.toFloat();
+  }
+  if (String(topic) == Topics.Check_Remote) {
+    Connected = true;
   }
 }
 void setup_wifi() {
@@ -386,6 +461,7 @@ void reconnect() {
     return;
   }
   Serial.println("AWS IoT Connected!");
+  Connected = true;
 }
 
 void Publish(float message, const char *topic) {
@@ -403,17 +479,16 @@ void Publish(float message, const char *topic) {
 }
 
 void Update_all_data() {
+  Serial.print("Cycle_Time:");
+  Serial.println(Cycle_time);
   // Checking regulator tanks
-  Low_Nutrient_Tank_1 = digitalRead(Nutrient1_Elevator_PIN);
+  RequestTankData();
   Serial.print("Low_Nutrient_Tank_1: ");
   Serial.println(Low_Nutrient_Tank_1);
-  Low_Nutrient_Tank_2 = digitalRead(Nutrient2_Elevator_PIN);
   Serial.print("Low_Nutrient_Tank_2: ");
   Serial.println(Low_Nutrient_Tank_2);
-  Low_pH_Elevator_Tank = digitalRead(pH_Elevator_PIN);
   Serial.print("Low_pH_Elevator_Tank:");
   Serial.println(Low_pH_Elevator_Tank);
-  Low_pH_Reductor_Tank = digitalRead(pH_Reductor_PIN);
   Serial.print("Low_pH_Reductor_Tank:");
   Serial.println(Low_pH_Reductor_Tank);
 
@@ -437,25 +512,30 @@ void Update_all_data() {
     Publish(1, Topics.Low_pH_Reductor_Tank);
   }
   // Nutrient Level tank
-  Tank_level = Height_tank - sonar.getDistance();
+  Tank_level = (-100 / Height_tank) * sonar.getDistance() + 100;
   Serial.print("tank:");
   Serial.println(Tank_level);
   if (Tank_level < 0) {
     Tank_level = 0;
   }
-  // 100cm -> 0%
-  // 1cm -> 1%  -> 10L  aprox
-  // 10cm -> 10% -> 100L aprox
+  // 85cm -> 0%
+  if (Process_ON == true && Filling == false) {
+    if (Tank_level < Minimum_Level) {
+      Fill_Tank();
+      Filling = true;
+    }
+  }
 
   // Flow_Meter
-
   Water_flow = FlowMeter1.Measure();
 
   // Water Temperature
   WaterTempSensor.requestTemperatures();
   Water_temperature = WaterTempSensor.getTempCByIndex(0);
   if (Water_temperature == -127) {
-    Water_temperature = 25;
+    Water_temperature = prev_Water_temperature;
+  } else {
+    prev_Water_temperature = Water_temperature;
   }
 
   // EC Value
@@ -463,10 +543,15 @@ void Update_all_data() {
   TdsSensor.update();
   // tdsValue = TdsSensor.getTdsValue();
   ECValue = TdsSensor.getEcValue();
+  if (ECValue < 0)
+    ECValue = 0;
 
   // pH Value
   pH = TdsSensor.getpH();
-
+  if (pH < 0)
+    pH = 0;
+  if (pH > 14)
+    pH = 14;
   // Weather Condition
   humidity = dht.readHumidity();
   temperature = dht.readTemperature();
@@ -490,45 +575,45 @@ void Update_all_data() {
   Serial.print("Flow rate: ");
   Serial.print(Water_flow, 0);
   Serial.println("L/min");
+  Serial.print("PID Output:");
+  Serial.print(pidController.Output);
 
   // Publish data. In case it's are having a measurement out of range it will be printed -1
-  if (pH >= 0 && pH <= 14) {
-    Publish(pH, Topics.pH);
-  } else {
-    Publish(-1, Topics.pH);
+  Publish(pH, Topics.pH);
+  Publish(Tank_level, Topics.Tank_level);
+  Publish(ECValue, Topics.TDS);
+  if (Water_temperature != -127) {
+    Publish(Water_temperature, Topics.Water_temperature);
   }
-  if (Tank_level >= 0 && Tank_level <= 100) {
-    Publish(Tank_level, Topics.Tank_level);
-  } else {
-    Publish(-1, Topics.Tank_level);
-  }
-  if (ECValue >= 0) {
-    Publish(ECValue, Topics.TDS);
-  } else {
-    Publish(-1, Topics.TDS);
-  }
-  Publish(Water_temperature, Topics.Water_temperature);
-  if (humidity >= 0 && humidity <= 100) {
-    Publish(humidity, Topics.Humidity);
-  } else {
-    Publish(-1, Topics.Humidity);
-  }
-  if (Water_flow >= 0) {
-    Publish(Water_flow, Topics.Water_Flow);
-  } else {
-    Publish(-1, Topics.Water_Flow);
-  }
+  Publish(humidity, Topics.Humidity);
+  Publish(Water_flow, Topics.Water_Flow);
   Publish(temperature, Topics.Weather_temperature);
-  delay(1000);
+  Publish(PID_OutPut, Topics.PID_OutPut);
 }
-
-void PID_Control() {
+void Update_PID_Parameters() {
   parameters.Set(Kp, Kd, Ki);
-  pidController.Input = analogRead(Water_temperature);
-  pidController.Update();
-  ThermalResistor.Run(pidController.Output);
+  pidController.Setpoint = Water_temp_Setpoint;
+  pidController.TurnOn();
+}
+void PID_Control() {
+  // Water Temperature
+  WaterTempSensor.requestTemperatures();
+  Water_temperature = WaterTempSensor.getTempCByIndex(0);
+  if (Water_temperature == -127) {
+    Water_temperature = prev_Water_temperature;
+  } else {
+    prev_Water_temperature = Water_temperature;
+  }
+  Serial.println("Water_temperature to PID: ");
+  Serial.println(Water_temperature);
+  pidController.Setpoint = Water_temp_Setpoint;
+  Serial.print("Water_temperature: ")
+  Serial.println(Water_temperature:)
+  pidController.Update(Water_temperature);
+  PID_OutPut = pidController.Output;
+  ThermalResistor.Run(PID_OutPut);
   Serial.print("PID output:");
-  Serial.println(pidController.Output);
+  Serial.println(PID_OutPut);
 }
 
 void Reset_ESP() {
@@ -548,7 +633,7 @@ void Reset_Settings() {
 }
 
 void SendMessageToNano() {
-  SerialPort.print('A');
+  SerialPort.print("A");
   SerialPort.print(Relay1);
   SerialPort.print(Relay2);
   SerialPort.print(Relay3);
@@ -559,7 +644,7 @@ void SendMessageToNano() {
   SerialPort.print(Relay8);
   SerialPort.println("");
   delay(10);
-  SerialPort.print('A');
+  SerialPort.print("A");
   SerialPort.print(Relay1);
   SerialPort.print(Relay2);
   SerialPort.print(Relay3);
@@ -569,4 +654,32 @@ void SendMessageToNano() {
   SerialPort.print(Relay7);
   SerialPort.print(Relay8);
   SerialPort.println("");
+}
+void RequestTankData() {
+  SerialPort.println('T');
+  delay(10);
+  SerialPort.println('T');
+  delay(500);
+  ReadMessageFromNano();
+}
+void ReadMessageFromNano() {
+  if (SerialPort.available()) {
+    // Serial.println("Message Received: ");
+    message_from_arduino = SerialPort.readString();
+    Serial.println(message_from_arduino);
+    String value = s.separa(message_from_arduino, ',', 0);
+    if (value == "S") {
+      String value = s.separa(message_from_arduino, ',', 1);
+      Low_pH_Elevator_Tank = value.toFloat();
+
+      value = s.separa(message_from_arduino, ',', 2);
+      Low_pH_Reductor_Tank = value.toFloat();
+
+      value = s.separa(message_from_arduino, ',', 3);
+      Low_Nutrient_Tank_1 = value.toFloat();
+
+      value = s.separa(message_from_arduino, ',', 4);
+      Low_Nutrient_Tank_2 = value.toFloat();
+    }
+  }
 }

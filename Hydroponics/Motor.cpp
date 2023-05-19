@@ -7,7 +7,6 @@ BTS7960::BTS7960() {}
 
 void BTS7960::SetUp(float Setpoint)
 {
-
   this->Setpoint = Setpoint;
   // put your setup code here, to run once:
   ledcSetup(Channel, freq, res); // setup PWM channel for BST R_PWM
@@ -19,8 +18,9 @@ void BTS7960::Run(float Setpoint)
 {
   this->Setpoint = Setpoint;
 
-  out = map(Setpoint, 0, 255, 155, 0); // The H bridge is inverted
-
+  out = map(Setpoint, 0, 255, 255, 155); // The H bridge is inverted
+  Serial.print("Out raw ");
+  Serial.print(out);
   ledcWrite(Channel, out);
 }
 void BTS7960::Stop()
