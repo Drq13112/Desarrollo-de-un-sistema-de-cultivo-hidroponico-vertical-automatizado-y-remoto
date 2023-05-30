@@ -335,7 +335,12 @@ namespace PID
 		void UpdatePID()
 		{
 			T error = GetError();
+      //Serial.print(error);
 			T diff_input = IsFirstInput ? 0 : this->Input - Last_input;
+      //Serial.println("Parameters:");
+      //Serial.println(Parameters_original.Kp);
+      //Serial.println(Parameters_original.Kd);
+      //Serial.println(Parameters_original.Ki);
 
 			TermP = Proportional_On == PROPORTIONAL_ON::ERROR ? Parameters_corrected.Kp * error : Parameters_corrected.Kp * diff_input;
 			TermI = Parameters_corrected.Ki * (error + Last_error) / 2;
@@ -343,12 +348,7 @@ namespace PID
 
 			if (Proportional_On == PROPORTIONAL_ON::ERROR)
 			{
-				 this->Output = TermP;
-			}
-			else
-			{
-				Output_sum -= TermP;
-				this->Output = 0;
+        
 			}
 
 			Output_sum += TermI;

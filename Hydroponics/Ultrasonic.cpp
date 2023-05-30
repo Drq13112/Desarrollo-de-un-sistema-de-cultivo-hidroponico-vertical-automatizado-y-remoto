@@ -14,30 +14,36 @@ void Ultrasonic::SetUp()
 }
 float Ultrasonic::getDistance()
 {
-    // Set the trigger pin LOW for 2uS
-    digitalWrite(TRIGPIN, LOW);
-    delayMicroseconds(2);
+    float sum = 0;
+    for (int i = 0; i < average; i++)
+    {
+        // Set the trigger pin LOW for 2uS
+        digitalWrite(TRIGPIN, LOW);
+        delayMicroseconds(2);
 
-    // Set the trigger pin HIGH for 20us to send pulse
-    digitalWrite(TRIGPIN, HIGH);
-    delayMicroseconds(20);
+        // Set the trigger pin HIGH for 20us to send pulse
+        digitalWrite(TRIGPIN, HIGH);
+        delayMicroseconds(20);
 
-    // Return the trigger pin to LOW
-    digitalWrite(TRIGPIN, LOW);
+        // Return the trigger pin to LOW
+        digitalWrite(TRIGPIN, LOW);
 
-    // Measure the width of the incoming pulse
-    duration = pulseIn(ECHOPIN, HIGH);
+        // Measure the width of the incoming pulse
+        duration = pulseIn(ECHOPIN, HIGH);
+        sum = sum + duration;
+    }
+    // Average duration until trigget reached the sensor
+    duration = sum / average;
 
     // Determine distance from duration
     // Use 343 metres per second as speed of sound
     // Divide by 1000 as we want millimeters
 
     distance = (duration / 2) * 0.343;
-
     // Print result to serial monitor
-    Serial.print("distance: ");
-    Serial.print(distance);
-    Serial.println(" mm");
+    //Serial.print("distance: ");
+    //Serial.print(distance);
+    //Serial.println(" mm");
 
     return distance;
 }

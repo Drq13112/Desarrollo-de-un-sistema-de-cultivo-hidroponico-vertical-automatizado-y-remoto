@@ -1,5 +1,4 @@
 // AiEsp32RotaryEncoder.h
-// based on https://github.com/marcmerlin/IoTuz code - extracted and modified Encoder code
 
 #ifndef _AIESP32ROTARYENCODER_h
 #define _AIESP32ROTARYENCODER_h

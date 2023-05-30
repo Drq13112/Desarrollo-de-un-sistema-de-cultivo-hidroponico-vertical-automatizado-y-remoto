@@ -1,6 +1,3 @@
-// based on https://github.com/marcmerlin/IoTuz code - extracted and modified Encoder code
-//
-//
 
 #include "esp_log.h"
 #define LOG_TAG "AiEsp32RotaryEncoder"

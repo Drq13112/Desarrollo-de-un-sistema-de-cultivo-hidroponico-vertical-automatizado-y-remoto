@@ -17,22 +17,26 @@ void ADS1115_PARALLEL::SetUp() {
   if (channel1 == 1 && !ads1.begin(0x48)) {
     Serial.println(channel1);
     Serial.println("Failed to initialize ADS 0x48.");
+    ESP.restart();
     while (1)
       ;
   }
   if (channel2 == 1 && !ads2.begin(0x49)) {
     Serial.println("Failed to initialize ADS 0x49.");
+    ESP.restart();
     while (1)
       ;
   }
   if (channel3 == 1 && !ads3.begin(0x4A)) {
     Serial.println("Failed to initialize ADS 0x4A.");
+    ESP.restart();
     while (1)
       ;
   }
   if (channel4 == 1 && !ads4.begin(0x4B)) {
     Serial.println(channel4);
     Serial.println("Failed to initialize ADS 0x4B.");
+    ESP.restart();
     while (1)
       ;
   }

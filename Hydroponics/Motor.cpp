@@ -18,9 +18,7 @@ void BTS7960::Run(float Setpoint)
 {
   this->Setpoint = Setpoint;
 
-  out = map(Setpoint, 0, 255, 255, 155); // The H bridge is inverted
-  Serial.print("Out raw ");
-  Serial.print(out);
+  out = map(Setpoint, 0, 255, 255, 0); // The H bridge is inverted
   ledcWrite(Channel, out);
 }
 void BTS7960::Stop()

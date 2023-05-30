@@ -20,6 +20,8 @@ extern float Time_Pump_OFF;     //mins
 extern float Time_Pump_ON;
 extern bool Process_ON;
 extern float Minimum_Level;
+extern bool Pump_State;
+extern bool Heater;
 
 void SaveSettings() {
   preferences.begin("Code", false);
@@ -28,7 +30,7 @@ void SaveSettings() {
   preferences.putFloat("MAX_pH", MAX_pH);
   preferences.putFloat("MIN_EC", MIN_EC);
   preferences.putFloat("Cycle_time", Cycle_time);
-  preferences.putFloat("Water_temp_Setpoint", Water_temp_Setpoint);
+  preferences.putFloat("Water_Setpoint", Water_temp_Setpoint);
   preferences.putFloat("Kp", Kp);
   preferences.putFloat("Ki", Ki);
   preferences.putFloat("Kd", Kd);
@@ -36,6 +38,8 @@ void SaveSettings() {
   preferences.putFloat("Time_Pump_ON", Time_Pump_ON);
   preferences.putBool("Process_ON", Process_ON);
   preferences.putFloat("Minimum_Level", Minimum_Level);
+  preferences.putBool("Pump_State", Pump_State);
+  preferences.putBool("Heater", Heater);
   preferences.end();
 }
 
@@ -46,7 +50,7 @@ void LoadSettings() {
   MAX_pH = preferences.getFloat("MAX_pH", MAX_pH);
   MIN_EC = preferences.getFloat("MIN_EC", MIN_EC);
   Cycle_time = preferences.getFloat("Cycle_time", Cycle_time);
-  Water_temp_Setpoint = preferences.getFloat("Water_temp_Setpoint", Water_temp_Setpoint);
+  Water_temp_Setpoint = preferences.getFloat("Water_Setpoint", Water_temp_Setpoint);
   Kp = preferences.getFloat("Kp", Kp);
   Ki = preferences.getFloat("Ki", Ki);
   Kd = preferences.getFloat("Kd", Kd);
@@ -54,6 +58,8 @@ void LoadSettings() {
   Time_Pump_ON = preferences.getFloat("Time_Pump_ON", Time_Pump_ON);
   Process_ON = preferences.getBool("Process_ON", Process_ON);
   Minimum_Level = preferences.getFloat("Minimum_Level", Minimum_Level);
+  Pump_State = preferences.getBool("Pump_State", Pump_State);
+  Heater = preferences.getBool("Heater", Heater);
   preferences.end();
 }
 
@@ -68,7 +74,7 @@ void ResetSettings() {
   preferences.putFloat("MAX_pH", 5.8);
   preferences.putFloat("MIN_EC", 1000);
   preferences.putFloat("Cycle_time", 10);
-  preferences.putFloat("Water_temp_Setpoint", 20);
+  preferences.putFloat("Water_Setpoint", 15);
   preferences.putFloat("Kp", 4.0);
   preferences.putFloat("Ki", 0.2);
   preferences.putFloat("Kd", 1);
@@ -76,6 +82,8 @@ void ResetSettings() {
   preferences.putFloat("Time_Pump_ON", 30);
   preferences.putBool("Process_ON", false);
   preferences.putFloat("Minimum_Level", 2.0);
+  preferences.putBool("Pump_State", false);
+  preferences.putBool("Heater", false);
   //
 
   MAX_EC = preferences.getFloat("MAX_EC", MAX_EC);
@@ -83,7 +91,7 @@ void ResetSettings() {
   MAX_pH = preferences.getFloat("MAX_pH", MAX_pH);
   MIN_EC = preferences.getFloat("MIN_EC", MIN_EC);
   Cycle_time = preferences.getFloat("Cycle_time", Cycle_time);
-  Water_temp_Setpoint = preferences.getFloat("Water_temp_Setpoint", Water_temp_Setpoint);
+  Water_temp_Setpoint = preferences.getFloat("Water_Setpoint", Water_temp_Setpoint);
   Kp = preferences.getFloat("Kp", Kp);
   Ki = preferences.getFloat("Ki", Ki);
   Kd = preferences.getFloat("Kd", Kd);
@@ -91,6 +99,8 @@ void ResetSettings() {
   Time_Pump_ON = preferences.getFloat("Time_Pump_ON", Time_Pump_ON);
   Process_ON = preferences.getBool("Process_ON", Process_ON);
   Minimum_Level = preferences.getFloat("Minimum_Level", Minimum_Level);
+  Pump_State = preferences.getBool("Pump_State", Pump_State);
+  Heater = preferences.getBool("Heater", Heater);
   preferences.end();}
 
 

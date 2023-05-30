@@ -17,5 +17,6 @@ class Ultrasonic
     // Variables to calculate distance:
     float duration;
     float distance;
+    float average = 10;
 };
 #endif

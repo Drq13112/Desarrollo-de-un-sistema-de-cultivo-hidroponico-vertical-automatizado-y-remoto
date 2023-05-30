@@ -4,7 +4,7 @@ float MIN_pH = 5.8;
 float MAX_EC = 2400;
 float MIN_EC = 1000;
 float Cycle_time = 5;  // mins
-float Water_temp_Setpoint = 20.0;
+float Water_temp_Setpoint = 15.0;
 float Kp = 4.0;
 float Ki = 0.2;
 float Kd = 1;
@@ -19,7 +19,7 @@ float Minimum_Level = 1.0;    // %
 // Non-controllable parameters
 #define Height_tank 860.00         // mm
 #define Sampling_Time_Heater 10  //ticks
-#define Check_Communication 10000  //ticks
+#define Check_Communication 1000  //ticks
 
 // PINS
 #define DHTPIN 4
@@ -55,6 +55,7 @@ struct
   const char *Water_Pump = "Hydroponic/Water_Pump";
   const char *Update_petition = "Hydroponic/Update_petition";
   const char *PID_OutPut = "Hydroponic/PID_OutPut";
+  const char *Heater = "Hydroponic/Heater";
 
   //  Remote Control
   const char *Water_Pump_Remote = "Hydroponic/Water_Pump_Remote";
@@ -65,6 +66,9 @@ struct
   const char *Save_Settings_Remote = "Hydroponic/Save_Settings_Remote";
   const char *Reset_Settings = "Hydroponic/Reset_Settings";
   const char *Control_Action = "Hydroponic/Control_Action";
+  const char *Heater_Remote = "Hydroponic/Heater_Remote";
+  const char *Settings_Remote = "Hydroponic/Settings_Remote";
+
   
   // Slide bars remote
   const char *MAX_EC_Remote = "Hydroponic/MAX_EC_Remote";
@@ -153,7 +157,10 @@ bool Save_Settings = false;
 bool Process_ON = false;
 bool Filling = false;
 bool Connected = false;
+bool Pump_State = false;
+bool Heater = false;
 size_t Attempt = 0;
+
 // Wifi settings
 const int Port = 1883;
 const char *mqttclient = "ESP32";            // Name of the device, must be unique

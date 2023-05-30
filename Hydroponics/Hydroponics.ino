@@ -4,6 +4,14 @@
 #include "FlowMeter.h"
 #include "Eeprom.hpp"
 #include "Certs.h"
+#include <esp_task_wdt.h>
+
+//  Using second core
+TaskHandle_t Task1;
+
+// Watchdog timer
+// 3 seconds WDT
+#define WDT_TIMEOUT 20
 
 // Functions
 void regulate_pH();
@@ -27,16 +35,17 @@ void RequestTankData();
 void Fill_Tank();
 void Stop_Fill_Tank();
 void Update_PID_Parameters();
-//Local varaibles
+void Publish_Settings();
+
+// Local varaibles
 String message_from_arduino = "";
-size_t contador = 0;
 size_t contador_communication = 0;
 // Objects
 String Response_string = "";
 BTS7960 ThermalResistor;
-//NewPing sonar(Trigger_PIN, Echo_PIN, MAX_DISTANCE);
+// NewPing sonar(Trigger_PIN, Echo_PIN, MAX_DISTANCE);
 Ultrasonic sonar(Trigger_PIN, Echo_PIN);
-//Relays Electrovalvulas;
+// Relays Electrovalvulas;
 WiFiClientSecure espClient = WiFiClientSecure();
 PubSubClient client(espClient);
 DHT dht(DHTPIN, DHTTYPE);
@@ -61,6 +70,7 @@ void setup() {
   setup_wifi();
   reconnect();
   client.setCallback(callback);
+  delay(2000);
 
   // LOAD SETTINGS
   LoadSettings();
@@ -68,7 +78,7 @@ void setup() {
   // Sensors and actuators
   sonar.SetUp();
   dht.begin();
-  //Electrovalvulas.SetUp();
+  // Electrovalvulas.SetUp();
   TdsSensor.begin();
   WaterTempSensor.begin();
   FlowMeter1.setup();
@@ -99,21 +109,17 @@ void setup() {
   client.subscribe(Topics.Kp_Remote);
   client.subscribe(Topics.Kd_Remote);
   client.subscribe(Topics.Ki_Remote);
+  client.subscribe(Topics.Settings_Remote);
+  client.subscribe(Topics.Heater_Remote);
   delay(10);
-  // Publish initial values
 
-  Publish(0, Topics.pH_Uppered);
-  Publish(0, Topics.Water_Uppered);
-  Publish(0, Topics.pH_Decreased);
-  Publish(0, Topics.Nutrient_Uppered);
-  Publish(0, Topics.Water_Pump);
-  Publish(1, Topics.Low_Nutrient_Tank);
-  Publish(1, Topics.Low_pH_Elevator_Tank);
-  Publish(1, Topics.Low_pH_Reductor_Tank);
+  // Publish initial values
   Publish(MAX_EC, Topics.MAX_EC);
   Publish(MIN_EC, Topics.MIN_EC);
   Publish(MAX_pH, Topics.MAX_pH);
   Publish(MIN_pH, Topics.MIN_pH);
+  Serial.print("Water_temp_Setpoint:");
+  Serial.println(Water_temp_Setpoint);
   Publish(Water_temp_Setpoint, Topics.Temp_SP);
   Publish(Cycle_time, Topics.Cycle_Time);
   Publish(Time_Pump_ON, Topics.Time_Pump_ON);
@@ -122,16 +128,71 @@ void setup() {
   Publish(Kd, Topics.Kd);
   Publish(Ki, Topics.Ki);
   Publish(Minimum_Level, Topics.Minimum_Level);
+  //Publish(Process_ON, Topics.Process_ON);
+  Publish(Minimum_Level, Topics.Minimum_Level);
+  Publish(Pump_State, Topics.Water_Pump);
+  Publish(Heater, Topics.Heater);
 
-  Publish(Process_ON, Topics.Process_ON);
   // PID
-  pidController.Input = analogRead(Water_temperature);
+  pidController.Input = Water_temperature;
   pidController.Setpoint = Water_temp_Setpoint;
   pidController.TurnOn();
 
+  // Task
+  xTaskCreatePinnedToCore(
+    Task1code,  // Function to implement the task
+    "Task1",    // Name of the task
+    10000,      // Stack size in words
+    NULL,       // Task input parameter
+    0,          // Priority of the task; The lowest
+    &Task1,     // Task handle.
+    0);         // Core where the task should run
+
+  // Watchdog
+  esp_task_wdt_init(WDT_TIMEOUT, true);
+  // enable panic so ESP32 restarts
+  esp_task_wdt_add(NULL);
+  esp_task_wdt_add(Task1);
+
   // MENU
   MiMenu.SetUp();
+
+  //Recover Previus State
+  if (Pump_State == true) {
+    Pump_on();
+
+  } else {
+    Pump_off();
+  }
+
   Serial.println("Setup Finished");
+}
+
+void Task1code(void *pvParameters) {
+  // Controlling PID sampling time to act and tank level filling up
+  for (;;) {
+
+    //Water temperature
+    WaterTempSensor.requestTemperatures();
+    Water_temperature = WaterTempSensor.getTempCByIndex(0);
+    if (Water_temperature == -127 || Water_temperature == 85) {
+      Water_temperature = prev_Water_temperature;
+    } else {
+      prev_Water_temperature = Water_temperature;
+    }
+
+    // PID control
+    if (Process_ON == true && Heater == true && Water_temp_Setpoint > Water_temperature) {
+      PID_Control();
+    } else {
+      PID_OutPut = 0;
+      ThermalResistor.Stop();
+    }
+
+    // Resetting WatchDog
+    esp_task_wdt_reset();
+    //vTaskDelay(pdMS_TO_TICKS(1000));
+  }
 }
 void loop() {
   MiMenu.MainMenu();
@@ -140,27 +201,12 @@ void loop() {
     Update_data_flag = false;
     Update_all_data();
   }
-  if (Process_ON == true) {
-    contador++;
-    //Serial.print("contador: ");
-    //Serial.println(contador);
-    if (contador >= Sampling_Time_Heater) {
-      Serial.println("PID in loop: ");
-      PID_Control();
-      // Control the level of tank
-      if (Filling == true) {
-        Tank_level = (-100 / Height_tank) * sonar.getDistance() + 100;
-        Serial.print("tank in loop:");
-        Serial.println(Tank_level);
-        if (Tank_level < 0) {
-          Tank_level = 0;
-        }
-        if (Tank_level > Minimum_Level) {
-          Stop_Fill_Tank();
-          Filling = false;
-        }
-      }
-      contador = 0;
+
+  // Control the level of tank
+  if (Filling == true && Process_ON == true) {
+    if (Tank_level > Minimum_Level) {
+      Stop_Fill_Tank();
+      Filling = false;
     }
   }
   if (contador_communication >= Check_Communication) {
@@ -168,16 +214,27 @@ void loop() {
     contador_communication = 0;
     Publish(1, Topics.Check);
     Attempt++;
+    Serial.print("antes");
+    Serial.println(Attempt);
     if (Connected == false && Attempt >= 2) {
       Serial.println("Connection_Lost");
+      Serial.println(Attempt);
+      Attempt = 0;
       SaveSettings();
       Reset_ESP();
     }
+    if (Connected == true) {
+      Serial.println("else");
+      Connected = false;
+      Attempt = 0;
+    }
   }
-  //Serial.print("contador_communication :");
-  //Serial.println(contador_communication);
+  // Serial.print("contador_communication :");
+  // Serial.println(contador_communication);
   contador_communication++;
   client.loop();
+  // Resetting WatchDog
+  esp_task_wdt_reset();
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 void Pump_on() {
@@ -185,37 +242,48 @@ void Pump_on() {
     Relay5 = 1;
     Relay1 = 1;
     SendMessageToNano();
+    Pump_State = true;
   }
 }
 void Pump_off() {
   Relay5 = 0;
   Relay1 = 0;
   SendMessageToNano();
+  Pump_State = false;
 }
 void Control_Action() {
   Update_all_data();
-  regulate_pH();
-  regulate_Solution();
+  //Only regulete whe pumps are off to have a realible measurement
+  if (Pump_State == false) {
+    /*
+  if ((ECValue > MAX_EC && pH < MIN_pH) || (ECValue > MAX_EC && pH > 7.0) ) {
+    // Just pouring water to reduce nutrient concentration a rise pH value because surely is under 5.5, which is lower than water pH, 7.0
+    Decrease_TDS();
+  }else {
+    // Regulating with pH regulators and nutrients
+    regulate_pH();
+    regulate_Solution();
+  }*/
+  }
 }
 void regulate_pH() {
 
-  // pH>rango max
+  // pH>max range
   if (pH > MAX_pH) {
     Decrease_pH();
   }
 
-  // pH<rango minimo
+  // pH<min range
   if (pH < MIN_pH) {
     Increase_pH();
   }
 }
 void regulate_Solution() {
-  // TDS>rango max
+  // EC > MAX RANGE
   if (ECValue > MAX_EC) {
     Decrease_TDS();
   }
-
-  // TDS<rango minimo
+  // EC < MIN RANGE
   if (ECValue < MIN_EC) {
     Increase_TDS();
   }
@@ -375,7 +443,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
     Response_string = response;
     Time_Pump_ON = Response_string.toFloat();
   }
-  if (String(topic) == Topics.Control_Action && Process_ON == true) {
+  if (String(topic) == Topics.Control_Action && Process_ON == true && Pump_State == true) {
     Control_Action();
   }
   if (String(topic) == Topics.Minimum_Level_Remote) {
@@ -384,6 +452,17 @@ void callback(char *topic, byte *payload, unsigned int length) {
   }
   if (String(topic) == Topics.Check_Remote) {
     Connected = true;
+    Serial.println("Connected");
+  }
+  if (String(topic) == Topics.Settings_Remote) {
+    Publish_Settings();
+  }
+  if (String(topic) == Topics.Heater_Remote) {
+    if (response == "1") {
+      Heater = true;
+    } else {
+      Heater = false;
+    }
   }
 }
 void setup_wifi() {
@@ -479,82 +558,49 @@ void Publish(float message, const char *topic) {
 }
 
 void Update_all_data() {
-  Serial.print("Cycle_Time:");
-  Serial.println(Cycle_time);
-  // Checking regulator tanks
+
+  //Requesting data of addictional tanks state
   RequestTankData();
-  Serial.print("Low_Nutrient_Tank_1: ");
-  Serial.println(Low_Nutrient_Tank_1);
-  Serial.print("Low_Nutrient_Tank_2: ");
-  Serial.println(Low_Nutrient_Tank_2);
-  Serial.print("Low_pH_Elevator_Tank:");
-  Serial.println(Low_pH_Elevator_Tank);
-  Serial.print("Low_pH_Reductor_Tank:");
-  Serial.println(Low_pH_Reductor_Tank);
-
-  if (Low_Nutrient_Tank_1 == 0.0 || Low_Nutrient_Tank_2 == 0.0) {
-    Low_Nutrient_Tank_General = 0.0;
-    Publish(0, Topics.Low_Nutrient_Tank);
-  } else {
-    Low_Nutrient_Tank_General = 1;
-    Publish(1, Topics.Low_Nutrient_Tank);
-  }
-  delay(50);
-  if (Low_pH_Elevator_Tank == 0) {
-    Publish(0, Topics.Low_pH_Elevator_Tank);
-  } else {
-    Publish(1, Topics.Low_pH_Elevator_Tank);
-  }
-  delay(50);
-  if (Low_pH_Reductor_Tank == 0) {
-    Publish(0, Topics.Low_pH_Reductor_Tank);
-  } else {
-    Publish(1, Topics.Low_pH_Reductor_Tank);
-  }
-  // Nutrient Level tank
-  Tank_level = (-100 / Height_tank) * sonar.getDistance() + 100;
-  Serial.print("tank:");
-  Serial.println(Tank_level);
-  if (Tank_level < 0) {
-    Tank_level = 0;
-  }
-  // 85cm -> 0%
-  if (Process_ON == true && Filling == false) {
-    if (Tank_level < Minimum_Level) {
-      Fill_Tank();
-      Filling = true;
-    }
-  }
-
-  // Flow_Meter
-  Water_flow = FlowMeter1.Measure();
-
-  // Water Temperature
-  WaterTempSensor.requestTemperatures();
-  Water_temperature = WaterTempSensor.getTempCByIndex(0);
-  if (Water_temperature == -127) {
-    Water_temperature = prev_Water_temperature;
-  } else {
-    prev_Water_temperature = Water_temperature;
-  }
-
   // EC Value
   TdsSensor.setTemperature(Water_temperature);
   TdsSensor.update();
-  // tdsValue = TdsSensor.getTdsValue();
   ECValue = TdsSensor.getEcValue();
-  if (ECValue < 0)
+  if (ECValue < 0) {
     ECValue = 0;
-
+  }
+  // Wait for a while until pH mesurement so as to avoid the influence of EC meter over pH sensor
+  //vTaskDelay(pdMS_TO_TICKS(5000));
   // pH Value
   pH = TdsSensor.getpH();
   if (pH < 0)
     pH = 0;
   if (pH > 14)
     pH = 14;
+
   // Weather Condition
   humidity = dht.readHumidity();
   temperature = dht.readTemperature();
+
+  // Nutrient Level tank
+  Tank_level = (-100 / Height_tank) * sonar.getDistance() + 100;
+
+  if (Tank_level < 0) {
+    Tank_level = 0;
+  }
+
+  if (Process_ON == true && Filling == false) {
+    if (Tank_level < Minimum_Level) {
+      Fill_Tank();
+      Filling = true;
+    }
+  }
+  //Serial.print("distance: ");
+  //Serial.print("tank:");
+  //Serial.println(Tank_level);
+
+  // Flow_Meter
+  Water_flow = FlowMeter1.Measure();
+
 
   Serial.println("");
   Serial.print("Water_temperature:");
@@ -578,13 +624,14 @@ void Update_all_data() {
   Serial.print("PID Output:");
   Serial.print(pidController.Output);
 
-  // Publish data. In case it's are having a measurement out of range it will be printed -1
+
+  Publish(Low_Nutrient_Tank_General, Topics.Low_Nutrient_Tank);
+  Publish(Low_pH_Elevator_Tank, Topics.Low_pH_Elevator_Tank);
+  Publish(Low_pH_Reductor_Tank, Topics.Low_pH_Reductor_Tank);
   Publish(pH, Topics.pH);
   Publish(Tank_level, Topics.Tank_level);
   Publish(ECValue, Topics.TDS);
-  if (Water_temperature != -127) {
-    Publish(Water_temperature, Topics.Water_temperature);
-  }
+  Publish(Water_temperature, Topics.Water_temperature);
   Publish(humidity, Topics.Humidity);
   Publish(Water_flow, Topics.Water_Flow);
   Publish(temperature, Topics.Weather_temperature);
@@ -596,27 +643,22 @@ void Update_PID_Parameters() {
   pidController.TurnOn();
 }
 void PID_Control() {
-  // Water Temperature
-  WaterTempSensor.requestTemperatures();
-  Water_temperature = WaterTempSensor.getTempCByIndex(0);
-  if (Water_temperature == -127) {
-    Water_temperature = prev_Water_temperature;
-  } else {
-    prev_Water_temperature = Water_temperature;
-  }
-  Serial.println("Water_temperature to PID: ");
-  Serial.println(Water_temperature);
+  //Serial.println("Water_temperature to PID: ");
+  //Serial.println(Water_temperature);
   pidController.Setpoint = Water_temp_Setpoint;
-  Serial.print("Water_temperature: ")
-  Serial.println(Water_temperature:)
+  //Serial.print("pidController.Setpoint:");
+  //Serial.println(pidController.Setpoint);
+  //Serial.print("Water_temperature: ");
+  //Serial.println(Water_temperature);
   pidController.Update(Water_temperature);
   PID_OutPut = pidController.Output;
   ThermalResistor.Run(PID_OutPut);
-  Serial.print("PID output:");
-  Serial.println(PID_OutPut);
+  //Serial.print("PID output:");
+  //Serial.println(PID_OutPut);
 }
 
 void Reset_ESP() {
+  SaveSettings();
   ESP.restart();
 }
 void Reset_Settings() {
@@ -680,6 +722,30 @@ void ReadMessageFromNano() {
 
       value = s.separa(message_from_arduino, ',', 4);
       Low_Nutrient_Tank_2 = value.toFloat();
+      if (Low_Nutrient_Tank_1 == 0 || Low_Nutrient_Tank_2 == 0) {
+        Low_Nutrient_Tank_General = 0;
+      } else {
+        Low_Nutrient_Tank_General = 1;
+      }
     }
   }
+}
+
+void Publish_Settings() {
+  // To update Node-red when is reinitialized
+  Publish(MAX_EC, Topics.MAX_EC);
+  Publish(MIN_EC, Topics.MIN_EC);
+  Publish(MAX_pH, Topics.MAX_pH);
+  Publish(MIN_pH, Topics.MIN_pH);
+  Publish(Water_temp_Setpoint, Topics.Temp_SP);
+  Publish(Cycle_time, Topics.Cycle_Time);
+  Publish(Time_Pump_ON, Topics.Time_Pump_ON);
+  Publish(Time_Pump_OFF, Topics.Time_Pump_OFF);
+  Publish(Kp, Topics.Kp);
+  Publish(Kd, Topics.Kd);
+  Publish(Ki, Topics.Ki);
+  Publish(Minimum_Level, Topics.Minimum_Level);
+  Publish(Process_ON, Topics.Process_ON);
+  Publish(Minimum_Level, Topics.Minimum_Level);
+  Publish(Pump_State, Topics.Process_ON);
 }
