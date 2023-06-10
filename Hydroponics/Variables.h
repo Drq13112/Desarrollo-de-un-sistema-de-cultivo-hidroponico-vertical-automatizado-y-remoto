@@ -3,24 +3,29 @@ float MAX_pH = 6;
 float MIN_pH = 5.8;
 float MAX_EC = 2400;
 float MIN_EC = 1000;
-float Cycle_time = 5;  // mins
+float Cycle_time = 60; // mins
 float Water_temp_Setpoint = 15.0;
 float Kp = 4.0;
 float Ki = 0.2;
-float Kd = 1;
-float Time_Pump_OFF = 15;     // mins
-float Time_Pump_ON = 15;      // mins
-int Time_Nutrient = 5000;     // ms
-int Time_pH_Decrease = 1500;  // ms
-int Time_pH_Up = 1500;        // ms
-int Time_Water = 5000;        // ms
-float Minimum_Level = 1.0;    // %
+float Kd = 0;
+float Time_Pump_OFF = 15;    // mins
+float Time_Pump_ON = 15;     // mins
+int Time_Nutrient = 5000;    // ms
+int Time_pH_Decrease = 1500; // ms
+int Time_pH_Up = 1500;       // ms
+int Time_Water = 10000;       // ms
+float Minimum_Level = 1.0;   // %
+float EC_1 = 0;
+float EC_2 = 0;
+float EC_3 = 0;
+float pH_1 = 0;
+float pH_2 = 0;
+float pH_3 = 0;
 
 // Non-controllable parameters
-#define Height_tank 860.00         // mm
-#define Sampling_Time_Heater 10  //ticks
-#define Check_Communication 1000  //ticks
-
+#define Height_tank 430.00       // mm
+#define Sampling_Time_Heater 10  // ticks
+#define Check_Communication 1000 // ticks
 // PINS
 #define DHTPIN 4
 #define DHTTYPE DHT11
@@ -28,7 +33,7 @@ float Minimum_Level = 1.0;    // %
 #define WaterFLow_PIN 5
 #define Trigger_PIN 19
 #define Echo_PIN 18
-#define MAX_DISTANCE 200  // Maximum distance (in cm) to ping.
+#define MAX_DISTANCE 200 // Maximum distance (in cm) to ping.
 #define pH_Reductor_PIN 39
 #define pH_Elevator_PIN 36
 #define Nutrient1_Elevator_PIN 35
@@ -44,7 +49,7 @@ float Minimum_Level = 1.0;    // %
 
 struct
 {
-  //Data
+  // Data
   const char *Tank_level = "Hydroponic/Tank_level";
   const char *pH = "Hydroponic/pH";
   const char *Water_Flow = "Hydroponic/Water_Flow";
@@ -69,7 +74,6 @@ struct
   const char *Heater_Remote = "Hydroponic/Heater_Remote";
   const char *Settings_Remote = "Hydroponic/Settings_Remote";
 
-  
   // Slide bars remote
   const char *MAX_EC_Remote = "Hydroponic/MAX_EC_Remote";
   const char *MIN_EC_Remote = "Hydroponic/MIN_EC_Remote";
@@ -111,10 +115,13 @@ struct
   const char *Low_Nutrient_Tank = "Hydroponic/Low_Nutrient_Tank";
   const char *Low_pH_Elevator_Tank = "Hydroponic/Low_pH_Elevator_Tank";
   const char *Low_pH_Reductor_Tank = "Hydroponic/Low_pH_Reductor_Tank";
+  const char *Filling = "Hydroponic/Filling";
+  const char *Max_Level_Sensor = "Hydroponic/Max_Level_Sensor";
+  const char *Min_Level_Sensor = "Hydroponic/Min_Level_Sensor";
 
   // Control Communication
   const char *Check_Remote = "Hydroponic/Communication_Check_Remote_1";
-  const char *Check= "Hydroponic/Communication_Check_1";
+  const char *Check = "Hydroponic/Communication_Check_1";
 
 } Topics;
 
@@ -152,6 +159,8 @@ float Low_Nutrient_Tank_2 = 1;
 float Low_Nutrient_Tank_General = 1;
 float Low_pH_Elevator_Tank = 1;
 float Low_pH_Reductor_Tank = 1;
+float Min_Level_Sensor = 1;
+float Max_Level_Sensor = 1;
 bool Reset = false;
 bool Save_Settings = false;
 bool Process_ON = false;
@@ -163,7 +172,7 @@ size_t Attempt = 0;
 
 // Wifi settings
 const int Port = 1883;
-const char *mqttclient = "ESP32";            // Name of the device, must be unique
-const char *ssid = "HydroponicTFG2023";      // name of the WiFi network
-const char *password = "HydroponicTFG2023";  // password of the WiFi network
+const char *mqttclient = "ESP32";           // Name of the device, must be unique
+const char *ssid = "HydroponicTFG2023";     // name of the WiFi network
+const char *password = "HydroponicTFG2023"; // password of the WiFi network
 bool state = 0;

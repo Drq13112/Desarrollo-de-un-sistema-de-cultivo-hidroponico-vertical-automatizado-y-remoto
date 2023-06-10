@@ -10,7 +10,7 @@
 
 // 3 seconds WDT
 #define WDT_TIMEOUT 10
-#define Check_Communication 100000
+#define Check_Communication 1000000
 
 // Functions
 
@@ -35,7 +35,7 @@ float Panel_Current = 0;
 float Load_Power = 0;
 float Panel_Power = 0;
 size_t contador_communication = 0;
-size_t Relay_State = 0; // Close
+size_t Relay_State = 0;  // Close
 bool Connected = false;
 size_t Attempt = 0;
 
@@ -44,11 +44,9 @@ ADS1115_PARALLEL I2C_Module(0, 0, 1, 0);
 WiFiClientSecure espClient = WiFiClientSecure();
 PubSubClient client(espClient);
 
-void callback(String topic, byte *payload, unsigned int length)
-{
+void callback(String topic, byte *payload, unsigned int length) {
   String response = "";
-  for (int i = 0; i < length; i++)
-  {
+  for (int i = 0; i < length; i++) {
     response += (char)payload[i];
   }
   // Serial.print("incoming: ");
@@ -61,35 +59,27 @@ void callback(String topic, byte *payload, unsigned int length)
   Serial.print(" message: ");
   Serial.println(response);
 
-  if (String(topic) == "Hydroponic/Power_Remote")
-  {
-    if (response == "1")
-    {
-      digitalWrite(PinRelay, HIGH); // Close
+  if (String(topic) == "Hydroponic/Power_Remote") {
+    if (response == "1") {
+      digitalWrite(PinRelay, HIGH);  // Close
       Relay_State = 1;
-    }
-    else
-    {
-      digitalWrite(PinRelay, LOW); // Open
+    } else {
+      digitalWrite(PinRelay, LOW);  // Open
       Relay_State = 0;
     }
   }
-  if (String(topic) == "Hydroponic/Reset_Remote")
-  {
+  if (String(topic) == "Hydroponic/Reset_Remote") {
     Reset_ESP();
   }
-  if (String(topic) == "Hydroponic/Update_petition_power")
-  {
+  if (String(topic) == "Hydroponic/Update_petition_power") {
     Update_Data();
   }
-  if (String(topic) == "Hydroponic/Communication_Check_Remote_2")
-  {
+  if (String(topic) == "Hydroponic/Communication_Check_Remote_2") {
     Serial.println("conected");
     Connected == true;
   }
 }
-void setup_wifi()
-{
+void setup_wifi() {
   /*
   delay(10);
   Serial.println();
@@ -113,8 +103,7 @@ void setup_wifi()
 
   Serial.println("Connecting to Wi-Fi");
 
-  while (WiFi.status() != WL_CONNECTED)
-  {
+  while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
@@ -129,17 +118,14 @@ void setup_wifi()
 
   Serial.println("Connecting to AWS IOT");
 }
-void reconnect()
-{
+void reconnect() {
 
-  while (!client.connect(THINGNAME))
-  {
+  while (!client.connect(THINGNAME)) {
     Serial.print(".");
     delay(100);
   }
 
-  if (!client.connected())
-  {
+  if (!client.connected()) {
     Serial.println("AWS IoT Timeout!");
     return;
   }
@@ -160,8 +146,7 @@ void reconnect()
   }*/
 }
 
-void Publish(float message, const char *topic)
-{
+void Publish(float message, const char *topic) {
   /*
     Serial.print("TOPIC: ");
     Serial.println(topic);
@@ -174,29 +159,26 @@ void Publish(float message, const char *topic)
   dtostrf(message, 6, 1, message_to_upload);
   client.publish(topic, message_to_upload);
 }
-void Reset_ESP()
-{
+void Reset_ESP() {
   ESP.restart();
 }
 
-void Update_Data()
-{
+void Update_Data() {
   Voltage = I2C_Module.ReadVoltage(ADS1115_ADDRESS3, 0);
   Load_Current = I2C_Module.ReadVoltage(ADS1115_ADDRESS3, 1);
   Panel_Current = I2C_Module.ReadVoltage(ADS1115_ADDRESS3, 2);
+
   Serial.print("Load current");
   Serial.println(Load_Current);
   Serial.print("Panel_Current:");
   Serial.println(Panel_Current);
-  Voltage = 9.52 * (Voltage);
-  Load_Current = -(Load_Current * 14.925) + 37.163;
-  if (Load_Current < 0)
-  {
+  Voltage = 10.17 * (Voltage);
+  Load_Current = -(Load_Current - 2.4.9)/0.066;
+  if (Load_Current < 0) {
     Load_Current = 0;
   }
-  Panel_Current = (Panel_Current * 14.925) - 37.163;
-  if (Panel_Current < 0)
-  {
+  Panel_Current = (Panel_Current - 2.325)/0.066;
+  if (Panel_Current < 0) {
     Panel_Current = 0;
   }
   Load_Power = Voltage * Load_Current;
@@ -212,8 +194,7 @@ void Update_Data()
   Publish(Panel_Power, "Hydroponic/Panel_Power");
 }
 
-void setup()
-{
+void setup() {
   Serial.begin(115200);
   Serial.println("Configuring WDT...");
   esp_task_wdt_init(WDT_TIMEOUT, true);
@@ -231,23 +212,19 @@ void setup()
   // client.setServer(mqtt_server, 1883);
   Publish(Relay_State, "Hydroponic/Power");
 }
-void loop()
-{
+void loop() {
 
-  if (contador_communication >= Check_Communication)
-  {
+  if (contador_communication >= Check_Communication) {
     Serial.println("Checking communication");
     contador_communication = 0;
-    Publish(1,"Hydroponic/Communication_Check_2");
+    Publish(1, "Hydroponic/Communication_Check_2");
     Attempt++;
-    if (Connected == false && Attempt >= 2)
-    {
+    if (Connected == false && Attempt >= 2) {
       Serial.println("Connection_Lost");
       Attempt = 0;
       Reset_ESP();
     }
-    else
-    {
+    if (Connected == true) {
       Connected = false;
       Attempt = 0;
     }

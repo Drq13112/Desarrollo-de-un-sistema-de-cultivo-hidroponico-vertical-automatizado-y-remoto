@@ -73,7 +73,7 @@ void ResetSettings() {
   preferences.putFloat("MIN_pH", 5.5);
   preferences.putFloat("MAX_pH", 5.8);
   preferences.putFloat("MIN_EC", 1000);
-  preferences.putFloat("Cycle_time", 10);
+  preferences.putFloat("Cycle_time", 60);
   preferences.putFloat("Water_Setpoint", 15);
   preferences.putFloat("Kp", 4.0);
   preferences.putFloat("Ki", 0.2);

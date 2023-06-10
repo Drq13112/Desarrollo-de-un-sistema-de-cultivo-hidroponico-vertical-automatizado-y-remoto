@@ -280,19 +280,15 @@ void Menu::MainMenu() {
               }
               break;
             case 2:  // pH UP
-              if (Process_ON == false)
                 Increase_pH();
               break;
             case 3:  // pH DOWN
-              if (Process_ON == false)
                 Decrease_pH();
               break;
             case 4:  // NUTRIENT UP
-              if (Process_ON == false)
                 Increase_TDS();
               break;
             case 5:  // WATER UP
-              if (Process_ON == false)
                 Decrease_TDS();
               break;
             case 6:  // Heater

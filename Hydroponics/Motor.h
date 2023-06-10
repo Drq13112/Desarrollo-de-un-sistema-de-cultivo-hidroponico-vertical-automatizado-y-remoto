@@ -22,6 +22,7 @@ private:
   const int freq = 1000;    //  Set up PWM Frequency
   const int res = 8;        //  Set up PWM Resolution
   const int RPWM = 33;
+  const int enable = 15;
   int out = 255;
   float Setpoint = 0;
 };
