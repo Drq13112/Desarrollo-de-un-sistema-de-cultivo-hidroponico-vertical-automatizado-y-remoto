@@ -173,7 +173,7 @@ void Update_Data() {
   Serial.print("Panel_Current:");
   Serial.println(Panel_Current);
   Voltage = 10.17 * (Voltage);
-  Load_Current = -(Load_Current - 2.4.9)/0.066;
+  Load_Current = -(Load_Current - 2.49)/0.066;
   if (Load_Current < 0) {
     Load_Current = 0;
   }
