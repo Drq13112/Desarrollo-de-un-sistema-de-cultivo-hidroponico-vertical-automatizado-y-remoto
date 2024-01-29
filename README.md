@@ -7,7 +7,6 @@
   <h3 align="center">Development of a vertical hydroponic automated and remote crop</h3>
 
   <p align="center">
-    Development of an automated vertical and remote hydroponic automated and remote vertical
     <br />
     <a href="David_Redondo_TFG.pdf"><strong>Explore the docs »</strong></a>
     <br />
