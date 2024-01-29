@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   
-  <h3 align="center">Development of an automated vertical and remote hydroponic automated and remote vertical</h3>
+  <h3 align="center">Development of a vertical hydroponic automated and remote crop</h3>
 
   <p align="center">
     Development of an automated vertical and remote hydroponic automated and remote vertical
