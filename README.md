@@ -77,23 +77,33 @@ growth.
 ### Software Architecture
 
 ![struct1](figs/struct2.png)
+
 *Figure 3: Architecture of remote communications.*
+
 ![struct2](figs/struct1.png)
+
 *Figure 4: Jerarchy of control and its communication protocols.*
 
 ## Node-Red
 ![struct2](figs/overview.png)
+
 ![struct2](figs/esp_cam.png)
+
 ![struct2](figs/control.png)
+
 ![struct2](figs/Comsuption.png)
+
 ![struct2](figs/sql.png)
 
 ## Power supply
+
 ![struct2](figs/solar.png)
+
+*Figure 4: Scheme of power supply system*
 
 ### Results
 
-![Project finished](./figs/final.png)
+![Project finished](./figs/final.jpg)
 *Figure 1: Project finished*
 
 ![Results](figs/results.png)
