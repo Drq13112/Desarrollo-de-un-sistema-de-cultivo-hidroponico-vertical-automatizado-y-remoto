@@ -78,11 +78,11 @@ growth.
 
 ![struct1](figs/struct2.png)
 
-*Figure 3: Architecture of remote communications.*
+*Figure 1: Architecture of remote communications.*
 
 ![struct2](figs/struct1.png)
 
-*Figure 4: Jerarchy of control and its communication protocols.*
+*Figure 2: Jerarchy of control and its communication protocols.*
 
 ## Node-Red
 ![struct2](figs/overview.png)
@@ -99,15 +99,17 @@ growth.
 
 ![struct2](figs/solar.png)
 
-*Figure 4: Scheme of power supply system*
+*Figure 3: Scheme of power supply system*
 
 ### Results
 
 ![Project finished](./figs/final.jpg)
-*Figure 1: Project finished*
+
+*Figure 4: Project finished*
 
 ![Results](figs/results.png)
-*Figure 2: Results.*
+
+*Figure 5: Results.*
 
 <!-- LICENSE -->
 ## License
