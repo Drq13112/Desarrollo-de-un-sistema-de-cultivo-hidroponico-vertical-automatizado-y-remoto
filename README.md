@@ -9,12 +9,9 @@
   <p align="center">
     Development of an automated vertical and remote hydroponic automated and remote vertical
     <br />
-    <a href="https://github.com/albertoibernon/Autonomous_Surveillance_Robot/blob/main/project_report/Guiado_y_Navegacion.pdf"><strong>Explore the docs »</strong></a>
+    <a href="David_Redondo_TFG.pdf"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="#usage">View Demo</a>
-    ·
-    <a href="#contact">Contact</a>
   </p>
 </div>
 
@@ -32,7 +29,7 @@
         <li><a href="#software-architecture">Software Architecture</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#results">Usage</a></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
@@ -66,58 +63,45 @@ On the other hand, the large-scale implementation of the developed system is hig
 This defines it as an energetically sustainable and environmentally friendly agricultural system. environmentally friendly.
 In short, our automated hydroponic garden project is more than just a solution to cope with the lack of water and resources. simply a solution to cope with the lack of food.
 
-
-![Apollo simulations](./figs/marvin_and_laser.png)
-*Figure 1: Apollo simulations.*
-
-This selection and the assumptions about the application have conditioned the map (the robot's navigation environment). As can be seen in Figure 2, it presents areas with narrow corridors, small rooms, but also wide spaces and oblique walls. In this way, we have tried to generalize the possibilities to be found in a real museum.
-
-![Visualization of the map in Apolo. (a) Top view. (b) Perspective view.](figs/map.png)
-*Figure 2: Visualization of the map in Apolo.*
-
 ### Objectives of the Project
 
-Once the application/problem requiring the navigation of a terrestrial robot has been chosen and the map of the environment to be worked on has been defined, we can establish the following objectives for the present work (see *project_report* for all the following chapters):
-
-- By using a differential type locomotion system: determine the **uncertainty associated with the kinematic model** (Chapter 2).
-- Chosen the **perception system**: **determine its uncertainty** by means of calibration (Chapter 2).
-- For the **localization**: implement an algorithm that allows to obtain at any time the absolute position of the robot **using the Extended Kalman Filter**. Test and experiment with this algorithm to **analyze the influence of the parameters** and the goodness of the estimation achieved (Chapter 3).
-- For the movement: **program a controller** that allows the robot to follow a defined trajectory. **Include a reactive control** that allows to avoid obstacles or to navigate through narrow places (Chapter 4).
-- For trajectory generation: **integrate a planner** (Chapter 4).
-- **Encapsulate everything** as a navigation algorithm as a proposal to the proposed application (Chapter 5).
+This project aims to develop a scalable prototype that allows:
+- Generate a high production of plants in a reduced space.
+- Power the production and control systems autonomously by means of solar energy. 
+- To be controlled remotely and without distance restrictions.
+- Monitor and control the parameters necessary for plant growth. 
+growth.
+- Show resistance to adverse weather conditions and functionality in outdoor environments.
+- Demonstrate the ability to successfully grow plants without the need for soil, using hydroponics as a growing technique. growing technique.
 
 ### Software Architecture
 
-The Robotic Navigation and Control has been implemented following a modular methodology that allows to perform individual regression tests to ease the validation process. It permits to distinguish the several parts involved in the project. It is structured in the following modules:
+![struct1](figs/struct2.png)
+*Figure 3: Architecture of remote communications.*
+![struct2](figs/struct1.png)
+*Figure 4: Jerarchy of control and its communication protocols.*
 
-- **Init.m:** responsible for reading the initial and goal poses, inputs of the simulator. Then, the module places the robot real pose in the initial pose and resets the odometry. It also defines the sensors noise and estimation covariances. Finally, it initialize the time variables and the store matrices.
-- **Planificador-global.m:** once the initial and goal poses are identified, the path planning module is executed to generate the waypoints that connect both points, based on RRT-star. This planification process is done off-line, previous to the running of the pseudo real-time (in-the-loop) code. The output of module is a matrix with the waypoints coordinates.
-- **Planificador-local.m:** responsible to generate the intermediate reference points that the robot needs to chase between two waypoints during the in-the-loop execution. It permits path re-planning from the last estimated position to the next waypoint once the previous sequence of reference points has been completed, which enhances the success of the path chaser task. The module also extracts the derived forward and rotation velocities commands, computed when the reference points are correlated with the time. These commands are considered as an active control.
-- **Navegacion.m:** responsible for taking the information from the proprioceptive (odometry) and exteroceptive (landmarks) sensors which are integrated in the Expanded Kalman Filter (EKF) to obtain the estimation pose and covariance matrices.
-- **Control-reactivo.m:** responsible for taking the reference pose and the estimated pose, computing the error between them and extract reactive velocity commands, from a PI controller, which are added to the active commands. It also identifies the present of a close wall or obstacle from ultrasonic sensors and generates a robot rotation, proportional to the distance to the objects, to move away from them. Once, the objects are not detected, the robot performs a replanning, in case of needing.
-- **Dke.m:** the simulator takes the control velocity commands and executes them in the Dynamics and Kinematic Environment (DKE), although only kinematic effects are considered for this approach. In this way, the real position and orientation are obtained.
+## Node-Red
+![struct2](figs/overview.png)
+![struct2](figs/esp_cam.png)
+![struct2](figs/control.png)
+![struct2](figs/Comsuption.png)
+![struct2](figs/sql.png)
 
-![Robotic Navigation and Control software architecture](figs/architecture.png)
-*Figure 3: Robotic Navigation and Control software architecture.*
+## Power supply
+![struct2](figs/solar.png)
 
-## Usage
-The following is a short video demonstrating the operation of the developed project.
-![The gif](./figs/demo.gif)
+### Results
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+![Project finished](./figs/final.png)
+*Figure 1: Project finished*
+
+![Results](figs/results.png)
+*Figure 2: Results.*
 
 <!-- LICENSE -->
 ## License
 
 Distributed under the BSD 3-Clause License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-<!-- CONTACT -->
-## Contact
-Alberto Ibernón Jiménez - [albertoibernon](https://github.com/jbarciv) - alberto.ibernon@alumnos.upm.es\
-David Redondo Quintero - [Drq13112](https://github.com/Drq13112) - david.redondo@alumnos.upm.es\
-Josep Mª Barberá Civera - [jbarciv](https://github.com/jbarciv) - chemabc@gmail.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
